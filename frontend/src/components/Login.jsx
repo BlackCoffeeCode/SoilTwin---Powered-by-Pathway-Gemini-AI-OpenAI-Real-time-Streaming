@@ -152,7 +152,7 @@ const Login = () => {
                         </button>
                     </p>
                     <p style={{ marginTop: '1rem', opacity: 0.7 }}>
-                        Powered by Pathway • Gemini AI • Real-time Streaming
+                        Powered by Pathway • OpenAI • Real-time Streaming
                     </p>
                 </div>
             </div>

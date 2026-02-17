@@ -2,7 +2,6 @@ fastapi
 uvicorn
 python-multipart
 python-dotenv
-google-generativeai
 openai
 requests
 pathway

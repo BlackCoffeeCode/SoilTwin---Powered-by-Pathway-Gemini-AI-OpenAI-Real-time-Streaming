@@ -19,7 +19,8 @@ SoilTwin is a production-grade, real-time Soil Digital Twin platform designed to
 ## Prerequisites
 - Python 3.10 or higher
 - Node.js & npm
-- LLM API Key (Google Gemini or OpenAI) in `.env` file.
+- OpenAI API Key in `.env` file.
+- **Windows Users:** Must use WSL2 (Ubuntu). See [SETUP_WSL.md](./SETUP_WSL.md) for a detailed guide.
 
 ## Installation
 
@@ -27,6 +28,10 @@ SoilTwin is a production-grade, real-time Soil Digital Twin platform designed to
     ```bash
     git clone <repo-url>
     cd SoilTwin
+    # Unix/Mac:
+    ./start.sh
+    # Windows/WSL:
+    ./setup_dev.sh
     ```
 
 2.  **Install Backend Dependencies**
@@ -44,9 +49,10 @@ SoilTwin is a production-grade, real-time Soil Digital Twin platform designed to
 4.  **Configure Environment**
     Create a `.env` file in the root directory:
     ```env
-    # Add your API Key (Choice of Gemini or OpenAI)
-    GOOGLE_API_KEY=your_gemini_key_here
-    # OPENAI_API_KEY=your_openai_key_here
+    # Add your OpenAI API Key
+    OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxx
+    # Database Config
+    MONGODB_URL=mongodb://localhost:27017/soiltwin_db
     ```
 
 ## Running the Application

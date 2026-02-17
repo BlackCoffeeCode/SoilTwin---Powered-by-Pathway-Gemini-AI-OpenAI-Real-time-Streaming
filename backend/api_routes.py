@@ -647,19 +647,19 @@ async def ask_question(request: Request, q: Question, current_user: str = Depend
         except:
             guidelines = "Guidelines unavailable."
 
-    # 3. Call LLM (Gemini) using .env key
-    import google.generativeai as genai
+    # 3. Call LLM (OpenAI) using .env key
+    from openai import OpenAI
     
-    api_key = os.getenv("GOOGLE_API_KEY")
-    if not api_key or "your_api_key_here" in api_key:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
         return {
-            "answer": "AI API Key missing. Please update .env file.",
+            "answer": "AI API Key (OPENAI_API_KEY) missing. Please update .env file.",
             "cost_saving": "N/A"
         }
         
-    genai.configure(api_key=api_key)
-    # Use gemini-2.0-flash-lite based on available models for this key
-    model = genai.GenerativeModel('gemini-2.0-flash-lite')
+    client = OpenAI(api_key=api_key)
+    # Use gpt-4o-mini based on user request
+    model_name = "gpt-4o-mini"
 
     prompt = f"""
     You are an agricultural expert helping an Indian farmer.
@@ -684,8 +684,15 @@ async def ask_question(request: Request, q: Question, current_user: str = Depend
     """
     
     try:
-        response = model.generate_content(prompt)
-        answer_text = response.text
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": "You are an agricultural expert helping an Indian farmer."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
+        answer_text = response.choices[0].message.content
         
         return {
             "answer": answer_text,

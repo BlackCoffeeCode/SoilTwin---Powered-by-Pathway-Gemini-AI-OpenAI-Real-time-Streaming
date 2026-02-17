@@ -67,74 +67,105 @@ const ChatBox = () => {
     };
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+            {/* Thread Background Pattern */}
+            <div className="absolute inset-0 opacity-5 pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(#2D5016 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+            </div>
+
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto space-y-3 mb-4 pr-2" style={{ maxHeight: '400px' }}>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 chat-container relative z-10">
                 {messages.length === 0 && (
-                    <div className="text-center py-8 text-slate-500">
-                        <Sparkles className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                        <p className="text-sm">Ask me anything about your soil health!</p>
+                    <div className="text-center py-12">
+                        <div className="w-16 h-16 bg-gradient-to-br from-[#7CB342] to-[#2D5016] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#7CB342]/20">
+                            <Sparkles className="w-8 h-8 text-white animate-pulse" />
+                        </div>
+                        <h3 className="text-xl font-serif text-[#2D5016] mb-2">Soil Health Assistant</h3>
+                        <p className="text-[#6D4C41]/70 text-sm max-w-[200px] mx-auto">
+                            Ask me about nutrient management, crop rotation, or disease prevention.
+                        </p>
                     </div>
                 )}
 
                 {messages.map((msg, idx) => (
-                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[80%] rounded-xl px-4 py-2 ${msg.role === 'user'
-                            ? 'bg-blue-600 text-white'
-                            : msg.isError
-                                ? 'bg-red-900/20 border border-red-500/30 text-red-200'
-                                : 'bg-slate-800 text-slate-100'
-                            }`}>
-                            <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                    <div key={idx} className={`chat-message ${msg.role === 'user' ? 'user' : 'ai'} ${msg.isError ? 'border-red-500/50 bg-red-50' : ''} fade-in-up`}>
+                        <div className="flex flex-col">
+                            <span className="text-xs font-semibold mb-1 opacity-70">
+                                {msg.role === 'user' ? 'You' : 'Field Advisor'}
+                            </span>
+                            <p className="whitespace-pre-wrap">{msg.content}</p>
+
                             {msg.cost_saving && (
-                                <p className="text-xs text-emerald-400 mt-1">💰 {msg.cost_saving}</p>
+                                <div className="mt-3 pt-2 border-t border-black/5 flex items-center gap-2">
+                                    <span className="text-xs font-bold text-amber-600 bg-amber-100/50 px-2 py-1 rounded-full border border-amber-200">
+                                        💰 Saving Opportunity
+                                    </span>
+                                    <span className="text-sm font-medium text-[#2D5016]">
+                                        {msg.cost_saving}
+                                    </span>
+                                </div>
                             )}
                         </div>
                     </div>
                 ))}
 
                 {loading && (
-                    <div className="flex justify-start">
-                        <div className="bg-slate-800 rounded-xl px-4 py-2">
-                            <div className="flex items-center gap-2 text-slate-400">
-                                <div className="flex gap-1">
-                                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
-                                </div>
-                                <span className="text-xs">Thinking...</span>
+                    <div className="chat-message ai fade-in-up w-fit">
+                        <div className="flex items-center gap-2">
+                            <div className="flex gap-1.5 py-1">
+                                <span className="w-2 h-2 bg-[#7CB342] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                                <span className="w-2 h-2 bg-[#7CB342] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                                <span className="w-2 h-2 bg-[#7CB342] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                             </div>
+                            <span className="text-xs text-[#6D4C41]/60">Analyzing soil data...</span>
                         </div>
                     </div>
                 )}
+
+                {/* Scroll anchor */}
+                <div id="end-of-chat"></div>
             </div>
 
             {/* Error Alert */}
             {error && (
-                <div className="mb-3 p-2 bg-red-900/20 border border-red-500/30 rounded-lg flex items-start gap-2">
-                    <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-red-200">{error}</p>
+                <div className="mx-4 mb-2 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 shadow-sm">
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-700">{error}</p>
                 </div>
             )}
 
             {/* Input Area */}
-            <div className="flex gap-2">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Ask about fertilizers, NPK levels..."
-                    className="flex-1 bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:border-blue-500/50 outline-none"
-                    disabled={loading}
-                />
-                <button
-                    onClick={handleSend}
-                    disabled={loading || !input.trim()}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:cursor-not-allowed rounded-lg transition-colors"
-                >
-                    <Send className="w-4 h-4 text-white" />
-                </button>
+            <div className="p-4 bg-white/60 backdrop-blur-md border-t border-[#6D4C41]/10">
+                <div className="flex gap-2 relative">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder="Ask about NPK levels, irrigation..."
+                        className="flex-1 bg-white border border-[#6D4C41]/20 rounded-xl px-4 py-3 
+                                 text-[#2D5016] placeholder-[#6D4C41]/40 
+                                 focus:border-[#7CB342] focus:ring-2 focus:ring-[#7CB342]/20 
+                                 outline-none transition-all shadow-inner"
+                        disabled={loading}
+                    />
+                    <button
+                        onClick={handleSend}
+                        disabled={loading || !input.trim()}
+                        className="p-3 bg-gradient-to-br from-[#2D5016] to-[#7CB342] 
+                                 text-white rounded-xl shadow-lg shadow-[#7CB342]/30 
+                                 hover:shadow-[#7CB342]/50 hover:scale-105 active:scale-95 
+                                 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none 
+                                 transition-all duration-200"
+                    >
+                        <Send className="w-5 h-5" />
+                    </button>
+                </div>
+                <div className="text-center mt-2">
+                    <span className="text-[10px] text-[#6D4C41]/40 font-medium tracking-wide uppercase">
+                        Powered by OpenAI • Pathway RAG Engine
+                    </span>
+                </div>
             </div>
         </div>
     );

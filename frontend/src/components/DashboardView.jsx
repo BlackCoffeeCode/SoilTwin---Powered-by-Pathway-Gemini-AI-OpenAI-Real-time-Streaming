@@ -102,7 +102,7 @@ const DashboardView = ({ soilState, profile }) => {
                     <div className="card h-full flex flex-col">
                         <div className="mb-4">
                             <h3 className="text-lg font-bold text-white">AI Field Advisor</h3>
-                            <p className="text-xs text-gray-400">Gemini 2.0 Flash • Real-time</p>
+                            <p className="text-xs text-gray-400">GPT-4o Mini • Real-time</p>
                         </div>
                         <div className="flex-1 min-h-0">
                             <ChatBox />

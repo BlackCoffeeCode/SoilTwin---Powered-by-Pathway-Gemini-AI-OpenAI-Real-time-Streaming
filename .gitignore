@@ -16,3 +16,10 @@ data/recent_events.csv
 data/simulated_streams/*.jsonl
 !data/simulated_streams/crop_events.json
 !data/simulated_streams/soil_amendments.json
+
+# Ignore logs and pids
+logs/
+.pids/
+__pycache__/
+*.pyc
+*.log

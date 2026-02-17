@@ -3,15 +3,253 @@
 > vite
 
 
-  VITE v7.3.1  ready in 1801 ms
+  VITE v7.3.1  ready in 985 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
-9:29:50 PM [vite] (client) hmr update /src/components/Login.css
-9:29:50 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
-9:31:43 PM [vite] (client) hmr update /src/components/Login.css
-9:32:44 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
-9:34:59 PM [vite] (client) hmr update /src/components/Login.css
-9:34:59 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
-9:36:10 PM [vite] (client) hmr update /src/components/Login.css
-9:38:05 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:49:14 PM [vite] (client) hmr update /src/components/Login.css
+9:49:19 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:50:31 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:50:31 PM [vite] (client) hmr update /src/components/Login.css
+9:53:10 PM [vite] (client) hmr update /src/components/DashboardView.jsx
+9:55:01 PM [vite] (client) hmr update /src/components/Login.jsx
+9:56:44 PM [vite] (client) hmr update /src/components/Login.css
+9:56:44 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:57:02 PM [vite] (client) hmr update /src/components/Login.css
+9:57:09 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:59:30 PM [vite] (client) hmr update /src/components/ChatBox.jsx
+9:59:31 PM [vite] Internal server error: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx: Unexpected token (70:4)
+
+  68 |
+  69 |     return (
+> 70 |     return (
+     |     ^
+  71 |         <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |             {/* Thread Background Pattern */}
+  73 |             <div className="absolute inset-0 opacity-5 pointer-events-none"
+  Plugin: vite:react-babel
+  File: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx:70:4
+  68 |  
+  69 |      return (
+  70 |      return (
+     |      ^
+  71 |          <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |              {/* Thread Background Pattern */}
+      at constructor (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:365:19)
+      at JSXParserMixin.raise (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:6599:19)
+      at JSXParserMixin.unexpected (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:6619:16)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11442:22)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:39
+      at JSXParserMixin.allowInAnd (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10784:23)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10780:39
+      at JSXParserMixin.allowInAnd (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12421:16)
+      at JSXParserMixin.parseExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10780:17)
+      at JSXParserMixin.parseReturnStatement (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13142:28)
+      at JSXParserMixin.parseStatementContent (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12798:21)
+      at JSXParserMixin.parseStatementLike (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13309:10)
+      at JSXParserMixin.parseBlock (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:39
+9:59:52 PM [vite] (client) Pre-transform error: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx: Unexpected token (70:4)
+
+  68 |
+  69 |     return (
+> 70 |     return (
+     |     ^
+  71 |         <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |             {/* Thread Background Pattern */}
+  73 |             <div className="absolute inset-0 opacity-5 pointer-events-none"
+  Plugin: vite:react-babel
+  File: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx:70:4
+  68 |  
+  69 |      return (
+  70 |      return (
+     |      ^
+  71 |          <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |              {/* Thread Background Pattern */}
+9:59:52 PM [vite] Internal server error: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx: Unexpected token (70:4)
+
+  68 |
+  69 |     return (
+> 70 |     return (
+     |     ^
+  71 |         <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |             {/* Thread Background Pattern */}
+  73 |             <div className="absolute inset-0 opacity-5 pointer-events-none"
+  Plugin: vite:react-babel
+  File: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx:70:4
+  68 |  
+  69 |      return (
+  70 |      return (
+     |      ^
+  71 |          <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |              {/* Thread Background Pattern */}
+      at constructor (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:365:19)
+      at JSXParserMixin.raise (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:6599:19)
+      at JSXParserMixin.unexpected (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:6619:16)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11442:22)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:39
+      at JSXParserMixin.allowInAnd (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10784:23)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10780:39
+      at JSXParserMixin.allowInAnd (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12421:16)
+      at JSXParserMixin.parseExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10780:17)
+      at JSXParserMixin.parseReturnStatement (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13142:28)
+      at JSXParserMixin.parseStatementContent (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12798:21)
+      at JSXParserMixin.parseStatementLike (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13309:10)
+      at JSXParserMixin.parseBlock (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:39
+10:00:13 PM [vite] Internal server error: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx: Unexpected token (70:4)
+
+  68 |
+  69 |     return (
+> 70 |     return (
+     |     ^
+  71 |         <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |             {/* Thread Background Pattern */}
+  73 |             <div className="absolute inset-0 opacity-5 pointer-events-none"
+  Plugin: vite:react-babel
+  File: /Users/piyushdhakad/Desktop/SoilTwin/frontend/src/components/ChatBox.jsx:70:4
+  68 |  
+  69 |      return (
+  70 |      return (
+     |      ^
+  71 |          <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
+  72 |              {/* Thread Background Pattern */}
+      at constructor (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:365:19)
+      at JSXParserMixin.raise (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:6599:19)
+      at JSXParserMixin.unexpected (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:6619:16)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11442:22)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:39
+      at JSXParserMixin.allowInAnd (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10784:23)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10780:39
+      at JSXParserMixin.allowInAnd (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12421:16)
+      at JSXParserMixin.parseExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10780:17)
+      at JSXParserMixin.parseReturnStatement (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13142:28)
+      at JSXParserMixin.parseStatementContent (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12798:21)
+      at JSXParserMixin.parseStatementLike (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13309:10)
+      at JSXParserMixin.parseBlock (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11081:23)
+      at JSXParserMixin.parseUpdate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10899:61)
+      at JSXParserMixin.parseExprOps (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (/Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10831:21)
+      at /Users/piyushdhakad/Desktop/SoilTwin/frontend/node_modules/@babel/parser/lib/index.js:10800:39
+10:00:40 PM [vite] (client) hmr update /src/components/ChatBox.jsx
+10:01:48 PM [vite] (client) hmr update /src/components/Login.css
+10:01:49 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:02:21 PM [vite] (client) hmr update /src/components/Login.css
+10:02:31 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:10:59 PM [vite] (client) hmr update /src/components/Login.css
+10:10:59 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:11:57 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:11:57 PM [vite] (client) hmr update /src/components/Login.css
+10:16:06 PM [vite] (client) hmr update /src/components/Login.css
+10:16:06 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:16:37 PM [vite] (client) hmr update /src/components/Login.css
+10:17:15 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:50:21 PM [vite] (client) hmr update /src/components/Login.css
+10:50:21 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+10:52:33 PM [vite] (client) hmr update /src/components/Login.css
+10:53:18 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
