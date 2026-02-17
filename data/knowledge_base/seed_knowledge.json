@@ -1,0 +1,125 @@
+[
+    {
+        "content": "Soil pH below 6.0 is classified as acidic and may reduce availability of phosphorus, calcium, and magnesium. Crops like rice tolerate mild acidity, but liming is recommended for highly acidic soils.",
+        "metadata": {
+            "collection": "soil_interpretation_guides",
+            "parameter": "pH",
+            "type": "interpretation",
+            "source": "TNAU Soil Guide",
+            "region": "India"
+        }
+    },
+    {
+        "content": "Electrical Conductivity (EC) above 4 mmhos/cm is critical for sensitive crops and indicates salinity stress. High EC reduces seed germination and nutrient uptake.",
+        "metadata": {
+            "collection": "soil_interpretation_guides",
+            "parameter": "EC",
+            "type": "salinity_risk",
+            "source": "TNAU Soil Rating Chart"
+        }
+    },
+    {
+        "content": "Nitrogen deficiency causes yellowing of older leaves first, stunted growth, and reduced tillering in cereals. Since nitrogen is mobile in plants, symptoms appear in lower leaves.",
+        "metadata": {
+            "collection": "nutrient_deficiency_symptoms",
+            "nutrient": "Nitrogen",
+            "symptom_type": "deficiency",
+            "mobility": "mobile",
+            "source": "TNAU Nutrient Management"
+        }
+    },
+    {
+        "content": "Potassium deficiency leads to yellowing or scorching at leaf margins, weak stems, and poor grain filling. Symptoms appear first in older leaves.",
+        "metadata": {
+            "collection": "nutrient_deficiency_symptoms",
+            "nutrient": "Potassium",
+            "symptom_type": "deficiency"
+        }
+    },
+    {
+        "content": "Urea should be applied in split doses for crops like wheat and rice. Avoid application before heavy rainfall to prevent nitrogen leaching.",
+        "metadata": {
+            "collection": "fertilizer_recommendation_rules",
+            "product": "Urea",
+            "nutrient": "Nitrogen",
+            "application_type": "split_dose",
+            "weather_sensitive": true,
+            "source": "TNAU Fertilizer Guide"
+        }
+    },
+    {
+        "content": "DAP (18-46-0) is ideal as a basal fertilizer for phosphorus-deficient soils. It supplies both nitrogen and water-soluble phosphorus.",
+        "metadata": {
+            "collection": "fertilizer_recommendation_rules",
+            "product": "DAP",
+            "grade": "18-46-0",
+            "application_stage": "basal"
+        }
+    },
+    {
+        "content": "Wheat requires higher nitrogen during early vegetative growth. Excess nitrogen after flowering may increase lodging risk.",
+        "metadata": {
+            "collection": "crop_specific_nutrient_rules",
+            "crop": "Wheat",
+            "growth_stage": "vegetative",
+            "nutrient": "Nitrogen"
+        }
+    },
+    {
+        "content": "For rainfed rice, nitrogen should be applied in smaller split doses to minimize losses due to unpredictable rainfall.",
+        "metadata": {
+            "collection": "crop_specific_nutrient_rules",
+            "crop": "Rice",
+            "condition": "rainfed",
+            "nutrient": "Nitrogen"
+        }
+    },
+    {
+        "content": "Soil organic matter improves water retention, nutrient availability, and soil structure. Low organic carbon reduces microbial activity and crop resilience.",
+        "metadata": {
+            "collection": "soil_quality_indicators",
+            "indicator": "Organic Matter",
+            "benefit": "soil_health"
+        }
+    },
+    {
+        "content": "High bulk density indicates soil compaction, restricting root growth and reducing infiltration. Deep tillage and organic amendments can reduce compaction.",
+        "metadata": {
+            "collection": "soil_quality_indicators",
+            "indicator": "Bulk Density",
+            "risk": "compaction"
+        }
+    },
+    {
+        "content": "Soil Health Cards test 12 parameters including pH, EC, organic carbon, nitrogen, phosphorus, potassium, sulfur, zinc, iron, manganese, copper, boron, and molybdenum. Cards are issued every 3 years.",
+        "metadata": {
+            "collection": "shc_program_information",
+            "type": "workflow",
+            "country": "India"
+        }
+    },
+    {
+        "content": "In drought-prone regions, mulching and life-saving irrigation during critical crop stages can reduce yield loss by conserving soil moisture.",
+        "metadata": {
+            "collection": "climate_adaptation_rules",
+            "risk_type": "drought",
+            "practice_type": "moisture_conservation"
+        }
+    },
+    {
+        "content": "India's fertilizer consumption shows a high nitrogen dominance compared to phosphorus and potassium, leading to nutrient imbalance in several states.",
+        "metadata": {
+            "collection": "macro_fertilizer_statistics",
+            "type": "national_trend",
+            "source": "Fert.gov.in Reports"
+        }
+    },
+    {
+        "content": "If heavy rainfall is forecast within 24 hours, postpone fertilizer application to prevent nutrient runoff and leaching.",
+        "metadata": {
+            "collection": "weather_response_rules",
+            "condition": "heavy_rain",
+            "action": "delay_fertilizer"
+        }
+    }
+]

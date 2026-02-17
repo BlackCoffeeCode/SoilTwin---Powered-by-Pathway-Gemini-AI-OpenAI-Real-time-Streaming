@@ -1,0 +1,397 @@
+﻿Crop Nutrient Deficiency Dataset
+Crop
+	Nutrient
+	Symptom
+	Leaf Affected
+	Stage
+	Severity
+	Visual Pattern
+	Cause
+	Source
+	Rice
+	Nitrogen
+	Yellowing
+	Old
+	Tillering
+	High
+	Uniform
+	Low N
+	ICAR
+	Rice
+	Zinc
+	Bronzing
+	New
+	Seedling
+	Medium
+	Streaking
+	Low Zn
+	Soil Health Card
+	Wheat
+	Potassium
+	Marginal burn
+	Old
+	Jointing
+	High
+	Brown edge
+	Low K
+	ICAR
+	Maize
+	Nitrogen
+	V-shaped yellowing
+	Old
+	Vegetative
+	High
+	V-shape
+	Low N
+	IARI
+	Barley
+	Nitrogen
+	Pale leaves
+	Old
+	Tillering
+	Medium
+	Chlorosis
+	Low N
+	ICAR
+	Ragi
+	Iron
+	Interveinal yellowing
+	New
+	Seedling
+	Medium
+	Vein pattern
+	High pH
+	Soil Health
+	Bajra
+	Phosphorus
+	Stunting
+	Whole
+	Early
+	Medium
+	Dark green
+	Low P
+	ICAR
+	Jowar
+	Potassium
+	Edge scorch
+	Old
+	Flowering
+	Medium
+	Burnt margin
+	Low K
+	ICAR
+	Chickpea
+	Zinc
+	Small leaves
+	New
+	Vegetative
+	Medium
+	Short nodes
+	Low Zn
+	ICAR
+	Lentil
+	Nitrogen
+	Pale plant
+	Old
+	Vegetative
+	Medium
+	Yellow
+	Poor nodulation
+	FAO
+	Green gram
+	Potassium
+	Burn margin
+	Old
+	Flowering
+	Medium
+	Brown edges
+	Low K
+	ICAR
+	Black gram
+	Phosphorus
+	Stunting
+	Whole
+	Early
+	Medium
+	Dark green
+	Low P
+	ICAR
+	Pigeon pea
+	Iron
+	Chlorosis
+	New
+	Vegetative
+	Medium
+	Yellow veins
+	High pH
+	ICAR
+	Pea
+	Boron
+	Flower drop
+	Flower
+	Flowering
+	High
+	Abort buds
+	Low B
+	ICAR
+	Mustard
+	Boron
+	Hollow stem
+	Stem
+	Flowering
+	High
+	Split stem
+	Low B
+	ICAR
+	Sunflower
+	Sulfur
+	Yellow new leaves
+	New
+	Early
+	Medium
+	Uniform
+	Low S
+	FAO
+	Groundnut
+	Calcium
+	Empty pods
+	Fruit
+	Pod
+	High
+	Poor fill
+	Low Ca
+	ICRISAT
+	Soybean
+	Phosphorus
+	Stunted
+	Whole
+	Early
+	Medium
+	Dark leaves
+	Low P
+	ICAR
+	Sesame
+	Nitrogen
+	Weak growth
+	Whole
+	Vegetative
+	Medium
+	Pale
+	Low N
+	ICAR
+	Potato
+	Potassium
+	Necrosis
+	Old
+	Tuber
+	High
+	Brown edge
+	Low K
+	ICAR
+	Tomato
+	Calcium
+	Fruit rot
+	Fruit
+	Fruiting
+	High
+	Dark patch
+	Low Ca
+	TNAU
+	Onion
+	Nitrogen
+	Thin neck
+	Old
+	Bulb
+	High
+	Pale
+	Low N
+	TNAU
+	Cabbage
+	Boron
+	Hollow stem
+	Stem
+	Heading
+	High
+	Internal cavity
+	Low B
+	ICAR
+	Cauliflower
+	Molybdenum
+	Whiptail
+	New
+	Early
+	High
+	Narrow leaf
+	Mo deficiency
+	ICAR
+	Brinjal
+	Potassium
+	Edge burn
+	Old
+	Fruiting
+	Medium
+	Brown edge
+	Low K
+	KVK
+	Okra
+	Nitrogen
+	Pale leaves
+	Old
+	Vegetative
+	Medium
+	Yellow
+	Low N
+	ICAR
+	Cotton
+	Boron
+	Flower drop
+	Flower
+	Flowering
+	High
+	Shedding
+	Low B
+	ICAR
+	Sugarcane
+	Nitrogen
+	Pale stalk
+	Whole
+	Early
+	High
+	Yellow
+	Low N
+	NFSM
+	Tea
+	Magnesium
+	Interveinal yellowing
+	Old
+	Growth
+	Medium
+	Vein yellow
+	Low Mg
+	Research
+	Coffee
+	Iron
+	Yellow new leaves
+	New
+	Early
+	Medium
+	Chlorosis
+	High pH
+	NutDef
+	Rubber
+	Magnesium
+	Yellow leaves
+	Old
+	Growth
+	Medium
+	Chlorosis
+	Low Mg
+	Plantation
+	Coconut
+	Potassium
+	Small nuts
+	Old
+	Fruiting
+	High
+	Yellow edges
+	Low K
+	ICAR
+	Banana
+	Potassium
+	Edge yellowing
+	Old
+	Fruiting
+	High
+	Necrosis
+	Low K
+	ICAR
+	Banana
+	Boron
+	Deformed fruit
+	Fruit
+	Fruiting
+	High
+	Malformed
+	Low B
+	ICAR
+	Mango
+	Zinc
+	Rosetting
+	New
+	Flush
+	High
+	Small leaves
+	Low Zn
+	ICAR
+	Apple
+	Calcium
+	Bitter pit
+	Fruit
+	Fruiting
+	High
+	Brown spots
+	Low Ca
+	FAO
+	Grapes
+	Magnesium
+	Vein yellowing
+	Old
+	Fruiting
+	Medium
+	Interveinal
+	Low Mg
+	FAO
+	Citrus
+	Iron
+	Yellow leaves
+	New
+	Vegetative
+	Medium
+	Green veins
+	High pH
+	ICAR
+	Turmeric
+	Potassium
+	Tip burn
+	Old
+	Rhizome
+	Medium
+	Brown tip
+	Low K
+	ICAR
+	Ginger
+	Magnesium
+	Yellow veins
+	Old
+	Vegetative
+	Medium
+	Interveinal
+	Low Mg
+	ICAR
+	Cardamom
+	Nitrogen
+	Pale leaves
+	Whole
+	Vegetative
+	Medium
+	Chlorosis
+	Low N
+	Spice Board
+	Black pepper
+	Zinc
+	Small leaves
+	New
+	Growth
+	Medium
+	Stunted
+	Low Zn
+	Research
+	Chili
+	Calcium
+	Fruit rot
+	Fruit
+	Fruiting
+	High
+	Dark spot
+	Low Ca
+	ICAR

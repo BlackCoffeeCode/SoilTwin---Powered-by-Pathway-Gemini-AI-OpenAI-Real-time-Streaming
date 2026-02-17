@@ -1,0 +1,29 @@
+[0;32m[INFO][0m Stopping all servers...
+[1;33m[WARN][0m Killing process on port 8000 (PID: 86849)
+[0;32m[INFO][0m All servers stopped
+
+[0;32m[INFO][0m 🚀 Starting SoilTwin Application...
+
+[0;32m[INFO][0m Stopping all servers...
+[0;32m[INFO][0m All servers stopped
+[0;32m[INFO][0m Starting backend server...
+[0;32m[INFO][0m Waiting for backend to start (PID: 87320)...
+[0;32m[INFO][0m ✅ Backend started successfully on http://localhost:8000/
+[0;32m[INFO][0m Starting frontend server...
+[0;32m[INFO][0m Waiting for frontend to start (PID: 87353)...
+[0;32m[INFO][0m ✅ Frontend started successfully on http://localhost:5173/
+
+[0;32m[INFO][0m === Server Status ===
+Backend:  [0;32m✅ Running[0m - http://localhost:8000/
+  PID: 87320
+Frontend: [0;32m✅ Running[0m - http://localhost:5173/
+  PID: 87363
+
+[0;32m[INFO][0m Recent logs:
+Backend:  tail -f /Users/piyushdhakad/Desktop/SoilTwin/logs/backend.log
+Frontend: tail -f /Users/piyushdhakad/Desktop/SoilTwin/logs/frontend.log
+
+[0;32m[INFO][0m 🎉 SoilTwin is ready!
+[0;32m[INFO][0m    Frontend: http://localhost:5173/
+[0;32m[INFO][0m    Backend:  http://localhost:8000/docs
+

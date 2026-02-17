@@ -1,0 +1,23 @@
+FERTILIZER APPLICATION GUIDELINES (ICAR STANDARDS)
+
+1. UREA (Nitrogen Source - 46%)
+   - Standard Dosage: 100-120 kg/ha for Wheat (split into 2-3 doses).
+   - Application Timing: Basal (at sowing), CRI stage (20-25 days), and Flowering.
+   - Efficiency Rule: Do not apply if heavy rain is forecast (leads to leaching).
+   - Cost Saving: If Soil Nitrogen > 560 kg/ha, reduce Urea dosage by 25%.
+
+2. DAP (Di-Ammonium Phosphate - 18% N, 46% P)
+   - Usage: Primary source of Phosphorus.
+   - Application: Must be applied BASAL (at sowing). Top dressing is ineffective as P is immobile in soil.
+   - Rule: If Soil Phosphorus > 25 kg/ha, reduce DAP application by 15-20%.
+
+3. MOP (Muriate of Potash - 60% K)
+   - Usage: Potassium for root strength and disease resistance.
+   - Deficiency: If K < 140 kg/ha, apply MOP full dose.
+   - Excess: If K > 280 kg/ha, skip MOP application.
+
+4. GENERAL SOIL HEALTH RULES
+   - Critical Nitrogen Limit: < 280 kg/ha (Low), 280-560 (Medium), > 560 (High).
+   - Critical Phosphorus Limit: < 10 kg/ha (Low), 10-25 (Medium), > 25 (High).
+   - Critical Potassium Limit: < 140 kg/ha (Low), 140-280 (Medium), > 280 (High).
+   - Moisture: Wheat requires 4-6 irrigations. Critical stages: CRI (21 days), Tillering, Booting.

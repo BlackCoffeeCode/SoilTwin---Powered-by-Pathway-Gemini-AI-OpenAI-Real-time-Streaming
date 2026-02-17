@@ -1,0 +1,27 @@
+{
+    "urea": {
+        "price_per_50kg_bag": 266,
+        "price_per_kg": 5.32,
+        "nutrient_content": {
+            "nitrogen": 0.46
+        },
+        "source": "Govt of India Fertilizer Subsidy 2024-25"
+    },
+    "dap": {
+        "price_per_50kg_bag": 1350,
+        "price_per_kg": 27.00,
+        "nutrient_content": {
+            "nitrogen": 0.18,
+            "phosphorus": 0.46
+        },
+        "source": "Market Rate 2024-25"
+    },
+    "potash": {
+        "price_per_50kg_bag": 1650,
+        "price_per_kg": 33.00,
+        "nutrient_content": {
+            "potassium": 0.60
+        },
+        "source": "Approx Market Rate 2025"
+    }
+}

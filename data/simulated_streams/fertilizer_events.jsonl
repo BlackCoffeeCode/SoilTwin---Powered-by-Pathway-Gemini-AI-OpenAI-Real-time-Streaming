@@ -1,0 +1,4 @@
+{"timestamp": "2025-11-15T09:00:00", "type": "DAP", "amount_kg": 50, "note": "Sowing dose", "user_id": "farmer"}
+{"timestamp": "2025-12-20T10:00:00", "type": "Urea", "amount_kg": 45, "note": "First split", "user_id": "farmer"}
+{"timestamp": "2025-11-10T08:00:00", "type": "DAP", "amount_kg": 60, "note": "Sowing dose", "user_id": "farmer2"}
+{"timestamp": "2026-01-05T09:30:00", "type": "Urea", "amount_kg": 50, "note": "First split", "user_id": "farmer2"}

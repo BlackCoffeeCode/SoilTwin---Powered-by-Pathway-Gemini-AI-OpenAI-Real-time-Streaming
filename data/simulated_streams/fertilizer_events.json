@@ -1,0 +1,12 @@
+{
+    "timestamp": "2026-02-04T10:00:00",
+    "type": "Urea",
+    "amount_kg": 20,
+    "note": "Top dressing for nitrogen"
+}
+{
+    "timestamp": "2026-02-08T10:00:00",
+    "type": "DAP",
+    "amount_kg": 15,
+    "note": "Phosphorus supplement"
+}

@@ -1,0 +1,21 @@
+# Soil Management Best Practices (Source: ICAR Soil Health Mission)
+
+## Rainfall Management
+- After heavy rain (>30mm), delay fertilizer application 3-5 days.
+- Allows soil to drain and prevents nutrient runoff.
+- Nitrogen leaching is highest in sandy soils during heavy rain events.
+
+## Irrigation Best Practices
+- Over-irrigation reduces soil aeration, affects root health.
+- Waterlogging can lead to nutrient lockup (especially iron, zinc).
+- Drip irrigation improves water and nutrient efficiency by 30-40%.
+
+## Organic Carbon Management
+- Organic carbon improves water retention and nutrient availability.
+- Crop residue incorporation increases OC by 0.02-0.05% annually.
+- Balanced chemical + organic inputs (FYM) maintain soil health.
+
+## Cost Considerations
+- Over-fertilization = wasted money + soil damage.
+- Soil testing every 2-3 years prevents blind application.
+- Balanced nutrition reduces total fertilizer cost by 20-30% while maintaining yield.

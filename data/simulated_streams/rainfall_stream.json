@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-01T08:00:00",
+  "rain_mm": 25,
+  "note": "Moderate non-monsoon rain. Source: IMD Winter Rain Data"
+}
+{
+  "timestamp": "2026-02-03T14:30:00",
+  "rain_mm": 10,
+  "note": "Light rain"
+}
+{
+  "timestamp": "2026-02-07T06:15:00",
+  "rain_mm": 40,
+  "note": "Heavy pre-monsoon shower. High leaching risk."
+}
+{
+  "timestamp": "2026-02-10T09:00:00",
+  "rain_mm": 5,
+  "note": "Drizzle"
+}

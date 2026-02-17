@@ -1,0 +1,23 @@
+CROP NUTRIENT DEFICIENCY & MANAGEMENT RULES
+
+1. NITROGEN (N) DEFICIENCY
+   - Symptoms: V-shaped yellowing of lower leaves (Chlorosis), stunted growth.
+   - Management: Top dressing with Urea. Foliar spray of 2% Urea if acute.
+   - Crop Impact: Significant yield reduction in cereals (Wheat/Rice).
+
+2. PHOSPHORUS (P) DEFICIENCY
+   - Symptoms: Purple tint on leaves (Anthocyanin pigment), poor root development, delayed maturity.
+   - Management: Apply DAP or SSP near the root zone.
+
+3. POTASSIUM (K) DEFICIENCY
+   - Symptoms: Scorching/burning of leaf margins which proceeds inwards (Marginal Necrosis). Weak stems (Lodging).
+   - Management: Apply MOP.
+
+4. SOIL MOISTURE MANAGEMENT
+   - Saturation (>80%): Leads to root rot and nitrogen loss (denitrification). Stop Irrigation.
+   - Stress (<30%): Wilting occurs. Yield penalty is high during flowering stage.
+   - Optimal Range: 50% - 70% Field Capacity.
+
+5. INTEGRATED NUTRIENT MANAGEMENT (INM)
+   - Organic Carbon: If OC < 0.5%, apply FYM (Farm Yard Manure) @ 10 tons/ha.
+   - pH Standards: Ideal is 6.5 - 7.5. acidic soils (<6) need Lime; alkaline (>8) need Gypsum.
