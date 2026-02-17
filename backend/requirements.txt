@@ -7,7 +7,6 @@ openai
 requests
 pathway
 pandas
-csv-diff
 slowapi
 python-jose[cryptography]
 pymongo

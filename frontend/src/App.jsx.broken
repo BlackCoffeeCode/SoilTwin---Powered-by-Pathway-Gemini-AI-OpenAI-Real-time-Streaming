@@ -1,8 +1,0 @@
-export default function App() {
-    return (
-        <div className="bg-slate-950 min-h-screen text-white p-8">
-            <h1 className="text-4xl font-bold">Test - SoilTwin Loading...</h1>
-            <p className="mt-4 text-slate-400">If you see this, React is working.</p>
-        </div>
-    );
-}

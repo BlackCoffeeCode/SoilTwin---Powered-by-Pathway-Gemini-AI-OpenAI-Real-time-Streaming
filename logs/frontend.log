@@ -3,15 +3,15 @@
 > vite
 
 
-  VITE v7.3.1  ready in 368 ms
+  VITE v7.3.1  ready in 1801 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
-4:55:36 PM [vite] (client) hmr update /src/components/Login.css
-4:55:36 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
-4:55:40 PM [vite] (client) hmr update /src/components/Login.css
-4:55:42 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
-5:00:54 PM [vite] (client) hmr update /src/components/Login.css
-5:00:54 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
-5:01:23 PM [vite] (client) hmr update /src/components/Login.css
-5:01:28 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:29:50 PM [vite] (client) hmr update /src/components/Login.css
+9:29:50 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:31:43 PM [vite] (client) hmr update /src/components/Login.css
+9:32:44 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:34:59 PM [vite] (client) hmr update /src/components/Login.css
+9:34:59 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx
+9:36:10 PM [vite] (client) hmr update /src/components/Login.css
+9:38:05 PM [vite] (client) hmr update /src/components/SoilHealthStats.jsx

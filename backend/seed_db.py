@@ -4,10 +4,12 @@ Seed MongoDB Atlas with initial users
 
 import sys
 import os
-sys.path.insert(0, os.path.dirname(__file__))
 
-from database import test_connection, init_db
-from crud.user_crud import create_user, get_user_by_username
+# Add the parent directory (project root) to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from backend.database import test_connection, init_db
+from backend.crud.user_crud import create_user, get_user_by_username
 
 def seed_users():
     """Seed initial admin and farmer users to MongoDB Atlas"""
@@ -47,11 +49,25 @@ def seed_users():
             print("✅ Created farmer user in MongoDB Atlas")
         else:
             print("ℹ️  Farmer user already exists")
+
+        # Check if farmer2 already exists
+        if not get_user_by_username("farmer2"):
+            create_user(
+                username="farmer2",
+                email="farmer2@soiltwin.com",
+                fullname="Suresh Singh (Farmer 2)",
+                password="farmer123",
+                role="farmer"
+            )
+            print("✅ Created farmer2 user in MongoDB Atlas")
+        else:
+            print("ℹ️  Farmer2 user already exists")
         
         print("\n🌱 MongoDB Atlas seeded successfully!")
         print("Login credentials:")
-        print("  Admin:  username='admin',  password='admin123'")
-        print("  Farmer: username='farmer', password='farmer123'")
+        print("  Admin:   username='admin',   password='admin123'")
+        print("  Farmer:  username='farmer',  password='farmer123'")
+        print("  Farmer2: username='farmer2', password='farmer123'")
         print(f"\n💾 Database: {os.getenv('MONGODB_DB_NAME', 'soiltwin')}")
         print("☁️  Hosted on: MongoDB Atlas")
         

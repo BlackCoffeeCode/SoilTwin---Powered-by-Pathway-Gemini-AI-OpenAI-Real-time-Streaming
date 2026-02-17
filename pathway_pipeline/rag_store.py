@@ -115,19 +115,11 @@ def setup_rag_store(docs_folder: str = "./docs"):
         return vector_server
         
     except ImportError as e:
-        print(f"⚠️  Pathway LLM xpack not fully available: {e}")
-        print("   Falling back to local sentence-transformers RAG...")
-        import sys
-        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from pathway_pipeline.rag_store_fallback import VectorRAG
-        return VectorRAG(docs_folder)
+        print(f"⚠️  Pathway LLM xpack not fully available: {e}. Please install pathway[llm].")
+        raise e
     except Exception as e:
         print(f"❌ Error setting up Pathway vector store: {e}")
-        print("   Using fallback implementation...")
-        import sys
-        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from pathway_pipeline.rag_store_fallback import VectorRAG
-        return VectorRAG(docs_folder)
+        raise e
 
 
 def query_vector_store(vector_store, question: str, k: int = 3):
@@ -147,9 +139,6 @@ def query_vector_store(vector_store, question: str, k: int = 3):
         if hasattr(vector_store, 'similarity_search'):
             results = vector_store.similarity_search(question, k=k)
             return [doc.text for doc in results]
-        # If it's our fallback VectorRAG
-        elif hasattr(vector_store, 'retrieve'):
-            return vector_store.retrieve(question, k=k)
         else:
             print("⚠️  Unknown vector store type")
             return []

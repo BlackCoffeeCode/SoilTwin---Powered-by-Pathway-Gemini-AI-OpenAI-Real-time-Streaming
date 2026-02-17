@@ -76,20 +76,18 @@ class MockDatabase:
 
 # Try connecting to real DB, fallback to Mock
 try:
-    print("⏳ Connecting to MongoDB Atlas...")
-    # client = MongoClient(
-    #     MONGODB_URL, 
-    #     tlsCAFile=certifi.where(),
-    #     serverSelectionTimeoutMS=5000, # Reduce timeout for faster fallback
-    #     connectTimeoutMS=5000,
-    #     socketTimeoutMS=5000
-    # )
-    # # Fast ping check
-    # client.admin.command('ping')
-    # print("✅ MongoDB Atlas connection successful!")
-    # db = client[MONGODB_DB_NAME]
+    client = MongoClient(
+        MONGODB_URL, 
+        tlsCAFile=certifi.where(),
+        serverSelectionTimeoutMS=5000,
+        connectTimeoutMS=5000,
+        socketTimeoutMS=5000
+    )
+    client.admin.command('ping')
+    print("✅ MongoDB Atlas connection successful!")
+    db = client[MONGODB_DB_NAME]
     
-    raise Exception("Forcing MockDB for testing")
+    # raise Exception("Forcing MockDB for testing")
     
     users_collection = db["users"]
     password_reset_tokens_collection = db["password_reset_tokens"]
