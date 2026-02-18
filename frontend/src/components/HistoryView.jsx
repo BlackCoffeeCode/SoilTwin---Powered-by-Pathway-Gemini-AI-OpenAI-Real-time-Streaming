@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Download, Calendar, ExternalLink, Loader2 } from 'lucide-react';
+import { Download, Calendar, ExternalLink, Loader2, CheckCircle2 } from 'lucide-react';
 import { getHistoryLog } from '../api/apiClient';
+import PageLayout from './common/PageLayout';
 
 
 const HistoryView = () => {
@@ -25,104 +26,103 @@ const HistoryView = () => {
     const filteredEvents = filter === 'All' ? events : events.filter(e => e.type === filter);
 
     return (
-        <div className="space-y-6">
-            {/* Header / Controls */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 className="text-2xl font-bold text-white">Event History Log</h2>
-                    <p className="text-gray-400 text-sm">Audit trail of all farm operations and environmental inputs.</p>
-                </div>
-                <div className="flex gap-2">
-                    <button className="btn-praman btn-praman-ghost">
+        <PageLayout
+            title="Event History"
+            subtitle="Audit trail of all farm operations and environmental inputs."
+            actions={
+                <div className="flex gap-3">
+                    <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#6D4C41] bg-white/50 border border-[#6D4C41]/10 rounded-xl hover:bg-white transition-all shadow-sm">
                         <Calendar className="w-4 h-4" /> Date Range
                     </button>
-                    <button className="btn-praman btn-praman-primary">
+                    <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#2D5016] rounded-xl hover:bg-[#3E6B1E] transition-all shadow-md shadow-[#2D5016]/20">
                         <Download className="w-4 h-4" /> Export CSV
                     </button>
                 </div>
-            </div>
+            }
+        >
+            <div className="space-y-6">
+                {/* Filters */}
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    {['All', 'Fertilizer', 'Irrigation', 'Harvest', 'Sensor', 'Rainfall'].map(f => (
+                        <button
+                            key={f}
+                            onClick={() => setFilter(f)}
+                            className={`px-5 py-2 rounded-full text-sm font-semibold transition-all border ${filter === f
+                                ? 'bg-[#2D5016] text-white border-[#2D5016] shadow-md shadow-[#2D5016]/20'
+                                : 'bg-white/50 text-[#8D6E63] border-[#8D6E63]/10 hover:bg-white hover:border-[#8D6E63]/30'
+                                }`}
+                        >
+                            {f}
+                        </button>
+                    ))}
+                </div>
 
-            {/* Filters */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
-                {['All', 'Fertilizer', 'Irrigation', 'Harvest', 'Sensor', 'Rainfall'].map(f => (
-                    <button
-                        key={f}
-                        onClick={() => setFilter(f)}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${filter === f
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-[#1f2937] text-gray-400 hover:text-white hover:bg-[#374151]'
-                            }`}
-                    >
-                        {f}
-                    </button>
-                ))}
-            </div>
-
-            {/* Table */}
-            <div className="praman-card overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className="bg-[#161c2e] text-gray-400 text-xs uppercase tracking-wider">
-                            <tr>
-                                <th className="p-4 font-semibold">Event ID</th>
-                                <th className="p-4 font-semibold">Timestamp</th>
-                                <th className="p-4 font-semibold">Type</th>
-                                <th className="p-4 font-semibold">Details</th>
-                                <th className="p-4 font-semibold">Quantity</th>
-                                <th className="p-4 font-semibold">Status</th>
-                                <th className="p-4 font-semibold text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-800 text-sm text-gray-300">
-                            {filteredEvents.map((e) => (
-                                <tr key={e.id} className="hover:bg-[#161c2e]/50 transition-colors group">
-                                    <td className="p-4 font-mono text-gray-500">#{e.id.slice(-4)}</td>
-                                    <td className="p-4 text-white font-medium">
-                                        {new Date(e.timestamp).toLocaleDateString()}
-                                        <span className="text-gray-500 text-xs ml-2">
-                                            {new Date(e.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </span>
-                                    </td>
-
-                                    <td className="p-4">
-                                        <span className={`px-2 py-1 rounded-md text-xs font-bold uppercase ${e.type === 'Fertilizer' ? 'bg-amber-500/10 text-amber-500' :
-                                            e.type === 'Irrigation' ? 'bg-cyan-500/10 text-cyan-500' :
-                                                e.type === 'Rainfall' ? 'bg-blue-500/10 text-blue-500' :
-                                                    e.type === 'Harvest' ? 'bg-rose-500/10 text-rose-500' :
-                                                        'bg-gray-500/10 text-gray-500'
-                                            }`}>
-                                            {e.type}
-                                        </span>
-                                    </td>
-                                    <td className="p-4">{e.subtype}</td>
-                                    <td className="p-4 font-mono">{e.amount}</td>
-                                    <td className="p-4">
-                                        <div className="flex items-center gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                            {e.status}
-                                        </div>
-                                    </td>
-                                    <td className="p-4 text-right">
-                                        <button className="text-gray-600 hover:text-blue-400 transition-colors">
-                                            <ExternalLink className="w-4 h-4" />
-                                        </button>
-                                    </td>
+                {/* Table Card */}
+                <div className="card overflow-hidden !p-0 border border-[#6D4C41]/5">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead className="bg-[#F5F1E8]/50 border-b border-[#6D4C41]/5">
+                                <tr>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63]">Event ID</th>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63]">Timestamp</th>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63]">Type</th>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63]">Details</th>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63]">Quantity</th>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63]">Status</th>
+                                    <th className="p-5 text-xs font-bold uppercase tracking-wider text-[#8D6E63] text-right">Action</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {loading && (
-                        <div className="flex justify-center p-8 text-gray-500">
-                            <Loader2 className="w-6 h-6 animate-spin mr-2" /> Loading Audit Log...
-                        </div>
-                    )}
-                    {!loading && filteredEvents.length === 0 && (
-                        <div className="text-center p-8 text-gray-500">No events found in history log.</div>
-                    )}
+                            </thead>
+                            <tbody className="divide-y divide-[#6D4C41]/5">
+                                {filteredEvents.map((e) => (
+                                    <tr key={e.id} className="hover:bg-[#7CB342]/5 transition-colors group">
+                                        <td className="p-5 font-mono text-sm text-[#A1887F] font-medium">#{e.id.slice(-4)}</td>
+                                        <td className="p-5 text-sm text-[#2D5016] font-medium">
+                                            {new Date(e.timestamp).toLocaleDateString()}
+                                            <span className="text-[#8D6E63] text-xs ml-2">
+                                                {new Date(e.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </span>
+                                        </td>
 
+                                        <td className="p-5">
+                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide ${e.type === 'Fertilizer' ? 'bg-amber-100 text-amber-700 border border-amber-200' :
+                                                e.type === 'Irrigation' ? 'bg-cyan-100 text-cyan-700 border border-cyan-200' :
+                                                    e.type === 'Rainfall' ? 'bg-blue-100 text-blue-700 border border-blue-200' :
+                                                        e.type === 'Harvest' ? 'bg-rose-100 text-rose-700 border border-rose-200' :
+                                                            'bg-gray-100 text-gray-600 border border-gray-200'
+                                                }`}>
+                                                {e.type}
+                                            </span>
+                                        </td>
+                                        <td className="p-5 text-sm text-[#5D4037]">{e.subtype}</td>
+                                        <td className="p-5 font-mono text-sm text-[#2D5016] font-semibold">{e.amount}</td>
+                                        <td className="p-5">
+                                            <div className="flex items-center gap-2 text-sm font-medium text-emerald-700">
+                                                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                                                {e.status}
+                                            </div>
+                                        </td>
+                                        <td className="p-5 text-right">
+                                            <button className="p-2 text-[#8D6E63] hover:text-[#2D5016] hover:bg-[#2D5016]/10 rounded-lg transition-all">
+                                                <ExternalLink className="w-4 h-4" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {loading && (
+                            <div className="flex justify-center p-12 text-[#8D6E63]">
+                                <Loader2 className="w-6 h-6 animate-spin mr-3 text-[#2D5016]" /> Loading Audit Log...
+                            </div>
+                        )}
+                        {!loading && filteredEvents.length === 0 && (
+                            <div className="text-center p-12 text-[#8D6E63]">No events found in history log.</div>
+                        )}
+
+                    </div>
                 </div>
             </div>
-        </div>
+        </PageLayout>
     );
 };
 

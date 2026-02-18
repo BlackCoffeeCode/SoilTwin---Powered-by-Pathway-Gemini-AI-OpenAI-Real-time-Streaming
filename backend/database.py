@@ -79,6 +79,7 @@ try:
     client = MongoClient(
         MONGODB_URL, 
         tlsCAFile=certifi.where(),
+        tlsAllowInvalidCertificates=True,
         serverSelectionTimeoutMS=5000,
         connectTimeoutMS=5000,
         socketTimeoutMS=5000

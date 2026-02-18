@@ -1,6 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, AreaChart, Area } from 'recharts';
 import { ArrowUpRight, TrendingDown } from 'lucide-react';
-import SoilHealthStats from './SoilHealthStats'; // Fixed duplicate import or missing import
+import SoilHealthStats from './SoilHealthStats';
+import PageLayout from './common/PageLayout';
 
 const TrendsView = () => {
     const data = [
@@ -14,96 +15,108 @@ const TrendsView = () => {
     ];
 
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-end">
-                <div>
-                    <h2 className="text-2xl font-bold text-white">Soil Health Trends</h2>
-                    <p className="text-gray-400 text-sm">7-Day Analysis of nutrient depletion and moisture retention.</p>
+        <PageLayout
+            title="Soil Health Trends"
+            subtitle="7-Day Analysis of nutrient depletion and moisture retention."
+            actions={
+                <div className="bg-white/50 backdrop-blur-sm p-1 rounded-xl border border-[#6D4C41]/10 flex text-xs font-medium shadow-sm">
+                    <button className="px-4 py-1.5 bg-[#2D5016] text-white rounded-lg shadow-md transition-all">Week</button>
+                    <button className="px-4 py-1.5 text-[#6D4C41] hover:bg-[#7CB342]/10 rounded-lg transition-all">Month</button>
+                    <button className="px-4 py-1.5 text-[#6D4C41] hover:bg-[#7CB342]/10 rounded-lg transition-all">Season</button>
                 </div>
-                <div className="bg-[#1f2937] p-1 rounded-lg flex text-xs font-medium">
-                    <button className="px-3 py-1 bg-blue-600 text-white rounded-md shadow">Week</button>
-                    <button className="px-3 py-1 text-gray-400 hover:text-white">Month</button>
-                    <button className="px-3 py-1 text-gray-400 hover:text-white">Season</button>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Nitrogen Chart */}
-                <div className="praman-card p-6">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="font-bold text-gray-200">Nitrogen (N) Levels</h3>
-                        <div className="flex items-center gap-1 text-emerald-400 text-sm font-bold">
-                            <ArrowUpRight className="w-4 h-4" /> +12%
+            }
+        >
+            <div className="space-y-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Nitrogen Chart */}
+                    <div className="card h-[400px] flex flex-col">
+                        <div className="flex justify-between items-center mb-6">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-amber-500/10 rounded-lg">
+                                    <div className="w-3 h-3 bg-amber-500 rounded-full animate-pulse"></div>
+                                </div>
+                                <h3 className="text-xl font-bold text-[#2D5016] font-serif">Nitrogen (N) Levels</h3>
+                            </div>
+                            <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-bold border border-emerald-100">
+                                <ArrowUpRight className="w-4 h-4" /> +12%
+                            </div>
+                        </div>
+                        <div className="flex-1 min-h-0">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={data}>
+                                    <defs>
+                                        <linearGradient id="colorN" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.2} />
+                                            <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                                    <XAxis dataKey="day" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} dy={10} />
+                                    <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} dx={-10} />
+                                    <Tooltip
+                                        contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: '#e5e7eb', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                                        itemStyle={{ color: '#374151' }}
+                                    />
+                                    <Area type="monotone" dataKey="N" stroke="#f59e0b" strokeWidth={3} fillOpacity={1} fill="url(#colorN)" />
+                                </AreaChart>
+                            </ResponsiveContainer>
                         </div>
                     </div>
-                    <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={data}>
-                                <defs>
-                                    <linearGradient id="colorN" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
-                                <XAxis dataKey="day" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '8px' }}
-                                    itemStyle={{ color: '#fff' }}
-                                />
-                                <Area type="monotone" dataKey="N" stroke="#f59e0b" strokeWidth={2} fillOpacity={1} fill="url(#colorN)" />
-                            </AreaChart>
-                        </ResponsiveContainer>
+
+                    {/* Moisture Chart */}
+                    <div className="card h-[400px] flex flex-col">
+                        <div className="flex justify-between items-center mb-6">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-blue-500/10 rounded-lg">
+                                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                                </div>
+                                <h3 className="text-xl font-bold text-[#2D5016] font-serif">Soil Moisture %</h3>
+                            </div>
+                            <div className="flex items-center gap-1 text-red-500 bg-red-50 px-3 py-1 rounded-full text-sm font-bold border border-red-100">
+                                <TrendingDown className="w-4 h-4" /> -5%
+                            </div>
+                        </div>
+                        <div className="flex-1 min-h-0">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={data}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                                    <XAxis dataKey="day" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} dy={10} />
+                                    <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} dx={-10} />
+                                    <Tooltip
+                                        contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', borderColor: '#e5e7eb', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                                        itemStyle={{ color: '#374151' }}
+                                    />
+                                    <Line type="monotone" dataKey="M" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, fill: "#3b82f6", strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
                 </div>
 
-                {/* Moisture Chart */}
-                <div className="praman-card p-6">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="font-bold text-gray-200">Soil Moisture %</h3>
-                        <div className="flex items-center gap-1 text-red-400 text-sm font-bold">
-                            <TrendingDown className="w-4 h-4" /> -5%
-                        </div>
-                    </div>
-                    <div className="h-64">
+                {/* Combined View */}
+                <div className="card p-8">
+                    <h3 className="text-xl font-bold text-[#2D5016] font-serif mb-8">Composite NPK Analysis</h3>
+                    <div className="h-[400px]">
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={data}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
-                                <XAxis dataKey="day" stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} axisLine={false} />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '8px' }}
-                                    itemStyle={{ color: '#fff' }}
-                                />
-                                <Line type="monotone" dataKey="M" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, fill: "#3b82f6" }} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                                <XAxis dataKey="day" stroke="#9ca3af" dy={10} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#9ca3af" dx={-10} tickLine={false} axisLine={false} />
+                                <Tooltip contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', borderRadius: '12px', border: '1px solid #e5e7eb' }} />
+                                <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                                <Line type="monotone" dataKey="N" stroke="#f59e0b" strokeWidth={3} dot={false} />
+                                <Line type="monotone" dataKey="P" stroke="#10b981" strokeWidth={3} dot={false} />
+                                <Line type="monotone" dataKey="K" stroke="#8b5cf6" strokeWidth={3} dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
-            </div>
 
-            {/* Combined View */}
-            <div className="praman-card p-6">
-                <h3 className="font-bold text-gray-200 mb-6">Composite NPK Analysis</h3>
-                <div className="h-80">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={data}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                            <XAxis dataKey="day" stroke="#9ca3af" />
-                            <YAxis stroke="#9ca3af" />
-                            <Tooltip contentStyle={{ backgroundColor: '#111827' }} />
-                            <Legend />
-                            <Line type="monotone" dataKey="N" stroke="#f59e0b" activeDot={{ r: 8 }} />
-                            <Line type="monotone" dataKey="P" stroke="#10b981" />
-                            <Line type="monotone" dataKey="K" stroke="#8b5cf6" />
-                        </LineChart>
-                    </ResponsiveContainer>
+                <div className="pt-4">
+                    <SoilHealthStats />
                 </div>
             </div>
-
-            <SoilHealthStats /> {/* OGD Integration */}
-        </div>
+        </PageLayout>
     );
 };
 

@@ -19,13 +19,8 @@ const ChatBox = () => {
         setError(null);
 
         try {
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-
-            if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            }
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
 
             const response = await fetch('/api/ask', {
                 method: 'POST',
@@ -33,9 +28,7 @@ const ChatBox = () => {
                 body: JSON.stringify({ text: input, language: 'en' })
             });
 
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
             const data = await response.json();
             const aiMessage = {
@@ -46,14 +39,12 @@ const ChatBox = () => {
             setMessages(prev => [...prev, aiMessage]);
         } catch (err) {
             console.error('Chat error:', err);
-            setError('Failed to get response. The AI service may be temporarily unavailable.');
-            // Add fallback response
-            const fallbackMessage = {
+            setError('Failed to get response.');
+            setMessages(prev => [...prev, {
                 role: 'assistant',
-                content: 'I apologize, but I\'m having trouble connecting to the AI service right now. Please try again in a moment.',
+                content: 'I apologize, but I\'m having trouble connecting right now.',
                 isError: true
-            };
-            setMessages(prev => [...prev, fallbackMessage]);
+            }]);
         } finally {
             setLoading(false);
         }
@@ -67,40 +58,49 @@ const ChatBox = () => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-[#FBF8F3]/50 rounded-xl relative overflow-hidden">
-            {/* Thread Background Pattern */}
-            <div className="absolute inset-0 opacity-5 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(#2D5016 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+        <div className="flex flex-col h-full bg-[#fcfbf9] rounded-3xl relative overflow-hidden shadow-sm border border-[#e5e0d8] font-sans">
+            {/* Header Area - Clean & Minimal */}
+            <div className="px-6 py-4 border-b border-[#e5e0d8] bg-[#fcfbf9] flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-[pulse_3s_infinite]"></div>
+                    <h3 className="text-lg font-serif font-bold text-[#1a2e1a] tracking-tight">Field Advisor</h3>
+                </div>
+                <div className="text-[10px] uppercase font-bold text-[#8D6E63] tracking-widest bg-[#f4f1ea] px-2 py-1 rounded-md">
+                    AI Active
+                </div>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 chat-container relative z-10">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 chat-container bg-[#fcfbf9]">
                 {messages.length === 0 && (
-                    <div className="text-center py-12">
-                        <div className="w-16 h-16 bg-gradient-to-br from-[#7CB342] to-[#2D5016] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#7CB342]/20">
-                            <Sparkles className="w-8 h-8 text-white animate-pulse" />
+                    <div className="text-center py-12 opacity-80 mt-8">
+                        <div className="w-16 h-16 bg-[#f4f1ea] rounded-full flex items-center justify-center mx-auto mb-5 border border-[#e5e0d8]">
+                            <Sparkles className="w-6 h-6 text-[#8D6E63]" />
                         </div>
-                        <h3 className="text-xl font-serif text-[#2D5016] mb-2">Soil Health Assistant</h3>
-                        <p className="text-[#6D4C41]/70 text-sm max-w-[200px] mx-auto">
-                            Ask me about nutrient management, crop rotation, or disease prevention.
+                        <h3 className="text-xl font-serif text-[#1a2e1a] mb-2">Hello, Farmer</h3>
+                        <p className="text-[#6D4C41] text-sm max-w-[250px] mx-auto leading-relaxed">
+                            I'm your AI advisor. Ask me about soil nutrients, crop health, or weather patterns.
                         </p>
                     </div>
                 )}
 
                 {messages.map((msg, idx) => (
-                    <div key={idx} className={`chat-message ${msg.role === 'user' ? 'user' : 'ai'} ${msg.isError ? 'border-red-500/50 bg-red-50' : ''} fade-in-up`}>
-                        <div className="flex flex-col">
-                            <span className="text-xs font-semibold mb-1 opacity-70">
-                                {msg.role === 'user' ? 'You' : 'Field Advisor'}
-                            </span>
+                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-[fadeInUp_0.4s_ease-out]`}>
+                        <div className={`
+                            max-w-[85%] px-5 py-3.5 rounded-2xl text-[14px] leading-relaxed shadow-sm
+                            ${msg.role === 'user'
+                                ? 'bg-[#1b3216] text-white rounded-tr-sm'
+                                : 'bg-[#f4f1ea] text-[#1a2e1a] rounded-tl-sm border border-[#e5e0d8]'
+                            }
+                            ${msg.isError ? 'bg-red-50 text-red-800 border-red-100' : ''}
+                        `}>
                             <p className="whitespace-pre-wrap">{msg.content}</p>
-
                             {msg.cost_saving && (
                                 <div className="mt-3 pt-2 border-t border-black/5 flex items-center gap-2">
-                                    <span className="text-xs font-bold text-amber-600 bg-amber-100/50 px-2 py-1 rounded-full border border-amber-200">
-                                        💰 Saving Opportunity
+                                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#1a2e1a]/70">
+                                        Tip:
                                     </span>
-                                    <span className="text-sm font-medium text-[#2D5016]">
+                                    <span className="text-xs font-bold text-[#2D5016] bg-white/50 px-2 py-0.5 rounded-md">
                                         {msg.cost_saving}
                                     </span>
                                 </div>
@@ -110,61 +110,57 @@ const ChatBox = () => {
                 ))}
 
                 {loading && (
-                    <div className="chat-message ai fade-in-up w-fit">
-                        <div className="flex items-center gap-2">
-                            <div className="flex gap-1.5 py-1">
-                                <span className="w-2 h-2 bg-[#7CB342] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                                <span className="w-2 h-2 bg-[#7CB342] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                                <span className="w-2 h-2 bg-[#7CB342] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                    <div className="flex justify-start animate-[fadeInUp_0.4s_ease-out]">
+                        <div className="bg-[#f4f1ea] px-5 py-4 rounded-2xl rounded-tl-sm border border-[#e5e0d8] flex gap-2 items-center shadow-sm">
+                            <div className="flex gap-1.5">
+                                <span className="w-1.5 h-1.5 bg-[#8D6E63] rounded-full animate-bounce"></span>
+                                <span className="w-1.5 h-1.5 bg-[#8D6E63] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                                <span className="w-1.5 h-1.5 bg-[#8D6E63] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                             </div>
-                            <span className="text-xs text-[#6D4C41]/60">Analyzing soil data...</span>
                         </div>
                     </div>
                 )}
-
-                {/* Scroll anchor */}
-                <div id="end-of-chat"></div>
             </div>
 
             {/* Error Alert */}
             {error && (
-                <div className="mx-4 mb-2 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 shadow-sm">
-                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-red-700">{error}</p>
+                <div className="mx-6 mb-2 p-3 bg-red-50 border border-red-100 rounded-xl flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-red-500" />
+                    <span className="text-xs text-red-700 font-medium">{error}</span>
                 </div>
             )}
 
-            {/* Input Area */}
-            <div className="p-4 bg-white/60 backdrop-blur-md border-t border-[#6D4C41]/10">
-                <div className="flex gap-2 relative">
+            {/* Input Area - Modern Pill Shape */}
+            <div className="p-5 bg-[#fcfbf9] border-t border-[#e5e0d8]">
+                <div className="relative flex items-center group">
                     <input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder="Ask about NPK levels, irrigation..."
-                        className="flex-1 bg-white border border-[#6D4C41]/20 rounded-xl px-4 py-3 
-                                 text-[#2D5016] placeholder-[#6D4C41]/40 
-                                 focus:border-[#7CB342] focus:ring-2 focus:ring-[#7CB342]/20 
-                                 outline-none transition-all shadow-inner"
+                        placeholder="Ask about your field..."
+                        className="w-full bg-white border border-[#e5e0d8] rounded-full pl-6 pr-14 py-4
+                                 text-[#1a2e1a] placeholder-[#8D6E63]/40 
+                                 focus:border-[#1b3216] focus:ring-1 focus:ring-[#1b3216]/10
+                                 outline-none transition-all shadow-sm font-medium text-sm
+                                 group-hover:border-[#d0c8bc]"
                         disabled={loading}
                     />
                     <button
                         onClick={handleSend}
                         disabled={loading || !input.trim()}
-                        className="p-3 bg-gradient-to-br from-[#2D5016] to-[#7CB342] 
-                                 text-white rounded-xl shadow-lg shadow-[#7CB342]/30 
-                                 hover:shadow-[#7CB342]/50 hover:scale-105 active:scale-95 
-                                 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none 
-                                 transition-all duration-200"
+                        className="absolute right-2 p-2.5 bg-[#1b3216] text-white rounded-full 
+                                 hover:bg-[#2D5016] hover:scale-105 active:scale-95 
+                                 disabled:opacity-50 disabled:cursor-not-allowed
+                                 transition-all duration-200 shadow-md flex items-center justify-center"
                     >
-                        <Send className="w-5 h-5" />
+                        <Send className="w-4 h-4 ml-0.5" />
                     </button>
                 </div>
-                <div className="text-center mt-2">
-                    <span className="text-[10px] text-[#6D4C41]/40 font-medium tracking-wide uppercase">
-                        Powered by OpenAI • Pathway RAG Engine
-                    </span>
+                <div className="text-center mt-3">
+                    <p className="text-[10px] text-[#8D6E63]/40 font-medium tracking-wide">
+                        Powered by Pathway RAG Engine
+                    </p>
                 </div>
             </div>
         </div>

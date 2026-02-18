@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, MapPin, Sprout, Activity, Save, Upload } from 'lucide-react';
+import PageLayout from './common/PageLayout';
 
 const ProfileSetup = () => {
     const navigate = useNavigate();
@@ -59,154 +60,161 @@ const ProfileSetup = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 fade-in-up">
-            <header>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    Farmer Profile & Soil Data
-                </h1>
-                <p className="text-slate-400 mt-2">Initialize your Digital Twin with accurate ground truth.</p>
-            </header>
+        <PageLayout
+            title="Digital Twin Setup"
+            subtitle="Initialize your farm's virtual clone with precision data for accurate AI simulations."
+        >
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Personal Details Card */}
-                <div className="card p-6 space-y-6">
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="p-3 rounded-lg bg-emerald-500/10">
-                            <User className="w-6 h-6 text-emerald-400" />
+                {/* Left Column: Farmer Details */}
+                <div className="lg:col-span-5 space-y-6">
+                    <div className="card p-8 border-[#2D5016]/10 relative group bg-white/60">
+                        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <User className="w-24 h-24 text-[#2D5016]" />
                         </div>
-                        <h3 className="text-xl font-semibold text-white">Farmer Details</h3>
-                    </div>
 
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm text-slate-400 mb-1">Full Name</label>
-                            <input
-                                type="text" name="name" required
-                                value={formData.name} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-4 py-2 text-white focus:border-emerald-500/50 outline-none"
-                                placeholder="e.g. Rajesh Kumar"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-slate-400 mb-1">Location (District/State)</label>
-                            <div className="relative">
-                                <MapPin className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
-                                <input
-                                    type="text" name="location" required
-                                    value={formData.location} onChange={handleChange}
-                                    className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg pl-10 pr-4 py-2 text-white focus:border-emerald-500/50 outline-none"
-                                    placeholder="e.g. Karnal, Haryana"
-                                />
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm text-slate-400 mb-1">Land Size (Acres)</label>
-                                <input
-                                    type="number" name="land_size" required step="0.1"
-                                    value={formData.land_size} onChange={handleChange}
-                                    className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-4 py-2 text-white focus:border-emerald-500/50 outline-none"
-                                    placeholder="2.5"
-                                />
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="p-3.5 rounded-2xl bg-[#2D5016]/5 border border-[#2D5016]/10">
+                                <User className="w-6 h-6 text-[#2D5016]" />
                             </div>
                             <div>
-                                <label className="block text-sm text-slate-400 mb-1">Main Crop</label>
+                                <h3 className="text-xl font-serif text-[#2D5016] font-bold">Farmer Profile</h3>
+                                <p className="text-sm text-[#8D6E63] font-medium">Personal & Field Identity</p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-6">
+                            <div className="group/input">
+                                <label className="block text-xs font-bold uppercase tracking-wider text-[#8D6E63] mb-2 group-focus-within/input:text-[#2D5016] transition-colors">Full Name</label>
+                                <input
+                                    type="text" name="name" required
+                                    value={formData.name} onChange={handleChange}
+                                    className="w-full bg-[#F5F1E8]/50 border-2 border-transparent focus:bg-white focus:border-[#7CB342]/50 rounded-xl px-4 py-3.5 text-[#2D5016] placeholder-[#A1887F]/50 outline-none transition-all duration-300 font-medium"
+                                    placeholder="e.g. Rajesh Kumar"
+                                />
+                            </div>
+
+                            <div className="group/input">
+                                <label className="block text-xs font-bold uppercase tracking-wider text-[#8D6E63] mb-2 group-focus-within/input:text-[#2D5016] transition-colors">Location</label>
                                 <div className="relative">
-                                    <Sprout className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
-                                    <select
-                                        name="crop"
-                                        value={formData.crop} onChange={handleChange}
-                                        className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg pl-10 pr-4 py-2 text-white focus:border-emerald-500/50 outline-none appearance-none"
-                                    >
-                                        <option value="Wheat">Wheat</option>
-                                        <option value="Rice">Rice</option>
-                                        <option value="Maize">Maize</option>
-                                        <option value="Cotton">Cotton</option>
-                                    </select>
+                                    <MapPin className="absolute left-4 top-3.5 w-5 h-5 text-[#8D6E63]/50" />
+                                    <input
+                                        type="text" name="location" required
+                                        value={formData.location} onChange={handleChange}
+                                        className="w-full bg-[#F5F1E8]/50 border-2 border-transparent focus:bg-white focus:border-[#7CB342]/50 rounded-xl pl-12 pr-4 py-3.5 text-[#2D5016] placeholder-[#A1887F]/50 outline-none transition-all duration-300 font-medium"
+                                        placeholder="District, State"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-5">
+                                <div className="group/input">
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#8D6E63] mb-2 group-focus-within/input:text-[#2D5016] transition-colors">Acres</label>
+                                    <input
+                                        type="number" name="land_size" required step="0.1"
+                                        value={formData.land_size} onChange={handleChange}
+                                        className="w-full bg-[#F5F1E8]/50 border-2 border-transparent focus:bg-white focus:border-[#7CB342]/50 rounded-xl px-4 py-3.5 text-[#2D5016] placeholder-[#A1887F]/50 outline-none transition-all duration-300 font-medium font-mono text-lg"
+                                        placeholder="0.0"
+                                    />
+                                </div>
+                                <div className="group/input">
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#8D6E63] mb-2 group-focus-within/input:text-[#2D5016] transition-colors">Crop</label>
+                                    <div className="relative">
+                                        <Sprout className="absolute left-3.5 top-3.5 w-5 h-5 text-[#8D6E63]/50 pointer-events-none" />
+                                        <select
+                                            name="crop"
+                                            value={formData.crop} onChange={handleChange}
+                                            className="w-full bg-[#F5F1E8]/50 border-2 border-transparent focus:bg-white focus:border-[#7CB342]/50 rounded-xl pl-10 pr-4 py-3.5 text-[#2D5016] outline-none appearance-none cursor-pointer transition-all duration-300 font-medium hover:bg-[#F5F1E8]"
+                                        >
+                                            <option value="Wheat">Wheat 🌾</option>
+                                            <option value="Rice">Rice 🍚</option>
+                                            <option value="Maize">Maize 🌽</option>
+                                            <option value="Cotton">Cotton ☁️</option>
+                                        </select>
+                                        <div className="absolute right-4 top-4 text-[#8D6E63]/50 pointer-events-none text-xs">▼</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    {/* Decoration Card */}
+                    <div className="bg-gradient-to-br from-[#2D5016] to-[#1a330d] rounded-2xl p-6 text-white text-center relative overflow-hidden group shadow-lg">
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <div className="relative z-10">
+                            <h4 className="font-serif text-lg mb-1 opacity-90">Ready to simulate?</h4>
+                            <p className="text-xs text-white/60 mb-4">Set accurate baselines for best AI results.</p>
+                            <div className="h-1 w-16 bg-[#7CB342] mx-auto rounded-full group-hover:w-24 transition-all duration-500"></div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Soil Data Card */}
-                <div className="card p-6 space-y-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                            <div className="p-3 rounded-lg bg-cyan-500/10">
-                                <Activity className="w-6 h-6 text-cyan-400" />
+                {/* Right Column: Soil Data */}
+                <div className="lg:col-span-7">
+                    <div className="card p-8 border-[#2D5016]/10 relative bg-white/70">
+                        <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3.5 rounded-2xl bg-[#7CB342]/10 border border-[#7CB342]/20">
+                                    <Activity className="w-6 h-6 text-[#7CB342]" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-serif text-[#2D5016] font-bold">Initial Soil Report</h3>
+                                    <p className="text-sm text-[#8D6E63] font-medium">Baseline Chemical Composition</p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-semibold text-white">Initial Soil Data</h3>
+                            <button type="button" className="text-xs font-bold text-[#7CB342] bg-[#7CB342]/5 hover:bg-[#7CB342]/10 px-4 py-2 rounded-lg border border-[#7CB342]/20 transition-all flex items-center gap-2 group">
+                                <Upload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                Upload Lab Report
+                            </button>
                         </div>
-                        <button type="button" className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
-                            <Upload className="w-3 h-3" /> Upload Report
-                        </button>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-xs text-slate-500 mb-1">Nitrogen (N) - kg/ha</label>
-                            <input
-                                type="number" name="nitrogen" required
-                                value={formData.nitrogen} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-right font-mono focus:border-cyan-500/50 outline-none"
-                            />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+                            {[
+                                { label: "Nitrogen (N)", name: "nitrogen", unit: "kg/ha", color: "emerald" },
+                                { label: "Phosphorus (P)", name: "phosphorus", unit: "kg/ha", color: "orange" },
+                                { label: "Potassium (K)", name: "potassium", unit: "kg/ha", color: "red" },
+                                { label: "Moisture", name: "moisture", unit: "%", step: "0.1", color: "blue" },
+                                { label: "pH Level", name: "ph", unit: "scale", step: "0.1", color: "purple" },
+                                { label: "Org. Carbon", name: "organic_carbon", unit: "%", step: "0.01", color: "stone" }
+                            ].map((field) => (
+                                <div key={field.name} className="bg-[#Fdfbf7] rounded-2xl p-4 border border-[#F5F1E8] hover:border-[#D4A574]/30 hover:shadow-lg hover:shadow-[#D4A574]/5 transition-all duration-300 group">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <label className="text-[11px] font-bold uppercase tracking-wider text-[#8D6E63]">{field.label}</label>
+                                        <span className="text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#F5F1E8] text-[#8D6E63]/60 font-medium">
+                                            {field.unit}
+                                        </span>
+                                    </div>
+                                    <div className="relative">
+                                        <input
+                                            type="number"
+                                            name={field.name}
+                                            step={field.step || "1"}
+                                            required
+                                            value={formData[field.name]}
+                                            onChange={handleChange}
+                                            className="w-full bg-transparent text-2xl font-serif font-medium text-[#2D5016] placeholder-[#A1887F]/30 outline-none border-b-2 border-transparent focus:border-[#7CB342] transition-colors py-1 pl-1"
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <div>
-                            <label className="block text-xs text-slate-500 mb-1">Phosphorus (P) - kg/ha</label>
-                            <input
-                                type="number" name="phosphorus" required
-                                value={formData.phosphorus} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-right font-mono focus:border-cyan-500/50 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs text-slate-500 mb-1">Potassium (K) - kg/ha</label>
-                            <input
-                                type="number" name="potassium" required
-                                value={formData.potassium} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-right font-mono focus:border-cyan-500/50 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs text-slate-500 mb-1">Moisture (%)</label>
-                            <input
-                                type="number" name="moisture" required step="0.1"
-                                value={formData.moisture} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-right font-mono focus:border-cyan-500/50 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs text-slate-500 mb-1">pH Level</label>
-                            <input
-                                type="number" name="ph" required step="0.1"
-                                value={formData.ph} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-right font-mono focus:border-cyan-500/50 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs text-slate-500 mb-1">Organic Carbon (%)</label>
-                            <input
-                                type="number" name="organic_carbon" required step="0.01"
-                                value={formData.organic_carbon} onChange={handleChange}
-                                className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-right font-mono focus:border-cyan-500/50 outline-none"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="pt-4">
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                        >
-                            <Save className="w-5 h-5" />
-                            {loading ? 'Initializing Twin...' : 'Create Digital Twin'}
-                        </button>
+                        <div className="flex items-center justify-end border-t border-[#F5F1E8] pt-8">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full sm:w-auto py-4 px-10 rounded-2xl bg-gradient-to-r from-[#2D5016] via-[#3E6B1E] to-[#7CB342] text-white font-bold text-lg shadow-xl shadow-[#2D5016]/20 hover:shadow-2xl hover:shadow-[#2D5016]/30 hover:-translate-y-1 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group relative overflow-hidden"
+                            >
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 rounded-2xl"></div>
+                                <Save className="w-5 h-5 relative z-10" />
+                                <span className="relative z-10">{loading ? 'Initializing Twin...' : 'Create Digital Twin'}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
-        </div>
+        </PageLayout>
     );
 };
 
