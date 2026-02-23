@@ -1,6 +1,14 @@
 fastapi
 uvicorn
-pathway
-google-generativeai
+python-multipart
 python-dotenv
+openai
 requests
+pathway
+pandas
+slowapi
+python-jose[cryptography]
+pymongo
+certifi
+bcrypt
+email-validator

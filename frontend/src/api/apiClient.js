@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'http://65.0.103.189:8000/api';
 
 // Helper to get auth token
 const getAuthHeaders = () => {

@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+      - "8765:8765"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - soiltwin-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        - VITE_API_URL=http://65.0.103.189:8000   # Replace later
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - soiltwin-network
+
+networks:
+  soiltwin-network:
+    driver: bridge
