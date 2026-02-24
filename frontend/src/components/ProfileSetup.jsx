@@ -7,6 +7,11 @@ const ProfileSetup = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
+    // New state for file upload
+    const [uploadFile, setUploadFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadMessage, setUploadMessage] = useState('');
+
     const [formData, setFormData] = useState({
         name: '',
         location: '',
@@ -23,6 +28,49 @@ const ProfileSetup = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    // New file selection handler
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setUploadFile(file);
+            uploadFileToS3(file);
+        }
+    };
+
+    // New S3 upload function
+    const uploadFileToS3 = async (file) => {
+        setUploading(true);
+        setUploadMessage('');
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const token = localStorage.getItem('soiltwin_token');
+        const baseURL = import.meta.env.VITE_API_URL || 'https://d2bebk7g4ys5zv.cloudfront.net';
+
+        try {
+            const response = await fetch(`${baseURL}/api/upload-soil-report`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setUploadMessage('✅ Upload successful! File saved to cloud.');
+                setUploadFile(null); // clear selected file after success
+            } else {
+                setUploadMessage(`❌ Upload failed: ${data.detail || 'Unknown error'}`);
+            }
+        } catch (error) {
+            setUploadMessage(`❌ Upload error: ${error.message}`);
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -162,10 +210,35 @@ const ProfileSetup = () => {
                                     <p className="text-sm text-[#8D6E63] font-medium">Baseline Chemical Composition</p>
                                 </div>
                             </div>
-                            <button type="button" className="text-xs font-bold text-[#7CB342] bg-[#7CB342]/5 hover:bg-[#7CB342]/10 px-4 py-2 rounded-lg border border-[#7CB342]/20 transition-all flex items-center gap-2 group">
-                                <Upload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                                Upload Lab Report
-                            </button>
+                            {/* Modified upload button section */}
+                            <div className="flex flex-col items-end">
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="file"
+                                        accept=".pdf,.jpg,.jpeg,.png"
+                                        onChange={handleFileChange}
+                                        style={{ display: 'none' }}
+                                        id="file-upload"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => document.getElementById('file-upload').click()}
+                                        disabled={uploading}
+                                        className="text-xs font-bold text-[#7CB342] bg-[#7CB342]/5 hover:bg-[#7CB342]/10 px-4 py-2 rounded-lg border border-[#7CB342]/20 transition-all flex items-center gap-2 group"
+                                    >
+                                        <Upload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                        {uploading ? 'Uploading...' : 'Upload Lab Report'}
+                                    </button>
+                                    {uploadFile && !uploading && (
+                                        <span className="text-xs text-[#8D6E63]">Selected: {uploadFile.name}</span>
+                                    )}
+                                </div>
+                                {uploadMessage && (
+                                    <div className={`text-xs mt-1 ${uploadMessage.includes('✅') ? 'text-green-600' : 'text-red-600'}`}>
+                                        {uploadMessage}
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">

@@ -12,3 +12,4 @@ pymongo
 certifi
 bcrypt
 email-validator
+boto3

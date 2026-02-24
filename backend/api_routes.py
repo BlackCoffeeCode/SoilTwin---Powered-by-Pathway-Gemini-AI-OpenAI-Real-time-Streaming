@@ -7,6 +7,10 @@
     from slowapi.util import get_remote_address
     import json
     import os
+    import boto3
+    import uuid
+    from botocore.exceptions import NoCredentialsError
+    from fastapi import File, UploadFile, Form
 
     # Local imports
     from .simulation_engine import process_event
@@ -28,6 +32,11 @@
 
     # Output file for Pathway state
     OUTPUT_FILE = "./data/current_state.csv"
+
+    # S3 Configuration for soil report uploads
+    S3_BUCKET = "soiltwin-uploads"        # Replace with your actual bucket name
+    S3_REGION = "ap-south-1"              # Replace with your bucket's region
+    s3_client = boto3.client('s3', region_name=S3_REGION)
 
     # Pydantic Models
     class Event(BaseModel):
@@ -339,6 +348,58 @@
                 data["location"] = "Ludhiana,IN"
                 data["name"] = "Suresh Singh"
             return {"status": "Found", "data": data}
+        
+
+        @router.post("/upload-soil-report")
+async def upload_soil_report(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_active_user)
+):
+    """
+    Upload a soil report file to S3 and store its metadata in MongoDB.
+    Allowed file types: PDF, JPEG, PNG.
+    """
+    # Allowed MIME types
+    allowed_types = ["application/pdf", "image/jpeg", "image/png"]
+    if file.content_type not in allowed_types:
+        raise HTTPException(status_code=400, detail="Only PDF, JPEG, or PNG files are allowed")
+
+    # Generate a unique filename
+    file_extension = file.filename.split('.')[-1]
+    unique_id = str(uuid.uuid4())
+    s3_key = f"soil-reports/{current_user['username']}/{unique_id}.{file_extension}"
+
+    try:
+        # Upload to S3
+        s3_client.upload_fileobj(
+            file.file,
+            S3_BUCKET,
+            s3_key,
+            ExtraArgs={"ContentType": file.content_type}
+        )
+
+        # Construct the file URL (public-read if bucket allows)
+        file_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{s3_key}"
+
+        # Save record to MongoDB
+        from .crud.soil_report_crud import create_soil_report
+        report = create_soil_report(
+            user_id=current_user["_id"],
+            filename=file.filename,
+            s3_url=file_url,
+            uploaded_at=datetime.utcnow()
+        )
+
+        return {
+            "message": "File uploaded successfully",
+            "file_url": file_url,
+            "report_id": str(report.inserted_id)
+        }
+
+    except NoCredentialsError:
+        raise HTTPException(status_code=500, detail="AWS credentials not configured on server")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
     @router.get("/soil-state")
     def get_soil_state(current_user: str = Depends(get_current_user)):
