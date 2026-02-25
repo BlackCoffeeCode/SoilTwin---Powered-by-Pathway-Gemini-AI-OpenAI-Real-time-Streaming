@@ -1,11 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, MapPin, Sprout, Activity, Save, Upload } from 'lucide-react';
+import { User, MapPin, Sprout, Activity, Save, Upload, CheckCircle2, AlertCircle, X } from 'lucide-react';
 import PageLayout from './common/PageLayout';
 
 const ProfileSetup = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [uploadStatus, setUploadStatus] = useState(null); // { type: 'success'|'error', msg: string }
+    const fileInputRef = useRef(null);
+
+    // Parse an uploaded CSV or JSON lab report and auto-fill form fields
+    const parseLabReport = (file) => {
+        if (!file) return;
+        const ext = file.name.split('.').pop().toLowerCase();
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            try {
+                let values = {};
+
+                if (ext === 'csv') {
+                    // Expect header row: uid,location,nitrogen,phosphorus,potassium,ph,organic_carbon,moisture,...
+                    const lines = e.target.result.trim().split('\n');
+                    if (lines.length < 2) throw new Error('CSV must have a header row and at least one data row.');
+                    const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                    const data = lines[1].split(',').map(v => v.trim());
+                    headers.forEach((h, i) => { values[h] = data[i]; });
+
+                } else if (ext === 'json') {
+                    const parsed = JSON.parse(e.target.result);
+                    // Accept top-level object or first element of array
+                    values = Array.isArray(parsed) ? parsed[0] : parsed;
+
+                } else {
+                    throw new Error('Unsupported file type. Please upload a CSV or JSON file.');
+                }
+
+                // Map parsed keys → form field names (case-insensitive + aliases)
+                const map = {
+                    nitrogen: ['nitrogen', 'n', 'n_kgha'],
+                    phosphorus: ['phosphorus', 'p', 'p_kgha'],
+                    potassium: ['potassium', 'k', 'k_kgha'],
+                    moisture: ['moisture', 'soil_moisture', 'soil_moisture_pct'],
+                    ph: ['ph', 'soil_ph'],
+                    organic_carbon: ['organic_carbon', 'oc', 'org_carbon'],
+                    location: ['location', 'district', 'region'],
+                    name: ['name', 'farmer', 'farmer_name', 'uid'],
+                };
+
+                const updated = {};
+                Object.entries(map).forEach(([field, aliases]) => {
+                    for (const alias of aliases) {
+                        const key = Object.keys(values).find(k => k.toLowerCase() === alias);
+                        if (key !== undefined && values[key] !== undefined && values[key] !== '') {
+                            updated[field] = values[key];
+                            break;
+                        }
+                    }
+                });
+
+                if (Object.keys(updated).length === 0) throw new Error('No recognisable soil fields found in the file.');
+
+                setFormData(prev => ({ ...prev, ...updated }));
+                setUploadStatus({ type: 'success', msg: `✅ Parsed "${file.name}" — ${Object.keys(updated).join(', ')} auto-filled.` });
+
+            } catch (err) {
+                setUploadStatus({ type: 'error', msg: `❌ ${err.message}` });
+            }
+        };
+
+        reader.onerror = () => setUploadStatus({ type: 'error', msg: '❌ Failed to read file.' });
+        reader.readAsText(file);
+    };
 
     // New state for file upload
     const [uploadFile, setUploadFile] = useState(null);
@@ -200,7 +266,16 @@ const ProfileSetup = () => {
                 {/* Right Column: Soil Data */}
                 <div className="lg:col-span-7">
                     <div className="card p-8 border-[#2D5016]/10 relative bg-white/70">
-                        <div className="flex items-center justify-between mb-8">
+                        {/* Hidden file input */}
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept=".csv,.json"
+                            style={{ display: 'none' }}
+                            onChange={(e) => { parseLabReport(e.target.files[0]); e.target.value = ''; }}
+                        />
+
+                        <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-4">
                                 <div className="p-3.5 rounded-2xl bg-[#7CB342]/10 border border-[#7CB342]/20">
                                     <Activity className="w-6 h-6 text-[#7CB342]" />
@@ -210,36 +285,73 @@ const ProfileSetup = () => {
                                     <p className="text-sm text-[#8D6E63] font-medium">Baseline Chemical Composition</p>
                                 </div>
                             </div>
-                            {/* Modified upload button section */}
-                            <div className="flex flex-col items-end">
+                            <div className="flex flex-col items-end gap-3">
+                                {/* Auto-fill Button (Local Parsing) */}
                                 <div className="flex items-center gap-2">
-                                    <input
-                                        type="file"
-                                        accept=".pdf,.jpg,.jpeg,.png"
-                                        onChange={handleFileChange}
-                                        style={{ display: 'none' }}
-                                        id="file-upload"
-                                    />
                                     <button
                                         type="button"
-                                        onClick={() => document.getElementById('file-upload').click()}
-                                        disabled={uploading}
+                                        onClick={() => { setUploadStatus(null); fileInputRef.current?.click(); }}
                                         className="text-xs font-bold text-[#7CB342] bg-[#7CB342]/5 hover:bg-[#7CB342]/10 px-4 py-2 rounded-lg border border-[#7CB342]/20 transition-all flex items-center gap-2 group"
+                                        title="Auto-fill form from CSV or JSON report"
                                     >
-                                        <Upload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                                        {uploading ? 'Uploading...' : 'Upload Lab Report'}
+                                        <Activity className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                        Auto-fill from Data
                                     </button>
-                                    {uploadFile && !uploading && (
-                                        <span className="text-xs text-[#8D6E63]">Selected: {uploadFile.name}</span>
+                                </div>
+
+                                {/* Cloud Upload Button (S3) */}
+                                <div className="flex flex-col items-end">
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="file"
+                                            accept=".pdf,.jpg,.jpeg,.png,.csv,.json"
+                                            onChange={handleFileChange}
+                                            style={{ display: 'none' }}
+                                            id="file-upload-s3"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => document.getElementById('file-upload-s3').click()}
+                                            disabled={uploading}
+                                            className="text-xs font-bold text-[#8D6E63] bg-[#8D6E63]/5 hover:bg-[#8D6E63]/10 px-4 py-2 rounded-lg border border-[#8D6E63]/20 transition-all flex items-center gap-2 group"
+                                            title="Upload report file to cloud storage"
+                                        >
+                                            <Upload className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                            {uploading ? 'Uploading...' : 'Upload to Cloud'}
+                                        </button>
+                                        {uploadFile && !uploading && (
+                                            <span className="text-xs text-[#8D6E63]">Selected: {uploadFile.name}</span>
+                                        )}
+                                    </div>
+                                    {uploadMessage && (
+                                        <div className={`text-[10px] mt-1 ${uploadMessage.includes('✅') ? 'text-green-600' : 'text-red-600'}`}>
+                                            {uploadMessage}
+                                        </div>
                                     )}
                                 </div>
-                                {uploadMessage && (
-                                    <div className={`text-xs mt-1 ${uploadMessage.includes('✅') ? 'text-green-600' : 'text-red-600'}`}>
-                                        {uploadMessage}
-                                    </div>
-                                )}
                             </div>
                         </div>
+
+                        {/* Upload status toast */}
+                        {uploadStatus && (
+                            <div className={`flex items-start gap-3 p-3.5 rounded-xl mb-5 text-sm font-medium border ${uploadStatus.type === 'success'
+                                ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                                : 'bg-red-50 border-red-200 text-red-800'
+                                }`}>
+                                {uploadStatus.type === 'success'
+                                    ? <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0 text-emerald-500" />
+                                    : <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-500" />}
+                                <span className="flex-1">{uploadStatus.msg}</span>
+                                <button type="button" onClick={() => setUploadStatus(null)} className="ml-auto text-current opacity-50 hover:opacity-100">
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Accepted format hint */}
+                        <p className="text-xs text-[#8D6E63] mb-4">
+                            📎 Supports <strong>CSV</strong> (columns: nitrogen, phosphorus, potassium, ph, organic_carbon, moisture, location) or <strong>JSON</strong>. Fields will be auto-filled below.
+                        </p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
                             {[

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -32,25 +32,171 @@
   --shadow-soft: rgba(45, 80, 22, 0.08);
 }
 
+/* ==========================================
+   📐 GLOBAL TYPOGRAPHY SYSTEM
+   Modular scale · Living Earth palette
+   ========================================== */
+
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #F5F1E8 0%, #EDE7DD 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  line-height: 1.78;
+  color: #4a5e50;
+  background: linear-gradient(160deg, #eef5ee 0%, #dfe8e2 50%, #e8f0e4 100%);
   background-attachment: fixed;
-  color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Typography */
+/* ── Headings ── */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: 'Libre Baskerville', serif;
-  color: var(--forest-green);
+  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  color: #0f2e1c;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.8rem, 6vw, 4.25rem);
+  letter-spacing: -1px;
+  line-height: 1.06;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.6px;
+  line-height: 1.12;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  letter-spacing: -0.3px;
+  line-height: 1.22;
+}
+
+h4 {
+  font-size: 1.4rem;
+  letter-spacing: 0;
+  font-weight: 600;
+  color: #1a3d26;
+}
+
+/* ── Body text ── */
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  line-height: 1.82;
+  color: #4a5e50;
+  font-size: 1.1rem;
+  max-width: 72ch;
+}
+
+/* ── Strong / emphasis ── */
+strong,
+b {
+  font-weight: 700;
+  color: #1a3d26;
+}
+
+em,
+i {
+  font-style: italic;
+  color: #5a6e5a;
+}
+
+/* ── Links ── */
+a {
+  color: #2D5016;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s ease, opacity 0.18s ease;
+}
+
+a:hover {
+  color: #4f9d44;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Small text / captions ── */
+small,
+.text-xs,
+[class*="text-xs"] {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* ── Uppercase labels / section tags ── */
+.label-upper {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8D6E63;
+}
+
+/* ── Blockquote / callout ── */
+blockquote {
+  border-left: 3px solid #4f9d44;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  background: rgba(79, 157, 68, 0.05);
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+  color: #2D5016;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* ── Monospace / code ── */
+code,
+pre,
+.font-mono,
+[class*="font-mono"] {
+  font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.88em;
+  letter-spacing: -0.2px;
+}
+
+/* ── Nav link text ── */
+.nav-link-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ── Subtitle / lead paragraph ── */
+.lead {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: #4f6f5c;
+  font-weight: 400;
+  max-width: 68ch;
+}
+
+/* ── Section headings with decorative line ── */
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4f9d44;
+  margin-bottom: 8px;
+  display: block;
 }
 
 /* Custom Scrollbar - Natural Theme */
@@ -72,22 +218,149 @@ h6 {
   background: rgba(124, 179, 66, 0.6);
 }
 
-/* 🌿 Organic Card Design */
-.card {
-  background: var(--bg-card);
+/* ==========================================
+   🌿 GLOBAL INPUT / TEXTAREA / SELECT STYLES
+   Matches the Home & Navbar design language
+   ========================================== */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]),
+textarea,
+select {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a2e1a;
+  background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1.5px solid var(--border-natural);
+  border: 1.5px solid rgba(45, 80, 22, 0.18);
+  border-radius: 12px;
+  padding: 11px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.15s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]):hover,
+textarea:hover,
+select:hover {
+  border-color: rgba(45, 80, 22, 0.32);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]):focus,
+textarea:focus,
+select:focus {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #2D5016;
+  box-shadow:
+    0 0 0 3px rgba(45, 80, 22, 0.12),
+    0 0 0 1px rgba(45, 80, 22, 0.20),
+    0 4px 16px rgba(45, 80, 22, 0.08);
+  transform: translateY(-1px);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(109, 76, 65, 0.42);
+  font-weight: 400;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: rgba(245, 241, 232, 0.6);
+  border-color: rgba(45, 80, 22, 0.10);
+  color: rgba(109, 76, 65, 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Textarea specific */
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.65;
+}
+
+/* Select arrow */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232D5016' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Label enhancement — works with sibling input focus */
+label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5D4037;
+  margin-bottom: 6px;
+  transition: color 0.18s ease;
+}
+
+/* Focus-within label highlight */
+.form-group:focus-within label,
+div:focus-within>label {
+  color: #2D5016;
+}
+
+/* Input group with icon — ensure icon doesn't overlap */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-left: 42px;
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgba(109, 76, 65, 0.45);
+  transition: color 0.18s ease;
+}
+
+.input-with-icon:focus-within .input-icon {
+  color: #2D5016;
+}
+
+/* 🌿 Organic Card Design - Glassmorphism */
+.card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(45, 80, 22, 0.09);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 4px 20px var(--shadow-soft);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 2px 8px rgba(45, 80, 22, 0.05),
+    0 8px 28px rgba(45, 80, 22, 0.07);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(45, 80, 22, 0.15);
-  border-color: rgba(124, 179, 66, 0.3);
+  box-shadow:
+    0 4px 16px rgba(45, 80, 22, 0.08),
+    0 16px 40px rgba(45, 80, 22, 0.12);
+  border-color: rgba(124, 179, 66, 0.25);
+  background: rgba(255, 255, 255, 0.88);
 }
 
 /* 🌲 Sidebar - Forest Green */

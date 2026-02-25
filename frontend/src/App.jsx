@@ -17,6 +17,10 @@ import HistoryView from './components/HistoryView';
 import TrendsView from './components/TrendsView';
 import NutrientPlan from './components/NutrientPlan';
 import ActionLog from './components/ActionLog'; // New
+import SoilHealthPage from './components/SoilHealthPage';
+import LiveEventsPage from './components/LiveEventsPage';
+import AdvisoryChatPage from './components/AdvisoryChatPage';
+import SimulationPage from './components/SimulationPage';
 import { getSoilState } from './api/apiClient';
 import { Target } from 'lucide-react';
 
@@ -109,6 +113,24 @@ function AppContent() {
                             <div className="card min-h-[600px]"><FieldMap /></div>
                         </ProtectedRoute>
                     } />
+
+                    {/* Nav routes */}
+                    <Route path="/soil-health" element={
+                        <ProtectedRoute><SoilHealthPage /></ProtectedRoute>
+                    } />
+                    <Route path="/profile-data" element={
+                        <ProtectedRoute><ProfileSetup /></ProtectedRoute>
+                    } />
+                    <Route path="/live-events" element={
+                        <ProtectedRoute><LiveEventsPage /></ProtectedRoute>
+                    } />
+                    <Route path="/advisory-chat" element={
+                        <ProtectedRoute><AdvisoryChatPage /></ProtectedRoute>
+                    } />
+                    <Route path="/simulation" element={
+                        <ProtectedRoute><SimulationPage /></ProtectedRoute>
+                    } />
+
                     <Route path="/admin" element={
                         <ProtectedRoute>
                             <RoleGuard allowedRoles={['admin']} fallback={
