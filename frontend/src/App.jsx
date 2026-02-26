@@ -21,7 +21,7 @@ import SoilHealthPage from './components/SoilHealthPage';
 import LiveEventsPage from './components/LiveEventsPage';
 import AdvisoryChatPage from './components/AdvisoryChatPage';
 import SimulationPage from './components/SimulationPage';
-import { getSoilState } from './api/apiClient';
+import { getSoilState, getProfile } from './api/apiClient';
 import { Target } from 'lucide-react';
 
 function AppContent() {
@@ -41,9 +41,8 @@ function AppContent() {
             }
 
             // Fetch Profile
-            const profileRes = await fetch('/api/profile');
-            const profileJson = await profileRes.json();
-            if (profileJson.status === "Found") {
+            const profileJson = await getProfile();
+            if (profileJson && profileJson.status === "Found") {
                 setProfile(profileJson.data);
             }
         } catch (e) {
