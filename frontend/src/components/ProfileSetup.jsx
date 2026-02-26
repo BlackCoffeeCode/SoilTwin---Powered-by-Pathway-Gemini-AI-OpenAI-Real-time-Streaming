@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, MapPin, Sprout, Activity, Save, Upload } from 'lucide-react';
 import PageLayout from './common/PageLayout';
+import React, { useState, useEffect } from 'react';
+
 
 const ProfileSetup = () => {
     const navigate = useNavigate();
@@ -11,6 +12,8 @@ const ProfileSetup = () => {
     const [uploadFile, setUploadFile] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [uploadMessage, setUploadMessage] = useState('');
+    const [reports, setReports] = useState([]);
+    const [fetchingReports, setFetchingReports] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -41,37 +44,63 @@ const ProfileSetup = () => {
 
     // New S3 upload function
     const uploadFileToS3 = async (file) => {
-        setUploading(true);
-        setUploadMessage('');
+  setUploading(true);
+  setUploadMessage('');
 
-        const formData = new FormData();
-        formData.append('file', file);
+  const formData = new FormData();
+  formData.append('file', file);
 
-        const token = localStorage.getItem('soiltwin_token');
-        const baseURL = import.meta.env.VITE_API_URL || 'https://d2bebk7g4ys5zv.cloudfront.net';
+  const token = localStorage.getItem('soiltwin_token');
+  const baseURL = import.meta.env.VITE_API_URL || 'https://d2bebk7g4ys5zv.cloudfront.net/api';
 
-        try {
-            const response = await fetch(`${baseURL}/api/upload-soil-report`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+  try {
+    const response = await fetch(`${baseURL}/upload-soil-report`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
 
-            const data = await response.json();
-            if (response.ok) {
-                setUploadMessage('✅ Upload successful! File saved to cloud.');
-                setUploadFile(null); // clear selected file after success
-            } else {
-                setUploadMessage(`❌ Upload failed: ${data.detail || 'Unknown error'}`);
-            }
-        } catch (error) {
-            setUploadMessage(`❌ Upload error: ${error.message}`);
-        } finally {
-            setUploading(false);
-        }
-    };
+    const data = await response.json();
+    if (response.ok) {
+      setUploadMessage('✅ Upload successful! File saved to cloud.');
+      setUploadFile(null);
+      fetchReports();  // Refresh the report list
+    } else {
+      setUploadMessage(`❌ Upload failed: ${data.detail || 'Unknown error'}`);
+    }
+  } catch (error) {
+    setUploadMessage(`❌ Upload error: ${error.message}`);
+  } finally {
+    setUploading(false);
+  }
+};
+
+    
+
+const fetchReports = async () => {
+  setFetchingReports(true);
+  try {
+    const token = localStorage.getItem('soiltwin_token');
+    const response = await fetch('https://d2bebk7g4ys5zv.cloudfront.net/api/soil-reports', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setReports(data);
+    }
+  } catch (error) {
+    console.error('Error fetching reports:', error);
+  } finally {
+    setFetchingReports(false);
+  }
+};
+
+// Fetch reports when component mounts
+useEffect(() => {
+  fetchReports();
+}, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -240,6 +269,27 @@ const ProfileSetup = () => {
                                 )}
                             </div>
                         </div>
+
+                                    {reports.length > 0 && (
+  <div className="mt-8">
+    <h4 className="font-semibold text-[#2D5016] mb-4">Your Uploaded Reports</h4>
+    <ul className="space-y-2">
+      {reports.map(report => (
+        <li key={report._id} className="flex items-center justify-between bg-white p-3 rounded-lg border">
+          <span className="text-sm text-gray-700">{report.filename}</span>
+          <a
+            href={report.view_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#7CB342] hover:underline text-sm"
+          >
+            View
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
                             {[

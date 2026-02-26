@@ -1,9 +1,9 @@
-const API_BASE_URL = 'http://65.0.103.189:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://d2bebk7g4ys5zv.cloudfront.net/api';
 
 // Helper to get auth token
 const getAuthHeaders = () => {
     const token = localStorage.getItem('soiltwin_token');
-    return token ? { 'Authorization': `Bearer ${token}` } : {};
+    return token ? { 'Authorization': `Bearer ${token}` } : null;
 };
 
 // Helper for handling 401 responses
