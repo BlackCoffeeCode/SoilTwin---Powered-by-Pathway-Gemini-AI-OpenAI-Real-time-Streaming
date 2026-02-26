@@ -54,9 +54,10 @@ def process_event(event_type, event_data):
 
     if event_type == "rain":
         mm = float(event_data.get("amount", 0))
-        # Logic: N -= 1.2 * mm, M += 0.4 * mm
-        n -= (mm * 1.2)
+        # Unified coefficient: N -= 0.8 * mm (matches Pathway main_pipeline.py)
+        n -= (mm * 0.8)
         m += (mm * 0.4)
+
         
     elif event_type == "irrigation":
         liters = float(event_data.get("liters", 0))

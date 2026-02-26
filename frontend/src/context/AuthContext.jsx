@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
-            const response = await fetch('http://localhost:8000/api/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
                     password,
                 }),
             });
+
 
             if (!response.ok) {
                 const error = await response.json();

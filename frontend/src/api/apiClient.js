@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://65.0.103.189:8000/api';
+const API_BASE_URL = '/api';
 
 // Helper to get auth token
 const getAuthHeaders = () => {
@@ -28,6 +28,25 @@ export const getSoilState = async () => {
         return await response.json();
     } catch (error) {
         console.error('Error fetching soil state:', error);
+        return null;
+    }
+};
+
+export const getProfile = async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/profile`, {
+            headers: getAuthHeaders(),
+        });
+
+        if (response.status === 401) {
+            handleUnauthorized();
+            return null;
+        }
+
+        if (!response.ok) throw new Error('Network response was not ok');
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching profile:', error);
         return null;
     }
 };

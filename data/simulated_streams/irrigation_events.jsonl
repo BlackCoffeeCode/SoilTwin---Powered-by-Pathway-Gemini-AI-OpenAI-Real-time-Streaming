@@ -1,2 +1,4 @@
 {"timestamp": "2026-02-05T10:00:00", "water_liters": 50000, "note": "Tube well irrigation", "user_id": "farmer"}
 {"timestamp": "2026-02-12T16:00:00", "water_liters": 40000, "note": "Canal irrigation", "user_id": "farmer2"}
+{"timestamp": "2026-02-26T19:45:19.889679", "note": "Manual trigger", "user_id": "farmer", "water_liters": 0.0}
+{"timestamp": "2026-02-26T21:36:14.159547", "note": "Manual trigger", "user_id": "farmer", "water_liters": 0.0}

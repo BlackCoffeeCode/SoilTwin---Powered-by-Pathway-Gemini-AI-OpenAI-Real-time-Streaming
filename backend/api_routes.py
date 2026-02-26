@@ -34,7 +34,11 @@ limiter = Limiter(key_func=get_remote_address)
 OUTPUT_FILE = "./data/current_state.csv"
 
 # S3 Configuration for soil report uploads
+<<<<<<< HEAD
 S3_BUCKET = "soiltwin-farmers-reports"        # Replace with your actual bucket name
+=======
+S3_BUCKET = "soiltwin-uploads"        # Replace with your actual bucket name
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
 S3_REGION = "ap-south-1"              # Replace with your bucket's region
 s3_client = boto3.client('s3', region_name=S3_REGION)
 
@@ -58,6 +62,7 @@ class SimulateRequest(BaseModel):
 @router.post("/login")
 @limiter.limit("5/minute")  # Max 5 login attempts per minute
 async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
+<<<<<<< HEAD
         """
         User login endpoint.
         Returns JWT access token and refresh token for authentication.
@@ -78,17 +83,116 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
         
         # Create refresh token (long-lived, 30 days)
         refresh_token_info = create_refresh_token(str(user["_id"]))
+=======
+    """
+    User login endpoint.
+    Returns JWT access token and refresh token for authentication.
+    
+    Credentials:
+    - Username: admin, Password: admin123 (admin role)
+    - Username: farmer, Password: farmer123 (farmer role)
+    """
+    user = authenticate_user(form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="Incorrect username or password"
+        )
+    
+    # Create JWT access token (short-lived, 30 minutes)
+    access_token = create_access_token(data={"sub": user["username"]})
+    
+    # Create refresh token (long-lived, 30 days)
+    refresh_token_info = create_refresh_token(str(user["_id"]))
+    
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token_info["token"],
+        "token_type": "bearer",
+        "username": user["username"],
+        "role": user.get("role", "farmer"),
+        "expires_in": 1800  # 30 minutes in seconds
+    }
+
+
+class RegisterRequest(BaseModel):
+    username: str
+    email: EmailStr
+    fullname: str
+    password: str
+
+@router.post("/register")
+@limiter.limit("3/minute")  # Max 3 registration attempts per minute
+async def register_user(request: Request, data: RegisterRequest):
+    """
+    User registration endpoint.
+    Creates new user account with farmer role.
+    
+    Validation:
+    - Username: 3-20 characters, alphanumeric
+    - Password: Minimum 8 characters
+    - Email: Valid format
+    - Unique username and email
+    """
+    # Validate username length
+    if len(data.username) < 3 or len(data.username) > 20:
+        raise HTTPException(
+            status_code=400,
+            detail="Username must be between 3-20 characters"
+        )
+    
+    # Validate password strength
+    if len(data.password) < 8:
+        raise HTTPException(
+            status_code=400,
+            detail="Password must be at least 8 characters"
+        )
+    
+    # Check if password has at least one number
+    if not any(char.isdigit() for char in data.password):
+        raise HTTPException(
+            status_code=400,
+            detail="Password must contain at least one number"
+        )
+    
+    # Check if username already exists
+    if get_user_by_username(data.username):
+        raise HTTPException(
+            status_code=400,
+            detail="Username already taken"
+        )
+    
+    # Check if email already exists
+    if get_user_by_email(data.email):
+        raise HTTPException(
+            status_code=400,
+            detail="Email already registered"
+        )
+    
+    try:
+        # Create new user with farmer role
+        user = create_user(
+            username=data.username,
+            email=data.email,
+            fullname=data.fullname,
+            password=data.password,
+            role="farmer"
+        )
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
         
         return {
-            "access_token": access_token,
-            "refresh_token": refresh_token_info["token"],
-            "token_type": "bearer",
-            "username": user["username"],
-            "role": user.get("role", "farmer"),
-            "expires_in": 1800  # 30 minutes in seconds
+            "message": "Registration successful",
+            "username": data.username,
+            "email": data.email
         }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Registration failed: {str(e)}"
+        )
 
 
+<<<<<<< HEAD
 class RegisterRequest(BaseModel):
         username: str
         email: EmailStr
@@ -291,14 +395,50 @@ async def refresh_access_token(data: RefreshTokenRequest):
         
         # Create new access token
         access_token = create_access_token(data={"sub": user["username"]})
+=======
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+@router.post("/forgot-password")
+@limiter.limit("3/minute")  # Max 3 forgot password attempts per minute
+async def forgot_password(request: Request, data: ForgotPasswordRequest):
+    """
+    Forgot password endpoint.
+    Generates a 6-digit reset token for the user.
+    
+    In production, this would send an email with the token.
+    For development, the token is returned in the response.
+    """
+    # Find user by email
+    user = get_user_by_email(data.email)
+    if not user:
+        # Don't reveal if email exists - return success anyway
+        return {
+            "message": "If that email exists, a reset code has been sent",
+            "token": None  # In production, don't return token
+        }
+    
+    try:
+        # Create reset token
+        token_info = create_reset_token(user["_id"])
+        
+        # In production: Send email with token_info["token"]
+        # For now, return it in response for testing
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
         
         return {
-            "access_token": access_token,
-            "token_type": "bearer",
-            "expires_in": 1800  # 30 minutes
+            "message": "Reset code generated successfully",
+            "token": token_info["token"],  # Remove in production
+            "expires_in": "15 minutes"
         }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate reset token: {str(e)}"
+        )
 
 
+<<<<<<< HEAD
 @router.post("/logout")
 async def logout(data: RefreshTokenRequest):
         """
@@ -306,12 +446,67 @@ async def logout(data: RefreshTokenRequest):
         Revokes the refresh token to prevent future refreshes.
         """
         revoked = revoke_refresh_token(data.refresh_token)
+=======
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    token: str
+    new_password: str
+
+@router.post("/reset-password")
+@limiter.limit("5/minute")  # Max 5 reset attempts per minute
+async def reset_password(request: Request, data: ResetPasswordRequest):
+    """
+    Reset password endpoint.
+    Verifies the reset token and updates the password.
+    """
+    # Find user by email
+    user = get_user_by_email(data.email)
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid email or token"
+        )
+    
+    # Validate new password
+    if len(data.new_password) < 8:
+        raise HTTPException(
+            status_code=400,
+            detail="Password must be at least 8 characters"
+        )
+    
+    if not any(char.isdigit() for char in data.new_password):
+        raise HTTPException(
+            status_code=400,
+            detail="Password must contain at least one number"
+        )
+    
+    # Verify reset token
+    if not verify_reset_token(user["_id"], data.token):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid or expired reset token"
+        )
+    
+    try:
+        # Update password
+        update_user_password(user["_id"], data.new_password)
+        
+        # Mark token as used
+        mark_token_used(user["_id"], data.token)
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
         
         return {
-            "message": "Logged out successfully" if revoked else "Token invalid or already revoked"
+            "message": "Password reset successful",
+            "username": user["username"]
         }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Password reset failed: {str(e)}"
+        )
 
 
+<<<<<<< HEAD
 @router.get("/me")
 async def read_users_me(current_user: dict = Depends(get_current_active_user)):
         """
@@ -319,16 +514,74 @@ async def read_users_me(current_user: dict = Depends(get_current_active_user)):
         Requires valid JWT token.
         """
         return current_user
+=======
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str
+
+@router.post("/refresh")
+async def refresh_access_token(data: RefreshTokenRequest):
+    """
+    Refresh access token endpoint.
+    Takes a valid refresh token and returns a new access token.
+    """
+    # Verify refresh token
+    token_doc = verify_refresh_token(data.refresh_token)
+    if not token_doc:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired refresh token"
+        )
+    
+    # Get user by ID
+    user = get_user_by_id(token_doc["user_id"])
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+    
+    # Create new access token
+    access_token = create_access_token(data={"sub": user["username"]})
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "expires_in": 1800  # 30 minutes
+    }
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
 
 
-    # ============================================================================
-    # FARMER PROFILE MANAGEMENT
-    # ============================================================================
+@router.post("/logout")
+async def logout(data: RefreshTokenRequest):
+    """
+    Logout endpoint.
+    Revokes the refresh token to prevent future refreshes.
+    """
+    revoked = revoke_refresh_token(data.refresh_token)
+    
+    return {
+        "message": "Logged out successfully" if revoked else "Token invalid or already revoked"
+    }
+
+
+@router.get("/me")
+async def read_users_me(current_user: dict = Depends(get_current_active_user)):
+    """
+    Get current authenticated user profile.
+    Requires valid JWT token.
+    """
+    return current_user
+
+
+# ============================================================================
+# FARMER PROFILE MANAGEMENT
+# ============================================================================
 
 
 
 @router.get("/profile")
 def get_profile(current_user: str = Depends(get_current_user)):
+<<<<<<< HEAD
         """
         Returns the current farmer profile.
         """
@@ -348,6 +601,28 @@ def get_profile(current_user: str = Depends(get_current_user)):
                 data["location"] = "Ludhiana,IN"
                 data["name"] = "Suresh Singh"
             return {"status": "Found", "data": data}
+=======
+    """
+    Returns the current farmer profile.
+    """
+    # For now, we still read the single profile.json but could easily multiplex
+    if not os.path.exists("./data/profile.json"):
+        return {"status": "No profile", "data": None}
+    
+    with open("./data/profile.json", "r") as f:
+        data = json.load(f)
+        # Mock override for farmer2 to show different location
+        if isinstance(current_user, dict):
+            c_username = current_user.get("username")
+        else:
+            c_username = current_user
+
+        if c_username == "farmer2": 
+            data["location"] = "Ludhiana,IN"
+            data["name"] = "Suresh Singh"
+        return {"status": "Found", "data": data}
+    
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
 
 @router.post("/upload-soil-report")
 async def upload_soil_report(
@@ -402,6 +677,7 @@ async def upload_soil_report(
 
 @router.get("/soil-state")
 def get_soil_state(current_user: str = Depends(get_current_user)):
+<<<<<<< HEAD
         """
         Get current soil state. Requires authentication.
         Returns the latest computed soil state for the logged-in user.
@@ -516,64 +792,181 @@ def get_history_log(limit: int = 50, current_user: str = Depends(get_current_use
         events = []
         if isinstance(current_user, dict):
             target_user = current_user.get("username", "farmer")
+=======
+    """
+    Get current soil state. Requires authentication.
+    Returns the latest computed soil state for the logged-in user.
+    """
+    if not os.path.exists(OUTPUT_FILE):
+        return {"status": "Initializing...", "data": None}
+    
+    # Parse CSV 
+    import csv
+    with open(OUTPUT_FILE, 'r') as f:
+        reader = csv.DictReader(f)
+        # Filter for current user's state
+        # user_id column is now in CSV from pipeline
+        if isinstance(current_user, dict):
+            target_user = current_user.get("username")
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
         else:
             target_user = current_user
-        
-        # helper to read jsonl
-        def read_jsonl(filepath, event_type, subtype_key=None, amount_key=None):
-            if not os.path.exists(filepath): return
             
-            with open(filepath, 'r') as f:
-                for line in f:
-                    try:
-                        data = json.loads(line.strip())
-                        
-                        # Filter by user
-                        if data.get("user_id", "farmer") != target_user:
-                            continue
-                            
-                        # Normalize for frontend
-                        evt = {
-                            "id": str(int(float(datetime.fromisoformat(data["timestamp"]).timestamp() * 1000))), # diverse ID
-                            "timestamp": data["timestamp"],
-                            "type": event_type,
-                            "subtype": data.get(subtype_key, "General") if subtype_key else "Standard",
-                            "amount": f"{data.get(amount_key, 0)}", # keep simple
-                            "status": "Logged",
-                            "operator": "User/System"
-                        }
-                        
-                        # Custom formatting for specific types
-                        if event_type == "Rainfall":
-                            evt["subtype"] = "Natural"
-                            evt["amount"] = f"{data.get('rain_mm', 0)} mm"
-                            evt["operator"] = "Cloud Node"
-                        elif event_type == "Irrigation":
-                            evt["subtype"] = "Tube Well"
-                            evt["amount"] = f"{data.get('water_liters', 0)} L"
-                            evt["operator"] = "Smart Valve"
-                        elif event_type == "Fertilizer":
-                            # fertilizer_events.jsonl: {"amount_kg": 20, ...} 
-                            evt["amount"] = f"{data.get('amount_kg', 0)} kg"
-                            
-                        events.append(evt)
-                    except Exception as e:
-                        # print(f"Error parsing line in {filepath}: {e}")
-                        continue
+        # We need the LATEST state for this user.
+        # Since CSV in Pathway writes updates, we scan all rows (or read reversed if large).
+        # For small demo file, reading all is fine.
+        user_rows = [row for row in reader if row.get("user_id") == target_user]
+        
+        if user_rows:
+            return user_rows[-1] # Return last (latest) state
+            
+    return {"status": "No data", "data": None}
 
-        # Read all streams
-        read_jsonl("./data/simulated_streams/rainfall_stream.jsonl", "Rainfall", amount_key="rain_mm")
-        read_jsonl("./data/simulated_streams/irrigation_events.jsonl", "Irrigation", amount_key="water_liters")
-        read_jsonl("./data/simulated_streams/fertilizer_events.jsonl", "Fertilizer", amount_key="amount_kg")
+@router.post("/events")
+def trigger_event(event: Event, current_user: str = Depends(get_current_user)):
+    """
+    Manually inject an event into the stream. Requires authentication.
+    """
+    # We append to the JSON files that Pathway is watching!
+    
+    target_file = ""
+    entry = {}
+    
+    import datetime
+    ts = datetime.datetime.now().isoformat()
+    
+    # Get user_id
+    if isinstance(current_user, dict):
+        user_id = current_user.get("username")
+    else:
+        user_id = current_user
+
+    # Handle aliases from frontend
+    if event.type == "rain25":
+        event.type = "rain"
+        if not event.data: event.data = {}
+        event.data["amount"] = 25.0
         
-        # Sort by timestamp desc
-        events.sort(key=lambda x: x["timestamp"], reverse=True)
+    common_fields = {"timestamp": ts, "note": "Manual trigger", "user_id": user_id}
+
+    if event.type == "rain":
+        target_file = "./data/simulated_streams/rainfall_stream.jsonl"
+        entry = {**common_fields, "rain_mm": float(event.data.get("amount", 0))}
         
-        return events[:limit]
+    elif event.type == "irrigation":
+        target_file = "./data/simulated_streams/irrigation_events.jsonl"
+        entry = {**common_fields, "water_liters": float(event.data.get("liters", 0))}
+        
+    elif event.type == "fertilizer":
+        target_file = "./data/simulated_streams/fertilizer_events.jsonl"
+        entry = {
+            **common_fields,
+            "amount_kg": float(event.data.get("amount", 0)), 
+            "type": event.data.get("type", "Urea")
+        }
+
+    elif event.type == "harvest":
+        target_file = "./data/simulated_streams/crop_events.json" # Not migrated yet
+        entry = {
+            **common_fields,
+            "event": "harvest",
+            "crop_name": event.data.get("crop", "Wheat"),
+            "yield_tons": 4.0
+        }
+
+    elif event.type == "amendment":
+        target_file = "./data/simulated_streams/soil_amendments.json" # Not migrated
+        entry = {
+            **common_fields,
+            "type": event.data.get("type", "manure"),
+            "amount_kg": float(event.data.get("amount", 0))
+        }
+    
+    if target_file and entry:
+        # Append to JSONL file (Efficient)
+        try:
+            with open(target_file, 'a') as f:
+                f.write(json.dumps(entry) + "\n")
+            
+            # FAST PATH: Optimistic UI Update.
+            # We calculate what the state *should* be and return it immediately.
+            # The actual persistent state will be updated by Pathway (Single Source of Truth) asynchronously.
+            new_state = process_event(event.type, event.data)
+            
+            return {"status": "Event Injected", "event": entry, "new_state": new_state}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+            
+    return {"status": "Ignored", "detail": "Unknown event type"}
+
+@router.get("/history")
+def get_history_log(limit: int = 50, current_user: str = Depends(get_current_user)):
+    """
+    Fetch aggregated history of all simulated events (Rain, Irrigation, Fertilizer).
+    Reads from local JSONL files.
+    """
+    events = []
+    if isinstance(current_user, dict):
+        target_user = current_user.get("username", "farmer")
+    else:
+        target_user = current_user
+    
+    # helper to read jsonl
+    def read_jsonl(filepath, event_type, subtype_key=None, amount_key=None):
+        if not os.path.exists(filepath): return
+        
+        with open(filepath, 'r') as f:
+            for line in f:
+                try:
+                    data = json.loads(line.strip())
+                    
+                    # Filter by user
+                    if data.get("user_id", "farmer") != target_user:
+                        continue
+                        
+                    # Normalize for frontend
+                    evt = {
+                        "id": str(int(float(datetime.fromisoformat(data["timestamp"]).timestamp() * 1000))), # diverse ID
+                        "timestamp": data["timestamp"],
+                        "type": event_type,
+                        "subtype": data.get(subtype_key, "General") if subtype_key else "Standard",
+                        "amount": f"{data.get(amount_key, 0)}", # keep simple
+                        "status": "Logged",
+                        "operator": "User/System"
+                    }
+                    
+                    # Custom formatting for specific types
+                    if event_type == "Rainfall":
+                        evt["subtype"] = "Natural"
+                        evt["amount"] = f"{data.get('rain_mm', 0)} mm"
+                        evt["operator"] = "Cloud Node"
+                    elif event_type == "Irrigation":
+                        evt["subtype"] = "Tube Well"
+                        evt["amount"] = f"{data.get('water_liters', 0)} L"
+                        evt["operator"] = "Smart Valve"
+                    elif event_type == "Fertilizer":
+                        # fertilizer_events.jsonl: {"amount_kg": 20, ...} 
+                        evt["amount"] = f"{data.get('amount_kg', 0)} kg"
+                        
+                    events.append(evt)
+                except Exception as e:
+                    # print(f"Error parsing line in {filepath}: {e}")
+                    continue
+
+    # Read all streams
+    read_jsonl("./data/simulated_streams/rainfall_stream.jsonl", "Rainfall", amount_key="rain_mm")
+    read_jsonl("./data/simulated_streams/irrigation_events.jsonl", "Irrigation", amount_key="water_liters")
+    read_jsonl("./data/simulated_streams/fertilizer_events.jsonl", "Fertilizer", amount_key="amount_kg")
+    
+    # Sort by timestamp desc
+    events.sort(key=lambda x: x["timestamp"], reverse=True)
+    
+    return events[:limit]
 
 
 @router.get("/external/ogd/{resource_id}")
 async def get_ogd_data(resource_id: str):
+<<<<<<< HEAD
         """
         Proxy to fetch data from data.gov.in using the server-side API key.
         Usage: GET /api/external/ogd/<resource_id>
@@ -581,91 +974,110 @@ async def get_ogd_data(resource_id: str):
         api_key =os.getenv("DATA_GOV_IN_API_KEY")
         if not api_key:
             raise HTTPException(status_code=500, detail="OGD API Key not configured on server")
+=======
+    """
+    Proxy to fetch data from data.gov.in using the server-side API key.
+    Usage: GET /api/external/ogd/<resource_id>
+    """
+    api_key =os.getenv("DATA_GOV_IN_API_KEY")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="OGD API Key not configured on server")
+    
+    url = f"https://api.data.gov.in/resource/{resource_id}?api-key={api_key}&format=json"
+    
+    try:
+        import urllib.request
+        import json
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
         
-        url = f"https://api.data.gov.in/resource/{resource_id}?api-key={api_key}&format=json"
-        
-        try:
-            import urllib.request
-            import json
+        with urllib.request.urlopen(url) as response:
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="External API Error")
+            data = json.loads(response.read().decode())
+            return data
             
-            with urllib.request.urlopen(url) as response:
-                if response.status != 200:
-                    raise HTTPException(status_code=response.status, detail="External API Error")
-                data = json.loads(response.read().decode())
-                return data
-                
-        except Exception as e:
-            print(f"OGD Proxy Error: {e}")
-            raise HTTPException(status_code=502, detail=f"Failed to fetch from OGD: {str(e)}")
+    except Exception as e:
+        print(f"OGD Proxy Error: {e}")
+        raise HTTPException(status_code=502, detail=f"Failed to fetch from OGD: {str(e)}")
 
 @router.get("/external/weather")
 async def get_weather_data(location: str = "Ludhiana,IN"):
+<<<<<<< HEAD
         """
         Fetches real-time weather from OpenWeatherMap.
         """
         api_key = os.getenv("OPENWEATHER_API_KEY")
         if not api_key:
             # Fallback for demo if key missing
-            return {
-                "temp": 28.5,
-                "humidity": 65,
-                "rain": 0,
-                "description": "Sunny (Demo)",
-                "icon": "01d",
-                "impact": "Ideal for harvest"
-            }
-            
-        url = f"https://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
+=======
+    """
+    Fetches real-time weather from OpenWeatherMap.
+    """
+    api_key = os.getenv("OPENWEATHER_API_KEY")
+    if not api_key:
+        # Fallback for demo if key missing
+        return {
+            "temp": 28.5,
+            "humidity": 65,
+            "rain": 0,
+            "description": "Sunny (Demo)",
+            "icon": "01d",
+            "impact": "Ideal for harvest"
+        }
         
-        try:
-            import urllib.request
-            import json
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
+    
+    try:
+        import urllib.request
+        import json
+        
+        import ssl
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        
+        with urllib.request.urlopen(url, context=ctx) as response:
+            if response.status != 200:
+                raise HTTPException(status_code=502, detail="Weather API Error")
             
-            import ssl
-            ctx = ssl.create_default_context()
-            ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
+            data = json.loads(response.read().decode())
             
-            with urllib.request.urlopen(url, context=ctx) as response:
-                if response.status != 200:
-                    raise HTTPException(status_code=502, detail="Weather API Error")
-                
-                data = json.loads(response.read().decode())
-                
-                # Simplified payload for Frontend
-                rain_mm = data.get("rain", {}).get("1h", 0)
-                hum = data.get("main", {}).get("humidity", 0)
-                
-                # Logic for Soil Impact Label
-                impact = "Stable"
-                if rain_mm > 5: impact = "Soil Saturation Likely"
-                elif hum < 30: impact = "High Evaporation Risk"
-                elif hum > 80: impact = "Fungal Risk High"
-                
-                return {
-                    "temp": data.get("main", {}).get("temp"),
-                    "humidity": hum,
-                    "rain": rain_mm,
-                    "description": data.get("weather", [{}])[0].get("description", "Clear"),
-                    "icon": data.get("weather", [{}])[0].get("icon", "01d"),
-                    "impact": impact
-                }
-                
-        except Exception as e:
-            print(f"Weather API Error: {e}")
-            # Return sensible fallback instead of crashing the dashboard
+            # Simplified payload for Frontend
+            rain_mm = data.get("rain", {}).get("1h", 0)
+            hum = data.get("main", {}).get("humidity", 0)
+            
+            # Logic for Soil Impact Label
+            impact = "Stable"
+            if rain_mm > 5: impact = "Soil Saturation Likely"
+            elif hum < 30: impact = "High Evaporation Risk"
+            elif hum > 80: impact = "Fungal Risk High"
+            
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
             return {
-                "temp": "--",
-                "humidity": "--",
-                "rain": 0,
-                "description": "Unavailable",
-                "icon": "unknown",
-                "impact": "Data Offline"
+                "temp": data.get("main", {}).get("temp"),
+                "humidity": hum,
+                "rain": rain_mm,
+                "description": data.get("weather", [{}])[0].get("description", "Clear"),
+                "icon": data.get("weather", [{}])[0].get("icon", "01d"),
+                "impact": impact
             }
+            
+    except Exception as e:
+        print(f"Weather API Error: {e}")
+        # Return sensible fallback instead of crashing the dashboard
+        return {
+            "temp": "--",
+            "humidity": "--",
+            "rain": 0,
+            "description": "Unavailable",
+            "icon": "unknown",
+            "impact": "Data Offline"
+        }
 
 @router.post("/ask")
 @limiter.limit("10/minute")  # Max 10 questions per minute
 async def ask_question(request: Request, q: Question, current_user: str = Depends(get_current_user)):
+<<<<<<< HEAD
         """
         RAG-based Question Answering with Pathway-Native Vector Retrieval.
         Uses Pathway's streaming vector engine for semantic search.
@@ -675,130 +1087,188 @@ async def ask_question(request: Request, q: Question, current_user: str = Depend
         """
         # 1. Get Current State
         state = get_soil_state()
+=======
+    """
+    RAG-based Question Answering with Pathway-Native Vector Retrieval.
+    Uses Pathway's streaming vector engine for semantic search.
+    Requires authentication.
+    RAG-based Question Answering with Pathway-Native Vector Retrieval.
+    Uses Pathway's streaming vector engine for semantic search.
+    """
+    # 1. Get Current State
+    state = get_soil_state()
+    
+    # 2. RAG Retrieval - Use Pathway vector store
+    try:
+        from pathway_pipeline.rag_store import query_vector_store, setup_rag_store
+>>>>>>> a56eb9e9a4584140f3a4cf2900e4e33289fe194a
         
-        # 2. RAG Retrieval - Use Pathway vector store
+        # Initialize vector store (cached after first call)
+        if not hasattr(ask_question, 'vector_store'):
+            print("🔧 Initializing Pathway vector store...")
+            ask_question.vector_store = setup_rag_store("./docs")
+        
+        # Query for relevant documents
+        relevant_chunks = query_vector_store (ask_question.vector_store, q.text, k=3)
+        
+        if relevant_chunks:
+            guidelines = "\n\n".join(relevant_chunks)
+            print(f"✅ Retrieved {len(relevant_chunks)} chunks via Pathway vector search")
+        else:
+            # Fallback if no results
+            guidelines = "Agricultural guidelines unavailable."
+            
+    except Exception as e:
+        print(f"RAG Error: {e}. Using direct file loading...")
+        # Ultimate fallback: direct file reading
+        guidelines = ""
         try:
-            from pathway_pipeline.rag_store import query_vector_store, setup_rag_store
-            
-            # Initialize vector store (cached after first call)
-            if not hasattr(ask_question, 'vector_store'):
-                print("🔧 Initializing Pathway vector store...")
-                ask_question.vector_store = setup_rag_store("./docs")
-            
-            # Query for relevant documents
-            relevant_chunks = query_vector_store (ask_question.vector_store, q.text, k=3)
-            
-            if relevant_chunks:
-                guidelines = "\n\n".join(relevant_chunks)
-                print(f"✅ Retrieved {len(relevant_chunks)} chunks via Pathway vector search")
-            else:
-                # Fallback if no results
-                guidelines = "Agricultural guidelines unavailable."
-                
-        except Exception as e:
-            print(f"RAG Error: {e}. Using direct file loading...")
-            # Ultimate fallback: direct file reading
-            guidelines = ""
+            with open("./docs/fertilizer_guidelines.txt", "r") as f: 
+                guidelines += f.read() + "\n"
+            with open("./docs/crop_nutrient_rules.txt", "r") as f: 
+                guidelines += f.read() + "\n"
+        except:
+            guidelines = "Guidelines unavailable."
+
+    # 3. Build shared prompt (used by all LLM providers)
+    prompt_system = "You are an agricultural expert helping an Indian farmer."
+    prompt_user = f"""
+You are an agricultural expert helping an Indian farmer.
+
+Current Soil Status (Live from Pathway Streaming Engine):
+Nitrogen: {state.get('nitrogen')} kg/ha ({state.get('status_n')})
+Phosphorus: {state.get('phosphorus')} kg/ha ({state.get('status_p')})
+Potassium: {state.get('potassium')} kg/ha ({state.get('status_k')})
+Moisture: {state.get('moisture')}%
+
+Relevant Agricultural Knowledge (from Pathway Vector RAG):
+{guidelines[:3000]}
+(End of Context)
+
+Farmer Question: {q.text}
+
+Instructions:
+- Answer in simple Hinglish (Hindi + English mix) or English as appropriate.
+- Be brief and actionable.
+- If suggesting fertilizer, mention estimated cost savings if they skip unnecessary application.
+- Use the provided Context Guidelines to support your answer.
+    """
+
+    # 4. Multi-LLM Router: select provider via LLM_PROVIDER env var.
+    # Supported values: 'openai' (default) | 'gemini' | 'claude'
+    llm_provider = os.getenv("LLM_PROVIDER", "openai").lower()
+    answer_text = None
+    used_provider = llm_provider
+
+    # ── OpenAI ────────────────────────────────────────────────────────────────
+    if answer_text is None and (llm_provider == "openai" or llm_provider not in ("gemini", "claude")):
+        openai_key = os.getenv("OPENAI_API_KEY")
+        if openai_key:
             try:
-                with open("./docs/fertilizer_guidelines.txt", "r") as f: 
-                    guidelines += f.read() + "\n"
-                with open("./docs/crop_nutrient_rules.txt", "r") as f: 
-                    guidelines += f.read() + "\n"
-            except:
-                guidelines = "Guidelines unavailable."
+                from openai import OpenAI as _OpenAI
+                _client = _OpenAI(api_key=openai_key)
+                _resp = _client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": prompt_system},
+                        {"role": "user",   "content": prompt_user}
+                    ],
+                    temperature=0.7
+                )
+                answer_text = _resp.choices[0].message.content
+                used_provider = "openai/gpt-4o-mini"
+                print("✅ LLM response via OpenAI (gpt-4o-mini)")
+            except Exception as e:
+                print(f"⚠️  OpenAI error: {e}. Trying next provider...")
 
-        # 3. Call LLM (OpenAI) using .env key
-        from openai import OpenAI
-        
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            return {
-                "answer": "AI API Key (OPENAI_API_KEY) missing. Please update .env file.",
-                "cost_saving": "N/A"
-            }
-            
-        client = OpenAI(api_key=api_key)
-        # Use gpt-4o-mini based on user request
-        model_name = "gpt-4o-mini"
+    # ── Google Gemini ─────────────────────────────────────────────────────────
+    if answer_text is None and (llm_provider == "gemini" or llm_provider not in ("openai", "claude")):
+        gemini_key = os.getenv("GOOGLE_API_KEY")
+        if gemini_key:
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=gemini_key)
+                _model = genai.GenerativeModel("gemini-1.5-flash")
+                _resp = _model.generate_content(f"{prompt_system}\n\n{prompt_user}")
+                answer_text = _resp.text
+                used_provider = "gemini/gemini-1.5-flash"
+                print("✅ LLM response via Google Gemini (gemini-1.5-flash)")
+            except Exception as e:
+                print(f"⚠️  Gemini error: {e}. Trying next provider...")
 
-        prompt = f"""
-        You are an agricultural expert helping an Indian farmer.
-        
-        Current Soil Status (Live from Pathway Streaming Engine):
-        Nitrogen: {state.get('nitrogen')} kg/ha ({state.get('status_n')})
-        Phosphorus: {state.get('phosphorus')} kg/ha ({state.get('status_p')})
-        Potassium: {state.get('potassium')} kg/ha ({state.get('status_k')})
-        Moisture: {state.get('moisture')}%
-        
-        Relevant Agricultural Knowledge (from Pathway Vector RAG):
-        {guidelines[:3000]}
-        (End of Context)
-        
-        Farmer Question: {q.text}
-        
-        Instructions:
-        - Answer in simple Hinglish (Hindi + English mix) or English as appropriate.
-        - Be brief and actionable.
-        - If suggesting fertilizer, mention estimated cost savings if they skip unnecessary application.
-        - Use the provided Context Guidelines to support your answer.
-        """
-        
-        try:
-            response = client.chat.completions.create(
-                model=model_name,
-                messages=[
-                    {"role": "system", "content": "You are an agricultural expert helping an Indian farmer."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7
-            )
-            answer_text = response.choices[0].message.content
-            
-            return {
-                "answer": answer_text,
-                "cost_saving": "Calculated in advice" 
-            }
-        except Exception as e:
-            # FALLBACK FOR DEMO: If API fails (Rate Limit), return a deterministic rule-based answer
-            print(f"AI API Error: {e}")
-            
-            # FALLBACK: Robust Rule-Based Expert System (Offline Mode)
-            # This simulates the AI's logic when the LLM API is rate-limited or unavailable.
-            print(f"Switched to Expert Rule Engine due to API: {e}")
-            
-            n_val = float(state.get('nitrogen', 0))
-            p_val = float(state.get('phosphorus', 0))
-            k_val = float(state.get('potassium', 0))
-            h2o = float(state.get('moisture', 0))
+    # ── Anthropic Claude ──────────────────────────────────────────────────────
+    if answer_text is None and (llm_provider == "claude" or llm_provider not in ("openai", "gemini")):
+        anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+        if anthropic_key:
+            try:
+                import anthropic
+                _client = anthropic.Anthropic(api_key=anthropic_key)
+                _resp = _client.messages.create(
+                    model="claude-3-haiku-20240307",
+                    max_tokens=1024,
+                    system=prompt_system,
+                    messages=[{"role": "user", "content": prompt_user}]
+                )
+                answer_text = _resp.content[0].text
+                used_provider = "claude/claude-3-haiku"
+                print("✅ LLM response via Anthropic Claude (claude-3-haiku)")
+            except Exception as e:
+                print(f"⚠️  Claude error: {e}. Falling back to rule engine...")
 
-            advice_parts = []
-            cost_savings = 0.0
-            
-            # 1. Nitrogen Analysis
-            if n_val < 280:
-                advice_parts.append(f"⚠️ **Nitrogen is critically low ({n_val} kg/ha).** Immediate application of Urea (40kg/acre) is recommended to prevent yellowing.")
-                cost_savings += 0 # Cost incurred
-            elif n_val > 560:
-                advice_parts.append(f"✅ **Nitrogen levels are high ({n_val} kg/ha).** You can safely SKIP the next scheduled Urea dosage.")
-                cost_savings += 450 # Approx saving
-            else:
-                advice_parts.append(f"✅ **Nitrogen is optimal.** Maintain current schedule.")
+    # ── LLM succeeded ─────────────────────────────────────────────────────────
+    if answer_text:
+        return {
+            "answer": answer_text,
+            "cost_saving": "Calculated in advice",
+            "provider": used_provider
+        }
 
-            # 2. Moisture Analysis
-            if h2o < 30:
-                advice_parts.append(f"💧 **Soil moisture is low ({h2o}%).** Irrigation is required within 24 hours.")
-            elif h2o > 80:
-                advice_parts.append(f"⚠️ **Soil is saturated ({h2o}%).** Delay irrigation to prevent root rot.")
-            
-            # 3. Overall Recommendation
-            if not advice_parts:
-                advice_parts.append("Soil parameters are within the ideal range for Wheat.")
+    # ── FALLBACK: Rule-Based Expert System (Offline Mode) ─────────────────────
+    # Activates when ALL LLM providers are unavailable (rate-limited / no key).
+    print("⚠️  All LLM providers failed. Activating rule-based expert engine.")
+    n_val = float(state.get('nitrogen', 0))
+    p_val = float(state.get('phosphorus', 0))
+    k_val = float(state.get('potassium', 0))
+    h2o   = float(state.get('moisture', 0))
 
-            final_advice = " ".join(advice_parts)
-            
-            saving_text = f"₹ {int(cost_savings)} estimated savings" if cost_savings > 0 else "Yield Protection Mode"
+    advice_parts = []
+    cost_savings  = 0.0
 
-            return {
-                "answer": final_advice,
-                "cost_saving": saving_text
-            }
+    # Nitrogen
+    if n_val < 280:
+        advice_parts.append(f"⚠️ **Nitrogen is critically low ({n_val} kg/ha).** Apply Urea (40 kg/acre) immediately to prevent yellowing.")
+        cost_savings += 0
+    elif n_val > 560:
+        advice_parts.append(f"✅ **Nitrogen is high ({n_val} kg/ha).** Safely SKIP next Urea dose.")
+        cost_savings += 450
+    else:
+        advice_parts.append(f"✅ **Nitrogen is optimal.** Maintain current schedule.")
+
+    # Phosphorus
+    if p_val < 11:
+        advice_parts.append(f"⚠️ **Phosphorus is low ({p_val} kg/ha).** Apply DAP (25 kg/acre) before sowing.")
+    elif p_val > 22:
+        advice_parts.append(f"✅ **Phosphorus is adequate.** Skip DAP this season.")
+        cost_savings += 300
+
+    # Potassium
+    if k_val < 110:
+        advice_parts.append(f"⚠️ **Potassium is deficient ({k_val} kg/ha).** Apply MOP (20 kg/acre).")
+
+    # Moisture
+    if h2o < 30:
+        advice_parts.append(f"💧 **Soil moisture is low ({h2o}%).** Irrigate within 24 hours.")
+    elif h2o > 80:
+        advice_parts.append(f"⚠️ **Soil is saturated ({h2o}%).** Delay irrigation to prevent root rot.")
+
+    if not advice_parts:
+        advice_parts.append("Soil parameters are within ideal range for Wheat. Continue current schedule.")
+
+    saving_text = f"₹ {int(cost_savings)} estimated savings this season" if cost_savings > 0 else "Yield Protection Mode"
+
+    return {
+        "answer": " ".join(advice_parts),
+        "cost_saving": saving_text,
+        "provider": "rule-engine"
+    }
+

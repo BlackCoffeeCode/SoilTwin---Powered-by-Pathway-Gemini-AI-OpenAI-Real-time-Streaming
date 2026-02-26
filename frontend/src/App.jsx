@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { DemoProvider, useDemo } from './context/DemoContext'; // New
+import { DemoProvider, useDemo } from './context/DemoContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -16,19 +16,23 @@ import FieldMap from './components/FieldMap';
 import HistoryView from './components/HistoryView';
 import TrendsView from './components/TrendsView';
 import NutrientPlan from './components/NutrientPlan';
-import ActionLog from './components/ActionLog'; // New
-import { getSoilState } from './api/apiClient';
+import ActionLog from './components/ActionLog';
+import SoilHealthPage from './components/SoilHealthPage';
+import LiveEventsPage from './components/LiveEventsPage';
+import AdvisoryChatPage from './components/AdvisoryChatPage';
+import SimulationPage from './components/SimulationPage';
+import { getSoilState, getProfile } from './api/apiClient';
 import { Target } from 'lucide-react';
 
 function AppContent() {
     const [soilState, setSoilState] = useState(null);
     const [profile, setProfile] = useState(null);
     const location = useLocation();
-    const { triggerHeartbeat, addLog } = useDemo(); // Use Demo Context
+    const { triggerHeartbeat, addLog } = useDemo();
 
     const fetchData = async () => {
         try {
-            triggerHeartbeat(); // Visual Pulse
+            triggerHeartbeat();
 
             // Fetch Soil State
             const stateData = await getSoilState();
@@ -37,9 +41,8 @@ function AppContent() {
             }
 
             // Fetch Profile
-            const profileRes = await fetch('/api/profile');
-            const profileJson = await profileRes.json();
-            if (profileJson.status === "Found") {
+            const profileJson = await getProfile();
+            if (profileJson && profileJson.status === "Found") {
                 setProfile(profileJson.data);
             }
         } catch (e) {
@@ -109,6 +112,24 @@ function AppContent() {
                             <div className="card min-h-[600px]"><FieldMap /></div>
                         </ProtectedRoute>
                     } />
+
+                    {/* Nav routes */}
+                    <Route path="/soil-health" element={
+                        <ProtectedRoute><SoilHealthPage /></ProtectedRoute>
+                    } />
+                    <Route path="/profile-data" element={
+                        <ProtectedRoute><ProfileSetup /></ProtectedRoute>
+                    } />
+                    <Route path="/live-events" element={
+                        <ProtectedRoute><LiveEventsPage /></ProtectedRoute>
+                    } />
+                    <Route path="/advisory-chat" element={
+                        <ProtectedRoute><AdvisoryChatPage /></ProtectedRoute>
+                    } />
+                    <Route path="/simulation" element={
+                        <ProtectedRoute><SimulationPage /></ProtectedRoute>
+                    } />
+
                     <Route path="/admin" element={
                         <ProtectedRoute>
                             <RoleGuard allowedRoles={['admin']} fallback={

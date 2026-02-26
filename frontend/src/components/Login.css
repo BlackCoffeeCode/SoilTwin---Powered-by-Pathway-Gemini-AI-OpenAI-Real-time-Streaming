@@ -1,31 +1,39 @@
+/* Login.css — Shared auth page styles for Login, Register, ForgotPassword, ResetPassword */
+
+/* =================== Layout =================== */
 .login-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #f0f7ee 0%, #e8f5e9 40%, #e3f2e1 100%);
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    font-family: 'Inter', sans-serif;
+    padding: 1.5rem;
 }
 
 .login-card {
-    background: rgba(20, 30, 40, 0.95);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(45, 80, 22, 0.12);
     border-radius: 24px;
-    padding: 3rem;
+    padding: 2.5rem 2rem;
     width: 100%;
-    max-width: 450px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(72, 187, 120, 0.2);
-    backdrop-filter: blur(10px);
+    max-width: 440px;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 20px 60px -10px rgba(45, 80, 22, 0.15);
     position: relative;
     z-index: 10;
-    animation: slideUp 0.6s ease-out;
+    animation: slideUp 0.5s ease forwards;
 }
 
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(24px);
     }
 
     to {
@@ -34,21 +42,24 @@
     }
 }
 
+/* =================== Header =================== */
 .login-header {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-bottom: 0.5rem;
 }
 
 .logo-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(45, 80, 22, 0.2));
     animation: float 3s ease-in-out infinite;
 }
 
@@ -56,262 +67,334 @@
 
     0%,
     100% {
-        transform: translateY(0px);
+        transform: translateY(0);
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-6px);
     }
 }
 
 .login-header h1 {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 2.25rem;
     font-weight: 700;
+    color: #2D5016;
+    letter-spacing: -0.5px;
+    margin: 0;
 }
 
 .tagline {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.95rem;
-    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: #8D6E63;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 0.01em;
 }
 
+/* =================== Form =================== */
 .login-form {
-    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
 
 .form-group label {
-    display: block;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #2D5016;
+    letter-spacing: 0.01em;
 }
 
-.form-group input {
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
-    padding: 0.875rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(72, 187, 120, 0.3);
+    padding: 0.75rem 1rem;
+    border: 1.5px solid rgba(45, 80, 22, 0.2);
     border-radius: 12px;
-    color: white;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: #1f2937;
+    background: rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: #48bb78;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.1);
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2D5016;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
 }
 
 .form-group input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: #9ca3af;
+    font-weight: 400;
 }
 
+/* =================== Buttons =================== */
 .login-button {
     width: 100%;
-    padding: 1rem;
-    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    padding: 0.85rem 1.5rem;
+    background: linear-gradient(135deg, #2D5016 0%, #3d6b20 100%);
+    color: white;
     border: none;
     border-radius: 12px;
-    color: white;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
+    font-family: 'Inter', sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
 }
 
 .login-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
-}
-
-.login-button:active:not(:disabled) {
-    transform: translateY(0);
+    background: linear-gradient(135deg, #3d6b20 0%, #4d7f28 100%);
+    box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4);
+    transform: translateY(-1px);
 }
 
 .login-button:disabled {
-    opacity: 0.6;
+    opacity: 0.65;
     cursor: not-allowed;
+    transform: none;
 }
 
-.error-message {
-    background: rgba(245, 101, 101, 0.1);
-    border: 1px solid rgba(245, 101, 101, 0.3);
-    color: #fc8181;
-    padding: 0.875rem 1rem;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.95rem;
-}
-
+/* =================== Divider =================== */
 .divider {
     display: flex;
     align-items: center;
-    text-align: center;
-    margin: 2rem 0;
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.85rem;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    color: #9ca3af;
+    font-size: 0.8rem;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .divider::before,
 .divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: 1px;
+    background: rgba(45, 80, 22, 0.12);
 }
 
-.divider span {
-    padding: 0 1rem;
-}
-
+/* =================== Demo Logins =================== */
 .demo-logins {
-    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .demo-label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    text-align: center;
-    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8D6E63;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.75rem;
 }
 
 .demo-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    display: flex;
+    gap: 0.75rem;
 }
 
 .demo-button {
-    padding: 1rem 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 500;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1.5px solid transparent;
 }
 
-.demo-button:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(72, 187, 120, 0.5);
-    transform: translateY(-2px);
+.demo-button.admin {
+    background: rgba(147, 51, 234, 0.08);
+    border-color: rgba(147, 51, 234, 0.2);
+    color: #7c3aed;
 }
 
 .demo-button.admin:hover:not(:disabled) {
-    border-color: rgba(237, 137, 54, 0.5);
+    background: rgba(147, 51, 234, 0.15);
+    transform: translateY(-1px);
+}
+
+.demo-button.farmer {
+    background: rgba(45, 80, 22, 0.08);
+    border-color: rgba(45, 80, 22, 0.2);
+    color: #2D5016;
+}
+
+.demo-button.farmer:hover:not(:disabled) {
+    background: rgba(45, 80, 22, 0.15);
+    transform: translateY(-1px);
+}
+
+.demo-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .demo-icon {
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
+/* =================== Footer =================== */
 .login-footer {
     text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.login-footer p {
-    color: rgba(255, 255, 255, 0.5);
+    margin-top: 1.5rem;
     font-size: 0.85rem;
-    margin: 0;
+    color: #8D6E63;
+    line-height: 1.6;
 }
 
-/* Animated background */
+/* =================== Error / Info Messages =================== */
+.error-message {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #dc2626;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.success-message {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #059669;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-message {
+    background: rgba(59, 130, 246, 0.07);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: #2563eb;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* =================== Animated Background =================== */
 .login-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     overflow: hidden;
-    z-index: 1;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .particle {
     position: absolute;
-    width: 300px;
-    height: 300px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(72, 187, 120, 0.1) 0%, transparent 70%);
-    animation: float-particle 15s infinite ease-in-out;
+    opacity: 0.06;
+    animation: drift linear infinite;
 }
 
 .particle:nth-child(1) {
-    left: 10%;
-    top: 20%;
-    animation-delay: 0s;
+    width: 300px;
+    height: 300px;
+    background: #2D5016;
+    top: -80px;
+    left: -60px;
+    animation-duration: 20s;
 }
 
 .particle:nth-child(2) {
-    right: 10%;
-    top: 40%;
-    animation-delay: 2s;
+    width: 200px;
+    height: 200px;
+    background: #7CB342;
+    top: 60%;
+    right: -40px;
+    animation-duration: 25s;
+    animation-delay: -5s;
 }
 
 .particle:nth-child(3) {
-    left: 50%;
-    bottom: 20%;
-    animation-delay: 4s;
+    width: 150px;
+    height: 150px;
+    background: #8D6E63;
+    bottom: -30px;
+    left: 40%;
+    animation-duration: 18s;
+    animation-delay: -10s;
 }
 
 .particle:nth-child(4) {
-    right: 30%;
-    bottom: 30%;
-    animation-delay: 6s;
+    width: 100px;
+    height: 100px;
+    background: #2D5016;
+    top: 30%;
+    left: 10%;
+    animation-duration: 22s;
+    animation-delay: -3s;
 }
 
 .particle:nth-child(5) {
-    left: 20%;
-    bottom: 40%;
-    animation-delay: 8s;
+    width: 250px;
+    height: 250px;
+    background: #7CB342;
+    bottom: 20%;
+    right: 15%;
+    animation-duration: 30s;
+    animation-delay: -8s;
 }
 
-@keyframes float-particle {
+@keyframes drift {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
 
-    0%,
+    50% {
+        transform: translateY(-30px) rotate(180deg);
+    }
+
     100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    33% {
-        transform: translate(20px, -20px) scale(1.1);
-    }
-
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
+        transform: translateY(0) rotate(360deg);
     }
 }
 
-@media (max-width: 768px) {
+/* =================== Responsive =================== */
+@media (max-width: 480px) {
     .login-card {
-        padding: 2rem;
-        margin: 1rem;
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .login-header h1 {
+        font-size: 1.875rem;
     }
 
     .demo-buttons {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 }

@@ -11,8 +11,8 @@ def load_soil_health_card(path: str):
     # We want to treat it as a stream of updates (initial snapshot).
     return pw.io.csv.read(
         path,
-        schema=SoilState, # Explicit schema required
-        mode="streaming" 
+        schema=SoilState,
+        mode="static" 
     )
 
 def load_simulated_stream(path: str, schema=None):

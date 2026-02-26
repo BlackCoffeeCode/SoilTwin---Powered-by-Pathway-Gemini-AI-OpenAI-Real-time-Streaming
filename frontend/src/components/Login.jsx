@@ -32,8 +32,8 @@ const Login = () => {
         setLoading(true);
 
         const credentials = {
-            admin: { username: 'admin', password: 'password' },
-            farmer: { username: 'farmer', password: 'password' },
+            admin: { username: 'farmer2', password: 'farmer123' },
+            farmer: { username: 'farmer', password: 'farmer123' },
         };
 
         const creds = credentials[demoUser];
@@ -121,14 +121,6 @@ const Login = () => {
                 <div className="demo-logins">
                     <p className="demo-label">Quick Demo Access:</p>
                     <div className="demo-buttons">
-                        <button
-                            onClick={() => handleDemoLogin('admin')}
-                            className="demo-button admin"
-                            disabled={loading}
-                        >
-                            <span className="demo-icon">👑</span>
-                            <span>Admin Login</span>
-                        </button>
                         <button
                             onClick={() => handleDemoLogin('farmer')}
                             className="demo-button farmer"

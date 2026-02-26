@@ -12,7 +12,7 @@ import os
 from dotenv import load_dotenv
 
 # Database imports
-from .crud.user_crud import get_user_by_username, verify_password
+from backend.crud.user_crud import get_user_by_username, verify_password
 
 load_dotenv()
 
