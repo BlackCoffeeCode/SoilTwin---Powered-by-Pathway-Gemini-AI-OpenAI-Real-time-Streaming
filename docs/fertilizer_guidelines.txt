@@ -1,23 +1,140 @@
-FERTILIZER APPLICATION GUIDELINES (ICAR STANDARDS)
+ICAR SOIL HEALTH AND FERTILIZER GUIDELINES
+=========================================
+Source: Indian Council of Agricultural Research (ICAR), New Delhi
 
-1. UREA (Nitrogen Source - 46%)
-   - Standard Dosage: 100-120 kg/ha for Wheat (split into 2-3 doses).
-   - Application Timing: Basal (at sowing), CRI stage (20-25 days), and Flowering.
-   - Efficiency Rule: Do not apply if heavy rain is forecast (leads to leaching).
-   - Cost Saving: If Soil Nitrogen > 560 kg/ha, reduce Urea dosage by 25%.
+1. NITROGEN (N) MANAGEMENT
+---------------------------
+Recommended N levels in soil: 280–560 kg/ha (Optimal)
+Low: <280 kg/ha | Critical: <140 kg/ha | High: >560 kg/ha
 
-2. DAP (Di-Ammonium Phosphate - 18% N, 46% P)
-   - Usage: Primary source of Phosphorus.
-   - Application: Must be applied BASAL (at sowing). Top dressing is ineffective as P is immobile in soil.
-   - Rule: If Soil Phosphorus > 25 kg/ha, reduce DAP application by 15-20%.
+Nitrogen Sources and Application Rates:
+- Urea (46% N): 100–120 kg/ha for wheat; 120–150 kg/ha for rice
+  Apply in 2–3 split doses: 50% basal + 25% at tillering + 25% at flag leaf
+- DAP (18% N, 46% P): 100–130 kg/ha as basal dose
+- Ammonium Sulphate (20.6% N): 200–250 kg/ha for acidic soils
+- CAN (Calcium Ammonium Nitrate, 26% N): Best for heavy soils
 
-3. MOP (Muriate of Potash - 60% K)
-   - Usage: Potassium for root strength and disease resistance.
-   - Deficiency: If K < 140 kg/ha, apply MOP full dose.
-   - Excess: If K > 280 kg/ha, skip MOP application.
+Leaching Loss: N leaches at 0.8 kg/ha per mm of rainfall. Avoid urea
+application before heavy rain (>20mm predicted).
 
-4. GENERAL SOIL HEALTH RULES
-   - Critical Nitrogen Limit: < 280 kg/ha (Low), 280-560 (Medium), > 560 (High).
-   - Critical Phosphorus Limit: < 10 kg/ha (Low), 10-25 (Medium), > 25 (High).
-   - Critical Potassium Limit: < 140 kg/ha (Low), 140-280 (Medium), > 280 (High).
-   - Moisture: Wheat requires 4-6 irrigations. Critical stages: CRI (21 days), Tillering, Booting.
+Nitrogen Deficiency Symptoms:
+- Yellowing of older leaves (chlorosis) from tip to base
+- Stunted plant growth, pale green to yellow colouration
+- Reduced tillering in wheat and rice
+
+Cost Optimisation:
+- If N > 560 kg/ha: Skip next urea dose (saves ₹450–₹500/acre)
+- Use soil test before each season to avoid over-application
+- Slow-release urea (neem-coated) reduces leaching by 15–20%
+
+2. PHOSPHORUS (P) MANAGEMENT
+------------------------------
+Recommended P levels: 11–22 kg/ha (Optimal)
+Low: <11 kg/ha | Critical: <5 kg/ha | High: >22 kg/ha
+
+Phosphorus Sources:
+- DAP (46% P₂O₅): 25–30 kg/ha as basal application
+- SSP (16% P₂O₅): 60–80 kg/ha for P-deficient soils
+- Rock Phosphate: Suitable for acidic soils (pH < 6.5)
+
+Key Facts:
+- P is immobile in soil; must be placed near root zone
+- P fixation is high in: calcareous soils (pH>7.5) and acidic soils (pH<5.5)
+- Apply P fertilisers 2–3 days before transplanting/sowing
+- Mycorrhizal inoculants improve P uptake efficiency by 20–30%
+
+P Deficiency Symptoms:
+- Purpling/reddening of leaves (anthocyanin accumulation)
+- Dark green foliage followed by bronze or olive discolouration
+- Poor root development, delayed maturity
+
+3. POTASSIUM (K) MANAGEMENT
+-----------------------------
+Recommended K levels: 110–280 kg/ha (Optimal)
+Low: <110 kg/ha | Critical: <55 kg/ha | High: >280 kg/ha
+
+Potassium Sources:
+- MOP (Muriate of Potash, 60% K₂O): 20–30 kg/ha
+- SOP (Sulphate of Potash, 50% K₂O): Preferred for chloride-sensitive crops
+- Wood ash: 5–8 tonnes/ha (low analysis, organic source)
+
+Key Facts:
+- K improves disease resistance, drought tolerance, and grain quality
+- Sandy soils are more prone to K leaching than clay soils
+- Apply K in split: 50% basal + 50% at active growth stage
+
+K Deficiency Symptoms:
+- Scorching/browning of leaf tips and margins (leaf scorch)
+- Weak stems, lodging in cereals
+- Shrivelled, low-weight grains
+
+4. ORGANIC CARBON (OC) AND SOIL HEALTH
+----------------------------------------
+Target OC: >0.75% for optimal crop productivity
+Low: <0.5% (degraded soil) | Medium: 0.5–0.75% | High: >0.75%
+
+FYM (Farm Yard Manure) Application:
+- 10–12 tonnes FYM/ha before sowing
+- N contribution: 0.5%, P: 0.2%, K: 0.5% of dry weight
+- Improves soil structure, water retention, microbial activity
+
+Vermicompost:
+- 3–5 tonnes/ha as basal application
+- Contains plant growth hormones and beneficial microbes
+
+Green Manure:
+- Dhaincha (Sesbania): Fixes 80–100 kg N/ha in 45–60 days
+- Apply green manure 2–3 weeks before transplanting
+
+5. pH MANAGEMENT
+-----------------
+Optimal range: 6.0–7.5
+Acidic (<6.0): Apply agricultural lime — 2–4 tonnes/ha
+Alkaline (>7.5): Apply gypsum (calcium sulphate) — 1–2 tonnes/ha
+                 or sulphur at 200–300 kg/ha
+
+6. MOISTURE AND IRRIGATION
+---------------------------
+Optimal soil moisture for wheat: 40–60%
+Critical irrigation stages for wheat:
+  1. Crown root initiation (20–25 DAS)
+  2. Tillering (40–45 DAS)
+  3. Jointing (60–65 DAS)
+  4. Flowering (80–85 DAS)
+  5. Grain filling (100–105 DAS)
+
+Irrigation requirement: 400–450 mm total for wheat season
+Each irrigation event: 50–75 mm (5–7 cm depth)
+Avoid waterlogging: drains must empty field within 24 hours
+
+7. FERTILIZER COST SAVINGS GUIDE
+----------------------------------
+| Scenario                        | Action           | Estimated Saving |
+|---------------------------------|------------------|-----------------|
+| N > 560 kg/ha                   | Skip Urea dose   | ₹450–500/acre   |
+| P > 22 kg/ha                    | Skip DAP         | ₹280–320/acre   |
+| K > 280 kg/ha                   | Skip MOP         | ₹180–200/acre   |
+| OC > 0.75%, after FYM           | Reduce N by 20%  | ₹150–200/acre   |
+
+8. CROP-SPECIFIC NPK REMOVAL (kg/ha per tonne of grain)
+---------------------------------------------------------
+| Crop   | N removal | P removal | K removal |
+|--------|-----------|-----------|-----------|
+| Wheat  | 20 kg/t   | 3.75 kg/t | 15 kg/t   |
+| Rice   | 18 kg/t   | 4 kg/t    | 14 kg/t   |
+| Maize  | 22 kg/t   | 4 kg/t    | 18 kg/t   |
+| Cotton | 25 kg/t   | 5 kg/t    | 20 kg/t   |
+
+9. INTEGRATED NUTRIENT MANAGEMENT (INM)
+-----------------------------------------
+Principle: Combine organic + inorganic + biofertilisers for sustainability.
+- Replace 20–25% chemical N with FYM or green manure
+- Biofertilisers: Rhizobium (legumes), Azotobacter (cereals), PSB (P solubilising)
+- Apply bio-fertilisers as seed treatment or soil drench
+
+10. SOIL TEST-BASED FERTILIZER RECOMMENDATIONS (STBFR)
+--------------------------------------------------------
+Always conduct a soil test before each crop season.
+Contact nearest ICAR-KVK (Krishi Vigyan Kendra) or state agricultural university
+for free soil health card analysis.
+National Soil Health Card scheme: www.soilhealth.dac.gov.in

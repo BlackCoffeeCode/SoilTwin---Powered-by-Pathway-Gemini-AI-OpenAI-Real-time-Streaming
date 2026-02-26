@@ -708,98 +708,145 @@ async def ask_question(request: Request, q: Question, current_user: str = Depend
         except:
             guidelines = "Guidelines unavailable."
 
-    # 3. Call LLM (OpenAI) using .env key
-    from openai import OpenAI
-    
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        return {
-            "answer": "AI API Key (OPENAI_API_KEY) missing. Please update .env file.",
-            "cost_saving": "N/A"
-        }
-        
-    client = OpenAI(api_key=api_key)
-    # Use gpt-4o-mini based on user request
-    model_name = "gpt-4o-mini"
+    # 3. Build shared prompt (used by all LLM providers)
+    prompt_system = "You are an agricultural expert helping an Indian farmer."
+    prompt_user = f"""
+You are an agricultural expert helping an Indian farmer.
 
-    prompt = f"""
-    You are an agricultural expert helping an Indian farmer.
-    
-    Current Soil Status (Live from Pathway Streaming Engine):
-    Nitrogen: {state.get('nitrogen')} kg/ha ({state.get('status_n')})
-    Phosphorus: {state.get('phosphorus')} kg/ha ({state.get('status_p')})
-    Potassium: {state.get('potassium')} kg/ha ({state.get('status_k')})
-    Moisture: {state.get('moisture')}%
-    
-    Relevant Agricultural Knowledge (from Pathway Vector RAG):
-    {guidelines[:3000]}
-    (End of Context)
-    
-    Farmer Question: {q.text}
-    
-    Instructions:
-    - Answer in simple Hinglish (Hindi + English mix) or English as appropriate.
-    - Be brief and actionable.
-    - If suggesting fertilizer, mention estimated cost savings if they skip unnecessary application.
-    - Use the provided Context Guidelines to support your answer.
+Current Soil Status (Live from Pathway Streaming Engine):
+Nitrogen: {state.get('nitrogen')} kg/ha ({state.get('status_n')})
+Phosphorus: {state.get('phosphorus')} kg/ha ({state.get('status_p')})
+Potassium: {state.get('potassium')} kg/ha ({state.get('status_k')})
+Moisture: {state.get('moisture')}%
+
+Relevant Agricultural Knowledge (from Pathway Vector RAG):
+{guidelines[:3000]}
+(End of Context)
+
+Farmer Question: {q.text}
+
+Instructions:
+- Answer in simple Hinglish (Hindi + English mix) or English as appropriate.
+- Be brief and actionable.
+- If suggesting fertilizer, mention estimated cost savings if they skip unnecessary application.
+- Use the provided Context Guidelines to support your answer.
     """
-    
-    try:
-        response = client.chat.completions.create(
-            model=model_name,
-            messages=[
-                {"role": "system", "content": "You are an agricultural expert helping an Indian farmer."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7
-        )
-        answer_text = response.choices[0].message.content
-        
+
+    # 4. Multi-LLM Router: select provider via LLM_PROVIDER env var.
+    # Supported values: 'openai' (default) | 'gemini' | 'claude'
+    llm_provider = os.getenv("LLM_PROVIDER", "openai").lower()
+    answer_text = None
+    used_provider = llm_provider
+
+    # ── OpenAI ────────────────────────────────────────────────────────────────
+    if answer_text is None and (llm_provider == "openai" or llm_provider not in ("gemini", "claude")):
+        openai_key = os.getenv("OPENAI_API_KEY")
+        if openai_key:
+            try:
+                from openai import OpenAI as _OpenAI
+                _client = _OpenAI(api_key=openai_key)
+                _resp = _client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": prompt_system},
+                        {"role": "user",   "content": prompt_user}
+                    ],
+                    temperature=0.7
+                )
+                answer_text = _resp.choices[0].message.content
+                used_provider = "openai/gpt-4o-mini"
+                print("✅ LLM response via OpenAI (gpt-4o-mini)")
+            except Exception as e:
+                print(f"⚠️  OpenAI error: {e}. Trying next provider...")
+
+    # ── Google Gemini ─────────────────────────────────────────────────────────
+    if answer_text is None and (llm_provider == "gemini" or llm_provider not in ("openai", "claude")):
+        gemini_key = os.getenv("GOOGLE_API_KEY")
+        if gemini_key:
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=gemini_key)
+                _model = genai.GenerativeModel("gemini-1.5-flash")
+                _resp = _model.generate_content(f"{prompt_system}\n\n{prompt_user}")
+                answer_text = _resp.text
+                used_provider = "gemini/gemini-1.5-flash"
+                print("✅ LLM response via Google Gemini (gemini-1.5-flash)")
+            except Exception as e:
+                print(f"⚠️  Gemini error: {e}. Trying next provider...")
+
+    # ── Anthropic Claude ──────────────────────────────────────────────────────
+    if answer_text is None and (llm_provider == "claude" or llm_provider not in ("openai", "gemini")):
+        anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+        if anthropic_key:
+            try:
+                import anthropic
+                _client = anthropic.Anthropic(api_key=anthropic_key)
+                _resp = _client.messages.create(
+                    model="claude-3-haiku-20240307",
+                    max_tokens=1024,
+                    system=prompt_system,
+                    messages=[{"role": "user", "content": prompt_user}]
+                )
+                answer_text = _resp.content[0].text
+                used_provider = "claude/claude-3-haiku"
+                print("✅ LLM response via Anthropic Claude (claude-3-haiku)")
+            except Exception as e:
+                print(f"⚠️  Claude error: {e}. Falling back to rule engine...")
+
+    # ── LLM succeeded ─────────────────────────────────────────────────────────
+    if answer_text:
         return {
             "answer": answer_text,
-            "cost_saving": "Calculated in advice" 
+            "cost_saving": "Calculated in advice",
+            "provider": used_provider
         }
-    except Exception as e:
-        # FALLBACK FOR DEMO: If API fails (Rate Limit), return a deterministic rule-based answer
-        print(f"AI API Error: {e}")
-        
-        # FALLBACK: Robust Rule-Based Expert System (Offline Mode)
-        # This simulates the AI's logic when the LLM API is rate-limited or unavailable.
-        print(f"Switched to Expert Rule Engine due to API: {e}")
-        
-        n_val = float(state.get('nitrogen', 0))
-        p_val = float(state.get('phosphorus', 0))
-        k_val = float(state.get('potassium', 0))
-        h2o = float(state.get('moisture', 0))
 
-        advice_parts = []
-        cost_savings = 0.0
-        
-        # 1. Nitrogen Analysis
-        if n_val < 280:
-            advice_parts.append(f"⚠️ **Nitrogen is critically low ({n_val} kg/ha).** Immediate application of Urea (40kg/acre) is recommended to prevent yellowing.")
-            cost_savings += 0 # Cost incurred
-        elif n_val > 560:
-            advice_parts.append(f"✅ **Nitrogen levels are high ({n_val} kg/ha).** You can safely SKIP the next scheduled Urea dosage.")
-            cost_savings += 450 # Approx saving
-        else:
-            advice_parts.append(f"✅ **Nitrogen is optimal.** Maintain current schedule.")
+    # ── FALLBACK: Rule-Based Expert System (Offline Mode) ─────────────────────
+    # Activates when ALL LLM providers are unavailable (rate-limited / no key).
+    print("⚠️  All LLM providers failed. Activating rule-based expert engine.")
+    n_val = float(state.get('nitrogen', 0))
+    p_val = float(state.get('phosphorus', 0))
+    k_val = float(state.get('potassium', 0))
+    h2o   = float(state.get('moisture', 0))
 
-        # 2. Moisture Analysis
-        if h2o < 30:
-            advice_parts.append(f"💧 **Soil moisture is low ({h2o}%).** Irrigation is required within 24 hours.")
-        elif h2o > 80:
-            advice_parts.append(f"⚠️ **Soil is saturated ({h2o}%).** Delay irrigation to prevent root rot.")
-        
-        # 3. Overall Recommendation
-        if not advice_parts:
-            advice_parts.append("Soil parameters are within the ideal range for Wheat.")
+    advice_parts = []
+    cost_savings  = 0.0
 
-        final_advice = " ".join(advice_parts)
-        
-        saving_text = f"₹ {int(cost_savings)} estimated savings" if cost_savings > 0 else "Yield Protection Mode"
+    # Nitrogen
+    if n_val < 280:
+        advice_parts.append(f"⚠️ **Nitrogen is critically low ({n_val} kg/ha).** Apply Urea (40 kg/acre) immediately to prevent yellowing.")
+        cost_savings += 0
+    elif n_val > 560:
+        advice_parts.append(f"✅ **Nitrogen is high ({n_val} kg/ha).** Safely SKIP next Urea dose.")
+        cost_savings += 450
+    else:
+        advice_parts.append(f"✅ **Nitrogen is optimal.** Maintain current schedule.")
 
-        return {
-            "answer": final_advice,
-            "cost_saving": saving_text
-        }
+    # Phosphorus
+    if p_val < 11:
+        advice_parts.append(f"⚠️ **Phosphorus is low ({p_val} kg/ha).** Apply DAP (25 kg/acre) before sowing.")
+    elif p_val > 22:
+        advice_parts.append(f"✅ **Phosphorus is adequate.** Skip DAP this season.")
+        cost_savings += 300
+
+    # Potassium
+    if k_val < 110:
+        advice_parts.append(f"⚠️ **Potassium is deficient ({k_val} kg/ha).** Apply MOP (20 kg/acre).")
+
+    # Moisture
+    if h2o < 30:
+        advice_parts.append(f"💧 **Soil moisture is low ({h2o}%).** Irrigate within 24 hours.")
+    elif h2o > 80:
+        advice_parts.append(f"⚠️ **Soil is saturated ({h2o}%).** Delay irrigation to prevent root rot.")
+
+    if not advice_parts:
+        advice_parts.append("Soil parameters are within ideal range for Wheat. Continue current schedule.")
+
+    saving_text = f"₹ {int(cost_savings)} estimated savings this season" if cost_savings > 0 else "Yield Protection Mode"
+
+    return {
+        "answer": " ".join(advice_parts),
+        "cost_saving": saving_text,
+        "provider": "rule-engine"
+    }
+

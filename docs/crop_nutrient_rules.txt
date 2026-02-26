@@ -1,23 +1,134 @@
-CROP NUTRIENT DEFICIENCY & MANAGEMENT RULES
+CROP NUTRIENT REQUIREMENTS AND MANAGEMENT GUIDE
+================================================
+Source: ICAR-Indian Institute of Wheat and Barley Research (IIWBR),
+        ICAR-National Rice Research Institute (NRRI), FCO Guidelines
 
-1. NITROGEN (N) DEFICIENCY
-   - Symptoms: V-shaped yellowing of lower leaves (Chlorosis), stunted growth.
-   - Management: Top dressing with Urea. Foliar spray of 2% Urea if acute.
-   - Crop Impact: Significant yield reduction in cereals (Wheat/Rice).
+1. WHEAT (Triticum aestivum)
+-----------------------------
+Season: Rabi (Oct/Nov sowing → Mar/Apr harvest)
+NPK Recommendation (kg/ha):
+  - Irrigated:      120:60:40 (N:P₂O₅:K₂O)
+  - Rainfed:         80:40:30
+  - High-yield var: 150:75:60
 
-2. PHOSPHORUS (P) DEFICIENCY
-   - Symptoms: Purple tint on leaves (Anthocyanin pigment), poor root development, delayed maturity.
-   - Management: Apply DAP or SSP near the root zone.
+Growth Stages & Nutrient Needs:
+  Week 0–2   Germination     P critical for root establishment
+  Week 3–5   Tillering       N critical — apply 1st split N here
+  Week 6–8   Jointing        N+K for stem strength
+  Week 9–11  Heading         Balanced NPK for ear formation
+  Week 12–14 Grain filling   K critical for grain weight
+  Week 15–16 Maturity        Reduce irrigation, no fertilizer
 
-3. POTASSIUM (K) DEFICIENCY
-   - Symptoms: Scorching/burning of leaf margins which proceeds inwards (Marginal Necrosis). Weak stems (Lodging).
-   - Management: Apply MOP.
+N Application Schedule for Wheat:
+  - 50% N as basal (at sowing with DAP)
+  - 25% N at crown root initiation (CRI, 21 DAS)
+  - 25% N at tillering (40–45 DAS)
 
-4. SOIL MOISTURE MANAGEMENT
-   - Saturation (>80%): Leads to root rot and nitrogen loss (denitrification). Stop Irrigation.
-   - Stress (<30%): Wilting occurs. Yield penalty is high during flowering stage.
-   - Optimal Range: 50% - 70% Field Capacity.
+Soil Health Targets for Wheat:
+  - pH: 6.5–7.5 (optimal)
+  - OC: >0.75%
+  - N: 280–560 kg/ha
+  - P: 15–25 kg/ha
+  - K: 150–280 kg/ha
+  - Moisture during grain fill: 45–55%
 
-5. INTEGRATED NUTRIENT MANAGEMENT (INM)
-   - Organic Carbon: If OC < 0.5%, apply FYM (Farm Yard Manure) @ 10 tons/ha.
-   - pH Standards: Ideal is 6.5 - 7.5. acidic soils (<6) need Lime; alkaline (>8) need Gypsum.
+Yield Limiting Factors:
+  1. Nitrogen deficiency: yellowing, stunted growth
+  2. Late sowing (after Nov 25): yield penalty 30–35 kg/ha per day delay
+  3. Waterlogging during tillering: 15–25% yield loss
+  4. Powdery mildew (low N + high humidity): apply fungicide
+
+2. RICE / PADDY (Oryza sativa)
+--------------------------------
+Season: Kharif (Jun/Jul transplant → Oct/Nov harvest)
+NPK Recommendation (kg/ha):
+  - High-yield HYV: 120:60:60
+  - Traditional:     80:40:40
+  - SRI method:      60:30:30 (with organic supplements)
+
+N Application Schedule for Rice:
+  - 1/3 N as basal (before transplanting)
+  - 1/3 N at active tillering (15–20 DAT)
+  - 1/3 N at panicle initiation (40–45 DAT)
+
+Water Management:
+  - Maintain 5 cm standing water during tillering
+  - Drain for 7–10 days at mid-tillering (improves root aeration)
+  - Alternate wetting and drying (AWD) saves 20–30% water
+
+Zinc deficiency in rice:
+  - Common in alkali soils (pH > 8)
+  - Symptoms: brown rusty spots, khaira disease
+  - Cure: ZnSO₄ at 25 kg/ha as basal or foliar spray (0.5%)
+
+3. MAIZE (Zea mays)
+---------------------
+Season: Kharif / Spring
+NPK Recommendation: 120:60:60 kg/ha
+
+N Application for Maize:
+  - 30% as basal + 40% at knee-high + 30% at tasselling
+  - Side-dress urea at V6 stage for best efficiency
+  
+Key Micronutrients:
+  - Zinc: 25 kg ZnSO₄/ha for deficient soils
+  - Boron: 1 kg/ha for silking support
+
+4. SUGARCANE (Saccharum officinarum)
+--------------------------------------
+Season: Planted Oct/Nov (plant crop) or ratoon
+NPK Recommendation:
+  - Plant crop:  250:85:120 kg/ha
+  - Ratoon crop: 200:65:100 kg/ha
+
+Apply N in 3–4 splits over the season.
+Trash mulching reduces N requirement by 15–20%.
+
+5. COTTON (Gossypium hirsutum)
+--------------------------------
+NPK Recommendation: 150:75:75 kg/ha for Bt Cotton
+Critical Stages:
+  - Squaring (45–50 DAS): N+K boost for boll retention
+  - Boll development (70–90 DAS): K for fibre quality
+
+6. DEFICIENCY IDENTIFICATION QUICK GUIDE
+------------------------------------------
+| Deficiency  | Visual Symptoms                          | Fix                    |
+|-------------|------------------------------------------|------------------------|
+| Nitrogen    | Yellowing from older leaves, tip to base | Urea/Ammonium Sulphate |
+| Phosphorus  | Purple/red coloration on young leaves    | DAP / SSP              |
+| Potassium   | Leaf edge scorch, weak stems             | MOP / SOP              |
+| Zinc        | Interveinal chlorosis, brown spots       | ZnSO₄ 25 kg/ha         |
+| Iron        | Interveinal yellowing on young leaves    | FeSO₄ spray 0.5%       |
+| Boron       | Die-back of shoot tips                   | Borax 5 kg/ha          |
+| Magnesium   | Interveinal chlorosis, older leaves      | MgSO₄ 25 kg/ha         |
+| Manganese   | Grey speck (oats), marsh spot (peas)     | MnSO₄ foliar spray     |
+
+7. FCO (FERTILIZER CONTROL ORDER) COMPLIANCE
+----------------------------------------------
+All fertilizers sold in India must conform to FCO, 1985 standards:
+- Urea: minimum 46% N
+- DAP: minimum 18% N + 46% P₂O₅
+- MOP: minimum 60% K₂O
+- SSP: minimum 16% P₂O₅
+- NPK complexes: labelled N:P:K ratio guaranteed
+
+Buy fertilizers only from licensed dealers with proper bills.
+Report sub-standard fertilizers: 1800-180-1551 (Toll-free)
+
+8. SEASONAL ADVISORY CALENDAR (HARYANA / PUNJAB)
+--------------------------------------------------
+Month       Activity
+──────────  ─────────────────────────────────────────────────
+October     Wheat sowing preparation, soil test, apply FYM
+November    Wheat sowing, basal NPK, pre-emergence herbicide
+December    CRI irrigation + first N split
+January     Second N split at tillering, monitor for yellow rust
+February    Jointing stage — watch moisture, apply K if low
+March       Grain filling — ensure adequate moisture, no N
+April       Harvest wheat, prepare for rice nursery
+May–June    Soil health card tests, repair irrigation channels
+July        Rice transplanting, basal NPK for rice
+August      Active tillering, N split for rice
+September   Panicle initiation, K application
+October     Rice harvest, wheat season resumes

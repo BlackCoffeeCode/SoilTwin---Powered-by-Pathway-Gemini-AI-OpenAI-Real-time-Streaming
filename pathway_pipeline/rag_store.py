@@ -125,26 +125,66 @@ def setup_rag_store(docs_folder: str = "./docs"):
 def query_vector_store(vector_store, question: str, k: int = 3):
     """
     Query the Pathway vector store for relevant documents.
-    
+
+    Uses the Pathway VectorStoreClient to send an HTTP query to the
+    running VectorStoreServer (default port 8666). Falls back to direct
+    file loading if the server is not yet available.
+
     Args:
-        vector_store: VectorStoreServer instance
-        question: User query
-        k: Number of top results
-    
+        vector_store: VectorStoreServer instance (used to confirm initialisation)
+        question: User query string
+        k: Number of top document chunks to retrieve
+
     Returns:
-        List of relevant document chunks
+        List[str]: Relevant document chunks ordered by similarity
     """
+    # --- Primary path: Pathway VectorStoreClient (HTTP) ---
     try:
-        # If it's a Pathway VectorStoreServer
-        if hasattr(vector_store, 'similarity_search'):
-            results = vector_store.similarity_search(question, k=k)
-            return [doc.text for doc in results]
-        else:
-            print("⚠️  Unknown vector store type")
-            return []
-    except Exception as e:
-        print(f"Error querying vector store: {e}")
-        return []
+        from pathway.xpacks.llm.vector_store import VectorStoreClient
+
+        # VectorStoreServer listens on localhost:8666 by default
+        client = VectorStoreClient(host="127.0.0.1", port=8666)
+        results = client(question, k=k)
+
+        if results:
+            chunks = [r.get("text", "") for r in results if r.get("text")]
+            if chunks:
+                print(f"✅ Pathway VectorStoreClient returned {len(chunks)} chunks")
+                return chunks
+
+    except Exception as client_err:
+        print(f"⚠️  VectorStoreClient error: {client_err}. Trying HTTP fallback...")
+
+    # --- Secondary path: raw HTTP query to /v1/retrieve ---
+    try:
+        import requests as _req
+        payload = {"query": question, "k": k}
+        resp = _req.post("http://127.0.0.1:8666/v1/retrieve", json=payload, timeout=3)
+        if resp.status_code == 200:
+            data = resp.json()
+            chunks = [item.get("text", "") for item in data.get("results", []) if item.get("text")]
+            if chunks:
+                print(f"✅ HTTP RAG retrieved {len(chunks)} chunks")
+                return chunks
+    except Exception as http_err:
+        print(f"⚠️  HTTP RAG query error: {http_err}. Falling back to file loading.")
+
+    # --- Tertiary: direct file loading (offline fallback) ---
+    try:
+        import os
+        docs_folder = "./docs"
+        all_text = []
+        for fname in os.listdir(docs_folder):
+            if fname.endswith(".txt"):
+                with open(os.path.join(docs_folder, fname), "r", encoding="utf-8") as fh:
+                    all_text.append(fh.read())
+        if all_text:
+            print("📄 Using direct docs file loading as RAG fallback")
+            return all_text[:k]
+    except Exception as file_err:
+        print(f"❌ File fallback error: {file_err}")
+
+    return []
 
 
 if __name__ == "__main__":
