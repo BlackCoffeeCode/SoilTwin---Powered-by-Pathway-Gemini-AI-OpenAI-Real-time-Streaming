@@ -1,63 +1,63 @@
-    from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends, Request
-    from fastapi.security import OAuth2PasswordRequestForm
-    from pydantic import BaseModel, EmailStr, field_validator
-    from typing import Optional, List
-    from datetime import datetime
-    from slowapi import Limiter
-    from slowapi.util import get_remote_address
-    import json
-    import os
-    import boto3
-    import uuid
-    from botocore.exceptions import NoCredentialsError
-    from fastapi import File, UploadFile, Form
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends, Request
+from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel, EmailStr, field_validator
+from typing import Optional, List
+from datetime import datetime
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+import json
+import os
+import boto3
+import uuid
+from botocore.exceptions import NoCredentialsError
+from fastapi import File, UploadFile, Form
 
-    # Local imports
-    from .simulation_engine import process_event
-    from .auth import (
-        authenticate_user,
-        create_access_token,
-        get_current_user,
-        get_current_active_user
-    )
-    from .crud.user_crud import create_user, get_user_by_username, get_user_by_email, update_user_password
-    from .crud.password_reset_crud import create_reset_token, verify_reset_token, mark_token_used
-    from .crud.refresh_token_crud import create_refresh_token, verify_refresh_token, revoke_refresh_token
-    from .crud.user_crud import get_user_by_id
+# Local imports
+from .simulation_engine import process_event
+from .auth import (
+    authenticate_user,
+    create_access_token,
+    get_current_user,
+    get_current_active_user
+)
+from .crud.user_crud import create_user, get_user_by_username, get_user_by_email, update_user_password
+from .crud.password_reset_crud import create_reset_token, verify_reset_token, mark_token_used
+from .crud.refresh_token_crud import create_refresh_token, verify_refresh_token, revoke_refresh_token
+from .crud.user_crud import get_user_by_id
 
-    router = APIRouter()
+router = APIRouter()
 
-    # Rate limiter for API endpoints
-    limiter = Limiter(key_func=get_remote_address)
+# Rate limiter for API endpoints
+limiter = Limiter(key_func=get_remote_address)
 
-    # Output file for Pathway state
-    OUTPUT_FILE = "./data/current_state.csv"
+# Output file for Pathway state
+OUTPUT_FILE = "./data/current_state.csv"
 
-    # S3 Configuration for soil report uploads
-    S3_BUCKET = "soiltwin-uploads"        # Replace with your actual bucket name
-    S3_REGION = "ap-south-1"              # Replace with your bucket's region
-    s3_client = boto3.client('s3', region_name=S3_REGION)
+# S3 Configuration for soil report uploads
+S3_BUCKET = "soiltwin-farmers-reports"        # Replace with your actual bucket name
+S3_REGION = "ap-south-1"              # Replace with your bucket's region
+s3_client = boto3.client('s3', region_name=S3_REGION)
 
-    # Pydantic Models
-    class Event(BaseModel):
-        type: str
-        amount: Optional[float] = 0.0
-        data: Optional[dict] = {}
+# Pydantic Models
+class Event(BaseModel):
+    type: str
+    amount: Optional[float] = 0.0
+    data: Optional[dict] = {}
 
-    class Question(BaseModel):
-        text: str
+class Question(BaseModel):
+    text: str
 
-    class SimulateRequest(BaseModel):
-        days: int
+class SimulateRequest(BaseModel):
+    days: int
 
 
-    # ============================================================================
-    # AUTHENTICATION ENDPOINTS
-    # ============================================================================
+# ============================================================================
+# AUTHENTICATION ENDPOINTS
+# ============================================================================
 
-    @router.post("/login")
-    @limiter.limit("5/minute")  # Max 5 login attempts per minute
-    async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
+@router.post("/login")
+@limiter.limit("5/minute")  # Max 5 login attempts per minute
+async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
         """
         User login endpoint.
         Returns JWT access token and refresh token for authentication.
@@ -89,15 +89,15 @@
         }
 
 
-    class RegisterRequest(BaseModel):
+class RegisterRequest(BaseModel):
         username: str
         email: EmailStr
         fullname: str
         password: str
 
-    @router.post("/register")
-    @limiter.limit("3/minute")  # Max 3 registration attempts per minute
-    async def register_user(request: Request, data: RegisterRequest):
+@router.post("/register")
+@limiter.limit("3/minute")  # Max 3 registration attempts per minute
+async def register_user(request: Request, data: RegisterRequest):
         """
         User registration endpoint.
         Creates new user account with farmer role.
@@ -165,12 +165,12 @@
             )
 
 
-    class ForgotPasswordRequest(BaseModel):
+class ForgotPasswordRequest(BaseModel):
         email: EmailStr
 
-    @router.post("/forgot-password")
-    @limiter.limit("3/minute")  # Max 3 forgot password attempts per minute
-    async def forgot_password(request: Request, data: ForgotPasswordRequest):
+@router.post("/forgot-password")
+@limiter.limit("3/minute")  # Max 3 forgot password attempts per minute
+async def forgot_password(request: Request, data: ForgotPasswordRequest):
         """
         Forgot password endpoint.
         Generates a 6-digit reset token for the user.
@@ -206,14 +206,14 @@
             )
 
 
-    class ResetPasswordRequest(BaseModel):
+class ResetPasswordRequest(BaseModel):
         email: EmailStr
         token: str
         new_password: str
 
-    @router.post("/reset-password")
-    @limiter.limit("5/minute")  # Max 5 reset attempts per minute
-    async def reset_password(request: Request, data: ResetPasswordRequest):
+@router.post("/reset-password")
+@limiter.limit("5/minute")  # Max 5 reset attempts per minute
+async def reset_password(request: Request, data: ResetPasswordRequest):
         """
         Reset password endpoint.
         Verifies the reset token and updates the password.
@@ -264,11 +264,11 @@
             )
 
 
-    class RefreshTokenRequest(BaseModel):
+class RefreshTokenRequest(BaseModel):
         refresh_token: str
 
-    @router.post("/refresh")
-    async def refresh_access_token(data: RefreshTokenRequest):
+@router.post("/refresh")
+async def refresh_access_token(data: RefreshTokenRequest):
         """
         Refresh access token endpoint.
         Takes a valid refresh token and returns a new access token.
@@ -299,8 +299,8 @@
         }
 
 
-    @router.post("/logout")
-    async def logout(data: RefreshTokenRequest):
+@router.post("/logout")
+async def logout(data: RefreshTokenRequest):
         """
         Logout endpoint.
         Revokes the refresh token to prevent future refreshes.
@@ -312,8 +312,8 @@
         }
 
 
-    @router.get("/me")
-    async def read_users_me(current_user: dict = Depends(get_current_active_user)):
+@router.get("/me")
+async def read_users_me(current_user: dict = Depends(get_current_active_user)):
         """
         Get current authenticated user profile.
         Requires valid JWT token.
@@ -327,8 +327,8 @@
 
 
 
-    @router.get("/profile")
-    def get_profile(current_user: str = Depends(get_current_user)):
+@router.get("/profile")
+def get_profile(current_user: str = Depends(get_current_user)):
         """
         Returns the current farmer profile.
         """
@@ -348,61 +348,60 @@
                 data["location"] = "Ludhiana,IN"
                 data["name"] = "Suresh Singh"
             return {"status": "Found", "data": data}
-        
 
-        @router.post("/upload-soil-report")
+@router.post("/upload-soil-report")
 async def upload_soil_report(
-    file: UploadFile = File(...),
-    current_user: dict = Depends(get_current_active_user)
-):
-    """
-    Upload a soil report file to S3 and store its metadata in MongoDB.
-    Allowed file types: PDF, JPEG, PNG.
-    """
-    # Allowed MIME types
-    allowed_types = ["application/pdf", "image/jpeg", "image/png"]
-    if file.content_type not in allowed_types:
-        raise HTTPException(status_code=400, detail="Only PDF, JPEG, or PNG files are allowed")
+        file: UploadFile = File(...),
+        current_user: dict = Depends(get_current_active_user)
+    ):
+        """
+        Upload a soil report file to S3 and store its metadata in MongoDB.
+        Allowed file types: PDF, JPEG, PNG.
+        """
+        # Allowed MIME types
+        allowed_types = ["application/pdf", "image/jpeg", "image/png"]
+        if file.content_type not in allowed_types:
+            raise HTTPException(status_code=400, detail="Only PDF, JPEG, or PNG files are allowed")
 
-    # Generate a unique filename
-    file_extension = file.filename.split('.')[-1]
-    unique_id = str(uuid.uuid4())
-    s3_key = f"soil-reports/{current_user['username']}/{unique_id}.{file_extension}"
+        # Generate a unique filename
+        file_extension = file.filename.split('.')[-1]
+        unique_id = str(uuid.uuid4())
+        s3_key = f"soil-reports/{current_user['username']}/{unique_id}.{file_extension}"
 
-    try:
-        # Upload to S3
-        s3_client.upload_fileobj(
-            file.file,
-            S3_BUCKET,
-            s3_key,
-            ExtraArgs={"ContentType": file.content_type}
-        )
+        try:
+            # Upload to S3
+            s3_client.upload_fileobj(
+                file.file,
+                S3_BUCKET,
+                s3_key,
+                ExtraArgs={"ContentType": file.content_type}
+            )
 
-        # Construct the file URL (public-read if bucket allows)
-        file_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{s3_key}"
+            # Construct the file URL (public-read if bucket allows)
+            file_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{s3_key}"
 
-        # Save record to MongoDB
-        from .crud.soil_report_crud import create_soil_report
-        report = create_soil_report(
-            user_id=current_user["_id"],
-            filename=file.filename,
-            s3_url=file_url,
-            uploaded_at=datetime.utcnow()
-        )
+            # Save record to MongoDB
+            from .crud.soil_report_crud import create_soil_report
+            report = create_soil_report(
+                user_id=current_user["_id"],
+                filename=file.filename,
+                s3_url=file_url,
+                uploaded_at=datetime.utcnow()
+            )
 
-        return {
-            "message": "File uploaded successfully",
-            "file_url": file_url,
-            "report_id": str(report.inserted_id)
-        }
+            return {
+                "message": "File uploaded successfully",
+                "file_url": file_url,
+                "report_id": str(report.inserted_id)
+            }
 
-    except NoCredentialsError:
-        raise HTTPException(status_code=500, detail="AWS credentials not configured on server")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+        except NoCredentialsError:
+            raise HTTPException(status_code=500, detail="AWS credentials not configured on server")
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
-    @router.get("/soil-state")
-    def get_soil_state(current_user: str = Depends(get_current_user)):
+@router.get("/soil-state")
+def get_soil_state(current_user: str = Depends(get_current_user)):
         """
         Get current soil state. Requires authentication.
         Returns the latest computed soil state for the logged-in user.
@@ -431,8 +430,8 @@ async def upload_soil_report(
                 
         return {"status": "No data", "data": None}
 
-    @router.post("/events")
-    def trigger_event(event: Event, current_user: str = Depends(get_current_user)):
+@router.post("/events")
+def trigger_event(event: Event, current_user: str = Depends(get_current_user)):
         """
         Manually inject an event into the stream. Requires authentication.
         """
@@ -508,8 +507,8 @@ async def upload_soil_report(
                 
         return {"status": "Ignored", "detail": "Unknown event type"}
 
-    @router.get("/history")
-    def get_history_log(limit: int = 50, current_user: str = Depends(get_current_user)):
+@router.get("/history")
+def get_history_log(limit: int = 50, current_user: str = Depends(get_current_user)):
         """
         Fetch aggregated history of all simulated events (Rain, Irrigation, Fertilizer).
         Reads from local JSONL files.
@@ -573,8 +572,8 @@ async def upload_soil_report(
         return events[:limit]
 
 
-    @router.get("/external/ogd/{resource_id}")
-    async def get_ogd_data(resource_id: str):
+@router.get("/external/ogd/{resource_id}")
+async def get_ogd_data(resource_id: str):
         """
         Proxy to fetch data from data.gov.in using the server-side API key.
         Usage: GET /api/external/ogd/<resource_id>
@@ -599,8 +598,8 @@ async def upload_soil_report(
             print(f"OGD Proxy Error: {e}")
             raise HTTPException(status_code=502, detail=f"Failed to fetch from OGD: {str(e)}")
 
-    @router.get("/external/weather")
-    async def get_weather_data(location: str = "Ludhiana,IN"):
+@router.get("/external/weather")
+async def get_weather_data(location: str = "Ludhiana,IN"):
         """
         Fetches real-time weather from OpenWeatherMap.
         """
@@ -664,9 +663,9 @@ async def upload_soil_report(
                 "impact": "Data Offline"
             }
 
-    @router.post("/ask")
-    @limiter.limit("10/minute")  # Max 10 questions per minute
-    async def ask_question(request: Request, q: Question, current_user: str = Depends(get_current_user)):
+@router.post("/ask")
+@limiter.limit("10/minute")  # Max 10 questions per minute
+async def ask_question(request: Request, q: Question, current_user: str = Depends(get_current_user)):
         """
         RAG-based Question Answering with Pathway-Native Vector Retrieval.
         Uses Pathway's streaming vector engine for semantic search.

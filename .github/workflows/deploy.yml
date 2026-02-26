@@ -1,0 +1,29 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Generate deployment package
+        run: |
+          zip -r deploy.zip . -x "*.git*" "*.github*" "frontend/node_modules/*" "frontend/dist/*" "__pycache__/*" "*.pyc" "*.log" "*.pid" "venv/*"
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: soiltwin-backend
+          environment_name: Soiltwin-backend-env
+          version_label: ${{ github.sha }}
+          region: ap-south-1
+          deployment_package: deploy.zip
+          wait_for_deployment: true
