@@ -7,9 +7,9 @@ export default defineConfig({
     plugins: [react()],
     server: {
         port: 5173,
-        // Don't wait for all modules to be pre-bundled before serving
+        // Required for React Router: serve index.html for all unknown routes on refresh
+        historyApiFallback: true,
         warmup: {
-            // Pre-transform these critical files immediately on server start
             clientFiles: [
                 './src/main.jsx',
                 './src/App.jsx',
