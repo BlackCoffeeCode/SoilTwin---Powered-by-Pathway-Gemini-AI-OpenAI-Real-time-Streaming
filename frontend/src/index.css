@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -502,4 +503,783 @@ h6 {
   .nav-items {
     flex-wrap: wrap;
   }
+=======
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Living Earth Color Palette */
+  --forest-green: #2D5016;
+  --leaf-green: #7CB342;
+  --earth-brown: #6D4C41;
+  --warm-cream: #F5F1E8;
+  --accent-gold: #D4A574;
+  --sky-blue: #81C784;
+
+  /* Semantic Color Mapping */
+  --bg-main: #F5F1E8;
+  --bg-card: rgba(255, 251, 245, 0.9);
+  --bg-card-2: #FBF8F3;
+
+  --accent-primary: #2D5016;
+  --accent-secondary: #7CB342;
+  --accent-tertiary: #81C784;
+  --accent-gold: #D4A574;
+  --accent-red: #C62828;
+
+  --text-primary: #6D4C41;
+  --text-secondary: #8D6E63;
+  --text-light: #A1887F;
+
+  --border-natural: rgba(109, 76, 65, 0.15);
+  --shadow-soft: rgba(45, 80, 22, 0.08);
+}
+
+/* ==========================================
+   📐 GLOBAL TYPOGRAPHY SYSTEM
+   Modular scale · Living Earth palette
+   ========================================== */
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  line-height: 1.78;
+  color: #4a5e50;
+  background: linear-gradient(160deg, #eef5ee 0%, #dfe8e2 50%, #e8f0e4 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Headings ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  color: #0f2e1c;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.8rem, 6vw, 4.25rem);
+  letter-spacing: -1px;
+  line-height: 1.06;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.6px;
+  line-height: 1.12;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  letter-spacing: -0.3px;
+  line-height: 1.22;
+}
+
+h4 {
+  font-size: 1.4rem;
+  letter-spacing: 0;
+  font-weight: 600;
+  color: #1a3d26;
+}
+
+/* ── Body text ── */
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  line-height: 1.82;
+  color: #4a5e50;
+  font-size: 1.1rem;
+  max-width: 72ch;
+}
+
+/* ── Strong / emphasis ── */
+strong,
+b {
+  font-weight: 700;
+  color: #1a3d26;
+}
+
+em,
+i {
+  font-style: italic;
+  color: #5a6e5a;
+}
+
+/* ── Links ── */
+a {
+  color: #2D5016;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s ease, opacity 0.18s ease;
+}
+
+a:hover {
+  color: #4f9d44;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Small text / captions ── */
+small,
+.text-xs,
+[class*="text-xs"] {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* ── Uppercase labels / section tags ── */
+.label-upper {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8D6E63;
+}
+
+/* ── Blockquote / callout ── */
+blockquote {
+  border-left: 3px solid #4f9d44;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  background: rgba(79, 157, 68, 0.05);
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+  color: #2D5016;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* ── Monospace / code ── */
+code,
+pre,
+.font-mono,
+[class*="font-mono"] {
+  font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.88em;
+  letter-spacing: -0.2px;
+}
+
+/* ── Nav link text ── */
+.nav-link-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ── Subtitle / lead paragraph ── */
+.lead {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: #4f6f5c;
+  font-weight: 400;
+  max-width: 68ch;
+}
+
+/* ── Section headings with decorative line ── */
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4f9d44;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Custom Scrollbar - Natural Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(237, 231, 221, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 179, 66, 0.4);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 179, 66, 0.6);
+}
+
+/* ==========================================
+   🌿 GLOBAL INPUT / TEXTAREA / SELECT STYLES
+   Matches the Home & Navbar design language
+   ========================================== */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]),
+textarea,
+select {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a2e1a;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(45, 80, 22, 0.18);
+  border-radius: 12px;
+  padding: 11px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.15s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]):hover,
+textarea:hover,
+select:hover {
+  border-color: rgba(45, 80, 22, 0.32);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="submit"]):not([type="button"]):focus,
+textarea:focus,
+select:focus {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #2D5016;
+  box-shadow:
+    0 0 0 3px rgba(45, 80, 22, 0.12),
+    0 0 0 1px rgba(45, 80, 22, 0.20),
+    0 4px 16px rgba(45, 80, 22, 0.08);
+  transform: translateY(-1px);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(109, 76, 65, 0.42);
+  font-weight: 400;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background: rgba(245, 241, 232, 0.6);
+  border-color: rgba(45, 80, 22, 0.10);
+  color: rgba(109, 76, 65, 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Textarea specific */
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.65;
+}
+
+/* Select arrow */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232D5016' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Label enhancement — works with sibling input focus */
+label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5D4037;
+  margin-bottom: 6px;
+  transition: color 0.18s ease;
+}
+
+/* Focus-within label highlight */
+.form-group:focus-within label,
+div:focus-within>label {
+  color: #2D5016;
+}
+
+/* Input group with icon — ensure icon doesn't overlap */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-left: 42px;
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgba(109, 76, 65, 0.45);
+  transition: color 0.18s ease;
+}
+
+.input-with-icon:focus-within .input-icon {
+  color: #2D5016;
+}
+
+/* 🌿 Organic Card Design - Glassmorphism */
+.card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(45, 80, 22, 0.09);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow:
+    0 2px 8px rgba(45, 80, 22, 0.05),
+    0 8px 28px rgba(45, 80, 22, 0.07);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 4px 16px rgba(45, 80, 22, 0.08),
+    0 16px 40px rgba(45, 80, 22, 0.12);
+  border-color: rgba(124, 179, 66, 0.25);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+/* 🌲 Sidebar - Forest Green */
+.sidebar-container {
+  background: linear-gradient(180deg, #2D5016 0%, #234012 100%);
+  border-right: 2px solid rgba(124, 179, 66, 0.2);
+  box-shadow: 4px 0 20px rgba(45, 80, 22, 0.15);
+}
+
+.sidebar-item {
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(245, 241, 232, 0.7);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.sidebar-item:hover {
+  background: rgba(124, 179, 66, 0.15);
+  color: #F5F1E8;
+  transform: translateX(4px);
+}
+
+.sidebar-item.active {
+  background: linear-gradient(90deg, rgba(124, 179, 66, 0.25), transparent);
+  border-left: 4px solid var(--accent-gold);
+  color: #FFFFFF;
+  box-shadow: 0 0 15px rgba(212, 165, 116, 0.2);
+}
+
+/* 🌱 Soil Score Circle - Natural */
+.soil-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FBF8F3;
+  box-shadow: 0 4px 20px rgba(45, 80, 22, 0.1);
+}
+
+.soil-circle::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(var(--leaf-green) var(--score-percent, 0%), transparent 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.soil-score-text {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--forest-green);
+  text-shadow: 0 2px 4px rgba(45, 80, 22, 0.1);
+}
+
+/* 🟢 Live Badge - Organic Green */
+.live-badge {
+  background: rgba(124, 179, 66, 0.15);
+  color: var(--forest-green);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1.5px solid rgba(124, 179, 66, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--leaf-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--leaf-green);
+  animation: pulse-natural 2s infinite;
+}
+
+/* 🌿 Natural Button */
+.btn-primary {
+  background: linear-gradient(135deg, #2D5016, #7CB342);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 25px rgba(124, 179, 66, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* 💬 Chat UI - Warm & Inviting */
+.chat-container {
+  height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.chat-message {
+  padding: 14px 18px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  max-width: 85%;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.chat-message.user {
+  background: linear-gradient(135deg, #2D5016, #3D6620);
+  color: #F5F1E8;
+  margin-left: auto;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 3px 12px rgba(45, 80, 22, 0.2);
+}
+
+.chat-message.ai {
+  background: rgba(251, 248, 243, 0.95);
+  border: 1.5px solid var(--border-natural);
+  color: var(--text-primary);
+  margin-right: auto;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 2px 8px rgba(109, 76, 65, 0.1);
+}
+
+/* Natural Animations */
+@keyframes pulse-natural {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Fade-in animations for organic feel */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   HORIZONTAL NAVIGATION - Living Earth Theme
+   ======================================== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+}
+
+.horizontal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 32px;
+  background: var(--warm-cream);
+  border-bottom: 1.5px solid var(--border-natural);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(45, 80, 22, 0.05);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-items {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-tab {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--earth-brown);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-tab:hover {
+  background: rgba(124, 179, 66, 0.1);
+  color: var(--forest-green);
+}
+
+.nav-tab.active {
+  background: var(--forest-green);
+  color: var(--warm-cream);
+  box-shadow: 0 2px 8px rgba(45, 80, 22, 0.2);
+}
+
+/* ========================================
+   LIVING EARTH HERO SECTION
+   ======================================== */
+.living-earth-hero {
+  background: linear-gradient(135deg, #F5F1E8 0%, #EDE7DD 50%, #F5F1E8 100%);
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.hero-container {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-content {
+  z-index: 1;
+}
+
+.hero-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--forest-green);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 500px;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--earth-brown);
+  background: rgba(255, 251, 245, 0.8);
+  border: 1.5px solid var(--border-natural);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.badge-pill.active {
+  background: rgba(124, 179, 66, 0.15);
+  border-color: rgba(124, 179, 66, 0.3);
+  color: var(--forest-green);
+}
+
+.badge-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 80, 22, 0.1);
+}
+
+.hero-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  box-shadow: 0 8px 32px rgba(45, 80, 22, 0.08);
+}
+
+.botanical-tree {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(45, 80, 22, 0.1));
+}
+
+.floating-leaves ellipse,
+.flowers circle {
+  animation: float 3s ease-in-out infinite;
+}
+
+.flowers circle:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.flowers circle:nth-child(3) {
+  animation-delay: 1s;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-badges {
+    justify-content: center;
+  }
+
+  .nav-items {
+    flex-wrap: wrap;
+  }
+>>>>>>> df922889ce3a92ea64a7083a83bf9092b0b7935b
 }

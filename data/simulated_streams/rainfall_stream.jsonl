@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"timestamp": "2026-02-01T08:00:00", "rain_mm": 25, "note": "Moderate non-monsoon rain", "user_id": "farmer"}
 {"timestamp": "2026-02-01T08:00:00", "rain_mm": 35, "note": "Heavy rain in Ludhiana", "user_id": "farmer2"}
 {"timestamp": "2026-02-03T14:30:00", "rain_mm": 10, "note": "Light rain", "user_id": "farmer"}
@@ -17,3 +18,25 @@
 {"timestamp": "2026-02-17T16:51:51.253378", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
 {"timestamp": "2026-02-18T16:10:02.167624", "note": "Manual trigger", "user_id": "admin", "rain_mm": 0.0}
 {"timestamp": "2026-02-18T16:51:35.942684", "note": "Manual trigger", "user_id": "farmer2", "rain_mm": 0.0}
+=======
+{"timestamp": "2026-02-01T08:00:00", "rain_mm": 25, "note": "Moderate non-monsoon rain", "user_id": "farmer"}
+{"timestamp": "2026-02-01T08:00:00", "rain_mm": 35, "note": "Heavy rain in Ludhiana", "user_id": "farmer2"}
+{"timestamp": "2026-02-03T14:30:00", "rain_mm": 10, "note": "Light rain", "user_id": "farmer"}
+{"timestamp": "2026-02-07T06:15:00", "rain_mm": 40, "note": "Heavy pre-monsoon shower", "user_id": "farmer"}
+{"timestamp": "2026-02-07T07:00:00", "rain_mm": 15, "note": "Moderate shower", "user_id": "farmer2"}
+{"timestamp": "2026-02-17T12:09:50.044236", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T12:11:16.648448", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T12:12:22.249944", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:37:10.808226", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:38:05.445498", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:39:41.494937", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:40:52.189355", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:41:34.263130", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:43:16.921529", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:46:06.777373", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:51:15.663079", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-17T16:51:51.253378", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 25.0}
+{"timestamp": "2026-02-18T16:10:02.167624", "note": "Manual trigger", "user_id": "admin", "rain_mm": 0.0}
+{"timestamp": "2026-02-18T16:51:35.942684", "note": "Manual trigger", "user_id": "farmer2", "rain_mm": 0.0}
+{"timestamp": "2026-02-26T01:00:51.375305", "note": "Manual trigger", "user_id": "farmer", "rain_mm": 0.0}
+>>>>>>> df922889ce3a92ea64a7083a83bf9092b0b7935b
