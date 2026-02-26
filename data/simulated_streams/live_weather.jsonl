@@ -1,3 +1,37 @@
+<<<<<<< HEAD
+
+{"timestamp": "2026-02-15T23:00:56.021875", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-15T23:08:32.248874", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-15T23:14:27.353758", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-15T23:27:11.475132", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-15T23:41:38.575251", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-15T23:48:18.978993", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-15T23:51:43.263850", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
+{"timestamp": "2026-02-17T12:11:23.916120", "rain_mm": 3.53, "note": "Live API: Simulated (API unavailable), Temp: 26.8\u00b0C"}
+{"timestamp": "2026-02-17T12:12:31.974531", "rain_mm": 0.09, "note": "Live API: Simulated (API unavailable), Temp: 28.9\u00b0C"}
+{"timestamp": "2026-02-17T16:37:21.518577", "rain_mm": 3.67, "note": "Live API: Simulated (API unavailable), Temp: 21.0\u00b0C"}
+{"timestamp": "2026-02-17T16:38:11.819575", "rain_mm": 1.91, "note": "Live API: Simulated (API unavailable), Temp: 24.2\u00b0C"}
+{"timestamp": "2026-02-17T16:39:51.274786", "rain_mm": 2.5, "note": "Live API: Simulated (API unavailable), Temp: 17.3\u00b0C"}
+{"timestamp": "2026-02-17T16:40:58.266212", "rain_mm": 4.62, "note": "Live API: Simulated (API unavailable), Temp: 17.0\u00b0C"}
+{"timestamp": "2026-02-17T16:41:47.319257", "rain_mm": 2.47, "note": "Live API: Simulated (API unavailable), Temp: 29.7\u00b0C"}
+{"timestamp": "2026-02-17T16:42:18.866657", "rain_mm": 2.7, "note": "Live API: Simulated (API unavailable), Temp: 15.9\u00b0C"}
+{"timestamp": "2026-02-17T16:42:44.480558", "rain_mm": 3.01, "note": "Live API: Simulated (API unavailable), Temp: 29.4\u00b0C"}
+{"timestamp": "2026-02-17T16:43:21.231968", "rain_mm": 0.47, "note": "Live API: Simulated (API unavailable), Temp: 18.3\u00b0C"}
+{"timestamp": "2026-02-17T16:46:12.550973", "rain_mm": 0.3, "note": "Live API: Simulated (API unavailable), Temp: 23.0\u00b0C"}
+{"timestamp": "2026-02-17T16:51:20.330234", "rain_mm": 4.0, "note": "Live API: Simulated (API unavailable), Temp: 26.0\u00b0C"}
+{"timestamp": "2026-02-17T21:19:21.466963", "rain_mm": 3.55, "note": "Live API: Simulated (API unavailable), Temp: 27.6\u00b0C"}
+{"timestamp": "2026-02-17T21:24:53.275720", "rain_mm": 3.52, "note": "Live API: Simulated (API unavailable), Temp: 24.4\u00b0C"}
+{"timestamp": "2026-02-17T21:49:15.823059", "rain_mm": 1.32, "note": "Live API: Simulated (API unavailable), Temp: 17.3\u00b0C"}
+{"timestamp": "2026-02-18T15:58:30.309182", "rain_mm": 1.77, "note": "Live API: Simulated (API unavailable), Temp: 21.7\u00b0C"}
+{"timestamp": "2026-02-18T16:06:21.506365", "rain_mm": 4.07, "note": "Live API: Simulated (API unavailable), Temp: 27.6\u00b0C"}
+{"timestamp": "2026-02-25T12:26:31.269927", "rain_mm": 1.18, "note": "Live API: Simulated (API unavailable), Temp: 28.4\u00b0C"}
+{"timestamp": "2026-02-25T12:53:27.831531", "rain_mm": 0.65, "note": "Live API: Simulated (API unavailable), Temp: 27.6\u00b0C"}
+{"timestamp": "2026-02-25T12:58:51.329495", "rain_mm": 1.46, "note": "Live API: Simulated (API unavailable), Temp: 25.5\u00b0C"}
+{"timestamp": "2026-02-25T13:31:43.977868", "rain_mm": 1.81, "note": "Live API: Simulated (API unavailable), Temp: 22.1\u00b0C"}
+{"timestamp": "2026-02-25T13:53:56.081284", "rain_mm": 0.14, "note": "Live API: Simulated (API unavailable), Temp: 29.2\u00b0C"}
+{"timestamp": "2026-02-26T04:33:47.462036", "rain_mm": 2.03, "note": "Live API: Simulated (API unavailable), Temp: 19.3\u00b0C"}
+{"timestamp": "2026-02-26T08:43:04.671881", "rain_mm": 0.07, "note": "Live API: Simulated (API unavailable), Temp: 27.2\u00b0C"}
+=======
 
 {"timestamp": "2026-02-15T23:00:56.021875", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
 {"timestamp": "2026-02-15T23:08:32.248874", "rain_mm": 0.0, "note": "Live API: clear sky, Temp: 14.32\u00b0C"}
